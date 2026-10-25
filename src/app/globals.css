@@ -1,10 +1,66 @@
+:root {
+  --paper: #e3ecdd;
+  --paper-rule: #b9cbb0;
+  --ink: #1e4636;
+  --ink-soft: #4e6b5c;
+  --red: #b5302a;
+  --red-wash: #f6e2df;
+  --amber: #8a5a12;
+  --thermal: #fafaf6;
+  --graphite: #2b2d2a;
+  --line: #dce3d8;
+  --radius: 10px;
+}
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  min-height: 100dvh;
+  background: var(--thermal);
+  color: var(--graphite);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  font-variation-settings: "wdth" 100;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Money and times use the condensed width with even-width figures. */
+.num {
+  font-variation-settings: "wdth" 75;
+  font-feature-settings: "tnum";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

@@ -1,0 +1,14 @@
+.empty {
+  max-width: 520px;
+  padding: 48px 0;
+}
+
+.empty h1 {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.empty p {
+  color: var(--ink-soft);
+  margin: 0;
+}
