@@ -23,4 +23,19 @@ export const RULES: Record<RuleId, RuleInfo> = {
     source: "DOL Fact Sheet 15",
     url: "https://www.dol.gov/agencies/whd/fact-sheets/15-tipped-employees-flsa",
   },
+  "IRS-AUTO": {
+    title: "An added gratuity is a service charge, not a qualified tip, unless the guest could change it",
+    source: "Treasury regulations under IRC section 224",
+    url: "https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions",
+  },
+  "IRS-OVER": {
+    title: "Money a guest freely adds above an added gratuity is a qualified tip",
+    source: "Treasury regulations under IRC section 224",
+    url: "https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions",
+  },
+  "IRS-TTOC": {
+    title: "Each tipped worker needs a Treasury tipped occupation code on their W-2",
+    source: "Form W-2 instructions, box 14b",
+    url: "https://www.irs.gov/instructions/iw2w3",
+  },
 };

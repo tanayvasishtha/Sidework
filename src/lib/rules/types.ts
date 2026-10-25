@@ -31,11 +31,18 @@ export type Policy = {
   pointsPerHour: Partial<Record<Role, number>>;
   /** True when the restaurant pays tipped staff below minimum wage and counts tips toward it. */
   takesTipCredit: boolean;
-  /** Processing fee taken from card tips before the split, as a fraction. 0 for none. */
+  /** Processing fee taken from card, PayPal and Venmo tips before the split, as a fraction. 0 for none. */
   cardFeeRate: number;
 };
 
-export type RuleId = "FLSA-MGR" | "FLSA-BOH" | "FLSA-FULL" | "FLSA-FEE";
+export type RuleId =
+  | "FLSA-MGR"
+  | "FLSA-BOH"
+  | "FLSA-FULL"
+  | "FLSA-FEE"
+  | "IRS-AUTO"
+  | "IRS-OVER"
+  | "IRS-TTOC";
 
 export type Flag = {
   ruleId: RuleId;
