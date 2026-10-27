@@ -10,7 +10,7 @@ export const RULES: Record<RuleId, RuleInfo> = {
   },
   "FLSA-BOH": {
     title: "Kitchen staff can share in the pool only when no tip credit is taken",
-    source: "29 CFR 531.54",
+    source: "29 CFR 531.54(c) and (d)",
     url: "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-B/part-531/subpart-D/section-531.54",
   },
   "FLSA-FULL": {
@@ -25,13 +25,13 @@ export const RULES: Record<RuleId, RuleInfo> = {
   },
   "IRS-AUTO": {
     title: "An added gratuity is a service charge, not a qualified tip, unless the guest could change it",
-    source: "Treasury regulations under IRC section 224",
-    url: "https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions",
+    source: "26 CFR 1.224-1(c)(4), final regulations T.D. 10044",
+    url: "https://www.irs.gov/irb/2026-18_IRB",
   },
   "IRS-OVER": {
     title: "Money a guest freely adds above an added gratuity is a qualified tip",
-    source: "Treasury regulations under IRC section 224",
-    url: "https://www.irs.gov/newsroom/one-big-beautiful-bill-provisions",
+    source: "26 CFR 1.224-1(c)(4), final regulations T.D. 10044",
+    url: "https://www.irs.gov/irb/2026-18_IRB",
   },
   "IRS-TTOC": {
     title: "Each tipped worker needs a Treasury tipped occupation code on their W-2",
