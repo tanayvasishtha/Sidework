@@ -1,5 +1,6 @@
 // Sends $1.00 to one Venmo and one PayPal sandbox receiver, then waits for the result.
-// npm run sandbox:check -- --venmo <phone|email|@handle> --paypal <sandbox email>
+// npm run sandbox:check -- --venmo <sandbox email or @handle> --paypal <sandbox email>
+// The sandbox rejects the PHONE recipient type, so test Venmo with an email or handle.
 
 import { parseArgs } from "node:util";
 import { type PayoutLine, getPayoutBatch, createPayoutBatch, paypal } from "@/lib/paypal";
@@ -13,7 +14,7 @@ try {
 
 const { values } = parseArgs({ options: { venmo: { type: "string" }, paypal: { type: "string" } } });
 if (!values.venmo && !values.paypal) {
-  console.error("Give at least one receiver: --venmo <phone|email|@handle> and/or --paypal <sandbox email>");
+  console.error("Give at least one receiver: --venmo <sandbox email or @handle> and/or --paypal <sandbox email>");
   process.exit(2);
 }
 
