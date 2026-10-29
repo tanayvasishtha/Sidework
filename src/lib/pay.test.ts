@@ -74,6 +74,12 @@ describe("payNight", () => {
     expect(sentCents).toBe(payout.items.reduce((t, i) => t + i.cents, 0));
     expect(payout.paypalBatchId).toBe("PB1");
     expect(payout.items.every((i) => i.status === "SUCCESS")).toBe(true);
+
+    const saved = d.prepare("select sum(tip_cents) as cents, count(*) as n from allocations where night_id = ?").get(SATURDAY) as {
+      cents: number;
+      n: number;
+    };
+    expect(saved).toEqual({ cents: sentCents, n: 13 });
   });
 
   it("pays a night only once", async () => {

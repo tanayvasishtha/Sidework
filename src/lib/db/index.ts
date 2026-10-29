@@ -4,6 +4,7 @@ import { DatabaseSync } from "node:sqlite";
 import type { Policy, Role, Shift, StaffMember, TipLine } from "@/lib/rules";
 import { settings } from "@/lib/settings";
 import { seedHartleys } from "./hartleys";
+import { seedLuciasHistory } from "./history";
 import { SCHEMA, SCHEMA_VERSION, TABLES } from "./schema";
 import { seedLucias } from "./seed";
 
@@ -21,6 +22,7 @@ export function openDb(path: string): DatabaseSync {
   db.exec("pragma foreign_keys = on");
   db.exec(SCHEMA);
   seedLucias(db);
+  seedLuciasHistory(db);
   seedHartleys(db);
   return db;
 }
@@ -38,6 +40,7 @@ export function resetDemo(): void {
   for (const table of TABLES) d.exec(`drop table if exists ${table}`);
   d.exec(SCHEMA);
   seedLucias(d);
+  seedLuciasHistory(d);
   seedHartleys(d);
 }
 

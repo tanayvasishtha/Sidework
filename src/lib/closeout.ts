@@ -24,6 +24,8 @@ export type Share = {
   title: string;
   cents: number;
   minutes: number;
+  points: number;
+  remainderCents: number;
   /** "4 hrs floor, 4.7 hrs bar" */
   detail: string;
   wallet: Staff["payoutWallet"];
@@ -129,6 +131,8 @@ export function getCloseout(d: DatabaseSync, nightId: string): Closeout {
         title: person.title,
         cents: a.cents,
         minutes: a.minutes,
+        points: a.points,
+        remainderCents: a.remainderCents,
         detail,
         wallet: person.payoutWallet,
       };
@@ -201,10 +205,23 @@ export function saveShiftEdits(d: DatabaseSync, nightId: string, note: string, r
   }
 }
 
+/** Each restaurant's latest night. Earlier nights are history, read by the books and worker checks. */
 export function listNights(d: DatabaseSync): { id: string; restaurant: string; date: string }[] {
   return d
     .prepare(
-      "select n.id, r.name as restaurant, n.date from nights n join restaurants r on r.id = n.restaurant_id order by n.date desc, r.name",
+      `select n.id, r.name as restaurant, n.date from nights n join restaurants r on r.id = n.restaurant_id
+       where n.date = (select max(date) from nights where restaurant_id = n.restaurant_id)
+       order by r.name`,
     )
     .all() as { id: string; restaurant: string; date: string }[];
+}
+
+/** Records the split that was paid, so it counts toward each person's qualified tips for the year. */
+export function saveAllocations(d: DatabaseSync, nightId: string, split: Share[]): void {
+  d.prepare("delete from allocations where night_id = ?").run(nightId);
+  const add = d.prepare(
+    `insert into allocations (night_id, staff_id, minutes, points, tip_cents, service_charge_cents, remainder_cents)
+     values (?, ?, ?, ?, ?, 0, ?)`,
+  );
+  for (const s of split) add.run(nightId, s.staffId, s.minutes, s.points, s.cents, s.remainderCents);
 }

@@ -75,3 +75,36 @@ describe("openDb", () => {
     rmSync(dir, { recursive: true, force: true });
   });
 });
+
+describe("Lucia's history", () => {
+  const d = openDb(":memory:");
+  const nights = d.prepare("select count(*) as n from nights where restaurant_id = ? and status = 'paid'").get(LUCIAS) as { n: number };
+  const maria = d
+    .prepare("select sum(a.tip_cents) as cents from allocations a join nights n on n.id = a.night_id where a.staff_id = 'maria' and n.date like '2026-%'")
+    .get() as { cents: number };
+
+  it("has every Friday and Saturday paid from January to the demo night", () => {
+    expect(nights.n).toBe(89);
+  });
+
+  it("gives Maria a real year-to-date total and never pays Dave", () => {
+    expect(maria.cents).toBeGreaterThan(500000);
+    const dave = d.prepare("select count(*) as n from allocations where staff_id = 'dave'").get() as { n: number };
+    expect(dave.n).toBe(0);
+  });
+
+  it("pays out every past pool to the cent", () => {
+    const off = d
+      .prepare(
+        `select count(*) as n from nights n where n.restaurant_id = ? and n.status = 'paid' and
+         (select coalesce(sum(tip_cents), 0) from allocations where night_id = n.id) = 0`,
+      )
+      .get(LUCIAS) as { n: number };
+    expect(off.n).toBe(0);
+  });
+
+  it("puts Maria on 6.5 hours the Friday before the demo", () => {
+    const fri = d.prepare("select minutes from allocations where night_id = 'lucias-2026-11-06' and staff_id = 'maria'").get() as { minutes: number };
+    expect(fri.minutes).toBe(390);
+  });
+});

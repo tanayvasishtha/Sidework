@@ -1,5 +1,5 @@
 import type { DatabaseSync } from "node:sqlite";
-import { getCloseout } from "@/lib/closeout";
+import { getCloseout, saveAllocations } from "@/lib/closeout";
 import { night as nightName } from "@/lib/format";
 import {
   type BatchStatus,
@@ -141,6 +141,7 @@ export async function payNight(
       batchId,
     );
     d.prepare("update nights set status = 'paid' where id = ?").run(nightId);
+    saveAllocations(d, nightId, shares);
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     d.prepare("update payout_batches set status = 'FAILED', updated_at = ? where id = ?").run(new Date().toISOString(), batchId);

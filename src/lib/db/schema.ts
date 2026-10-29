@@ -1,5 +1,5 @@
 /** Bump when a table changes. The demo database is rebuilt and reseeded on a mismatch. */
-export const SCHEMA_VERSION = 5;
+export const SCHEMA_VERSION = 6;
 
 export const TABLES = [
   "payout_items",
