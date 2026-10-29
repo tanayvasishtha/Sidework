@@ -1,0 +1,155 @@
+.page {
+  min-height: 100dvh;
+  background: #eef1ea;
+  padding: 24px 16px 40px;
+}
+
+.page > * {
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.loading {
+  color: var(--ink-soft);
+}
+
+/* The pale green guest check, ruled every 28px, with the red serial. */
+.slip {
+  background: var(--paper);
+  border-radius: 4px;
+  padding: 16px 16px 20px;
+  background-image: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 27px,
+    var(--paper-rule) 27px,
+    var(--paper-rule) 28px
+  );
+  /* 16px padding plus the 58px header, so each rule sits under a row of text. */
+  background-position: 0 74px;
+  box-shadow: 0 1px 0 var(--paper-rule);
+}
+
+/* Unruled header strip, like the top of a real check pad. */
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  min-height: 74px;
+  margin: -16px -16px 0;
+  padding: 16px 16px 0;
+  background: var(--paper);
+  border-radius: 4px 4px 0 0;
+}
+
+.place {
+  font-weight: 650;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.2;
+  font-variation-settings: "wdth" 112;
+}
+
+.place span {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variation-settings: "wdth" 100;
+  margin-top: 2px;
+}
+
+.serial {
+  color: var(--red);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  min-height: 28px;
+  padding-bottom: 4px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.total {
+  font-size: 22px;
+  font-weight: 600;
+  min-height: 56px;
+}
+
+.how {
+  margin: 0;
+  font-size: 12px;
+  line-height: 28px;
+  color: var(--ink-soft);
+}
+
+.outOfPool {
+  margin: 0;
+  font-size: 15px;
+  line-height: 28px;
+  color: var(--ink);
+}
+
+.year {
+  margin-top: 18px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+
+.year p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.year p:first-child {
+  margin-bottom: 0;
+}
+
+.year b {
+  color: var(--ink);
+}
+
+.amount {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.2;
+  margin: 2px 0 6px;
+}
+
+.cap {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line);
+  overflow: hidden;
+  margin: 10px 0 4px;
+}
+
+.cap span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+
+.year .capLabel {
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.fine {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-align: center;
+}

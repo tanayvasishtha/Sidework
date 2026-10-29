@@ -2,10 +2,12 @@ import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
 import { Shell } from "@/components/Shell";
+import { checkToken } from "@/lib/checks";
 import { type Closeout, type CloseoutFlag, getCloseout, listNights } from "@/lib/closeout";
 import { db, SATURDAY } from "@/lib/db";
 import { localTime, money, night as nightName } from "@/lib/format";
 import { getNightPayout, isSettled, type NightPayout, type PayoutRow } from "@/lib/pay";
+import { settings } from "@/lib/settings";
 import { resetDemoAction, takeOutAction } from "./actions";
 import { PayButton, PayoutWatcher } from "./PayButton";
 import { Schedule } from "./Schedule";
@@ -90,6 +92,7 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
   const sent = payout && payout.status !== "FAILED" ? payout : null;
   const statusFor = new Map(sent?.items.map((i) => [i.staffId, i]) ?? []);
   const settled = sent ? sent.items.every((i) => isSettled(i.status)) : true;
+  const secret = settings().CHECK_SECRET;
 
   return (
     <section className={styles.right} aria-labelledby="tips">
@@ -137,7 +140,9 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
           {c.split.map((s) => (
             <tr key={s.staffId}>
               <td>
-                {s.name}
+                <Link href={`/check/${checkToken(c.night.id, s.staffId, secret)}`} className={styles.person}>
+                  {s.name}
+                </Link>
                 <div className={styles.muted}>{s.detail}</div>
               </td>
               <td className="num">

@@ -12,6 +12,8 @@ const schema = z.object({
   PAYPAL_SANDBOX_RECEIVER: z.string().email().optional(),
   PAYPAL_SANDBOX_VENMO_RECEIVER: z.string().optional(),
   DATABASE_PATH: z.string().default("data/sidework.db"),
+  // Signs each worker's private check link. Set a long random value anywhere public.
+  CHECK_SECRET: z.string().min(16).default("sidework-local-demo-secret"),
   REPLAY: z.enum(["auto", "record", "off"]).default("auto"),
   FIXTURES_DIR: z.string().default("fixtures"),
 });
@@ -36,7 +38,9 @@ function serviceMode(replay: "auto" | "record" | "off", hasKeys: boolean): Servi
 }
 
 export function loadSettings(env: Record<string, string | undefined> = process.env): Settings {
-  const parsed = schema.safeParse(env);
+  // A line copied from .env.example and left blank means "not set".
+  const given = Object.fromEntries(Object.entries(env).filter(([, v]) => v !== undefined && v.trim() !== ""));
+  const parsed = schema.safeParse(given);
   if (!parsed.success) {
     const field = parsed.error.issues[0]?.path.join(".") ?? "unknown";
     throw new Error(`Setting ${field} is invalid. Check your .env.local against .env.example.`);
