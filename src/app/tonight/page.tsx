@@ -4,8 +4,10 @@ import { Suspense } from "react";
 import { Shell } from "@/components/Shell";
 import { type Closeout, type CloseoutFlag, getCloseout, listNights } from "@/lib/closeout";
 import { db, SATURDAY } from "@/lib/db";
-import { money, night as nightName } from "@/lib/format";
+import { localTime, money, night as nightName } from "@/lib/format";
+import { getNightPayout, isSettled, type NightPayout, type PayoutRow } from "@/lib/pay";
 import { resetDemoAction, takeOutAction } from "./actions";
+import { PayButton, PayoutWatcher } from "./PayButton";
 import { Schedule } from "./Schedule";
 import { ShiftNote } from "./ShiftNote";
 import styles from "./page.module.css";
@@ -33,6 +35,7 @@ async function CloseoutView({ searchParams }: { searchParams: PageProps<"/tonigh
   const nights = listNights(d);
   const nightId = typeof night === "string" && nights.some((n) => n.id === night) ? night : SATURDAY;
   const c = getCloseout(d, nightId);
+  const payout = getNightPayout(d, nightId);
 
   return (
     <>
@@ -54,7 +57,7 @@ async function CloseoutView({ searchParams }: { searchParams: PageProps<"/tonigh
           <Schedule closeout={c} />
           <ShiftNote key={nightId} nightId={nightId} suggested={DEMO_NOTES[nightId] ?? ""} last={c.note} />
         </section>
-        <Tips closeout={c} />
+        <Tips closeout={c} payout={payout} />
       </div>
       <form action={resetDemoAction} className={styles.reset}>
         <button type="submit">Reset demo</button>
@@ -63,10 +66,30 @@ async function CloseoutView({ searchParams }: { searchParams: PageProps<"/tonigh
   );
 }
 
-function Tips({ closeout: c }: { closeout: Closeout }) {
+const WALLET = { VENMO: "Venmo", PAYPAL: "PayPal" } as const;
+
+function payoutStatus(item: PayoutRow): { text: string; tone: "sending" | "done" | "waiting" | "failed" } {
+  const first = item.name.split(" ")[0];
+  switch (item.status) {
+    case "PENDING":
+    case "ONHOLD":
+      return { text: `Sending to ${WALLET[item.wallet]}`, tone: "sending" };
+    case "SUCCESS":
+      return { text: `Paid to ${WALLET[item.wallet]}`, tone: "done" };
+    case "UNCLAIMED":
+      return { text: `Sent. Waiting for ${first} to claim it`, tone: "waiting" };
+    default:
+      return { text: `Didn't go through${item.error ? `: ${item.error}` : ""}`, tone: "failed" };
+  }
+}
+
+function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout | null }) {
   const blocks = c.flags.filter((f) => f.severity === "block");
   const warnings = c.flags.filter((f) => f.severity === "warn");
   const paid = c.split.length;
+  const sent = payout && payout.status !== "FAILED" ? payout : null;
+  const statusFor = new Map(sent?.items.map((i) => [i.staffId, i]) ?? []);
+  const settled = sent ? sent.items.every((i) => isSettled(i.status)) : true;
 
   return (
     <section className={styles.right} aria-labelledby="tips">
@@ -117,17 +140,38 @@ function Tips({ closeout: c }: { closeout: Closeout }) {
                 {s.name}
                 <div className={styles.muted}>{s.detail}</div>
               </td>
-              <td className="num">{money(s.cents)}</td>
+              <td className="num">
+                {money(s.cents)}
+                {statusFor.has(s.staffId) ? (
+                  <PayoutLine item={statusFor.get(s.staffId)!} />
+                ) : null}
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <button className={`${styles.pay} num`} type="button" disabled>
-        {c.blocking > 0
-          ? `Fix ${c.blocking} ${c.blocking === 1 ? "problem" : "problems"} before paying`
-          : `Pay ${paid} ${paid === 1 ? "person" : "people"} ${money(c.money.poolCents)}`}
-      </button>
+      {sent ? (
+        <div className={styles.sent} role="status">
+          <b className="num">
+            Sent {money(sent.items.reduce((t, i) => t + i.cents, 0))} to {sent.items.length} people at{" "}
+            {localTime(sent.createdAt, c.restaurant.state)}
+          </b>
+          {sent.items.filter((i) => i.status === "SUCCESS").length} of {sent.items.length} paid so far, through PayPal
+          Payouts.
+          <PayoutWatcher nightId={c.night.id} settled={settled} />
+        </div>
+      ) : (
+        <PayButton
+          nightId={c.night.id}
+          disabled={c.blocking > 0 || paid === 0}
+          label={
+            c.blocking > 0
+              ? `Fix ${c.blocking} ${c.blocking === 1 ? "problem" : "problems"} before paying`
+              : `${payout?.status === "FAILED" ? "Try again: pay" : "Pay"} ${paid} ${paid === 1 ? "person" : "people"} ${money(c.money.poolCents)}`
+          }
+        />
+      )}
 
       {warnings.length > 0 ? (
         <ul className={styles.warnings} aria-label="Worth knowing">
@@ -140,6 +184,11 @@ function Tips({ closeout: c }: { closeout: Closeout }) {
       ) : null}
     </section>
   );
+}
+
+function PayoutLine({ item }: { item: PayoutRow }) {
+  const { text, tone } = payoutStatus(item);
+  return <div className={`${styles.status} ${styles[tone]}`}>{text}</div>;
 }
 
 function BlockFlag({ flag: f, nightId }: { flag: CloseoutFlag; nightId: string }) {

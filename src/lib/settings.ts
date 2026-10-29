@@ -7,6 +7,10 @@ const schema = z.object({
   PAYPAL_CLIENT_SECRET: z.string().optional(),
   PAYPAL_WEBHOOK_ID: z.string().optional(),
   PAYPAL_API_BASE: z.string().url().default("https://api-m.sandbox.paypal.com"),
+  // Sandbox personal accounts that stand in for every staff member, so test payouts
+  // land somewhere they can be claimed. Staff emails like maria@sidework.test can't be.
+  PAYPAL_SANDBOX_RECEIVER: z.string().email().optional(),
+  PAYPAL_SANDBOX_VENMO_RECEIVER: z.string().optional(),
   DATABASE_PATH: z.string().default("data/sidework.db"),
   REPLAY: z.enum(["auto", "record", "off"]).default("auto"),
   FIXTURES_DIR: z.string().default("fixtures"),

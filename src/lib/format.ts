@@ -22,3 +22,14 @@ export function night(isoDate: string): string {
   const d = new Date(`${isoDate}T12:00:00Z`);
   return d.toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", timeZone: "UTC" });
 }
+
+const ZONES: Record<string, string> = { TX: "America/Chicago", NY: "America/New_York", CA: "America/Los_Angeles" };
+
+/** A timestamp as the restaurant's own wall clock shows it: "12:58 AM". */
+export function localTime(iso: string, state: string): string {
+  return new Date(iso).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: ZONES[state] ?? "America/Chicago",
+  });
+}

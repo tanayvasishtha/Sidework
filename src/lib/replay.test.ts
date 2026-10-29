@@ -90,3 +90,15 @@ describe("replay", () => {
     });
   });
 });
+
+describe("replay through the PayPal client", () => {
+  it("surfaces a replay miss as itself, not as a network failure", async () => {
+    const judge = createPayPalClient({
+      baseUrl: "https://api-m.sandbox.paypal.com",
+      clientId: "replay",
+      clientSecret: "replay",
+      fetch: replayFetch({ mode: "replay", dir: tempDir() }),
+    });
+    await expect(judge.request("GET", "/v1/payments/payouts/PB1")).rejects.toBeInstanceOf(ReplayMissError);
+  });
+});

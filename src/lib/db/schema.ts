@@ -1,5 +1,5 @@
 /** Bump when a table changes. The demo database is rebuilt and reseeded on a mismatch. */
-export const SCHEMA_VERSION = 4;
+export const SCHEMA_VERSION = 5;
 
 export const TABLES = [
   "payout_items",
@@ -100,17 +100,22 @@ create table if not exists flags (
 create table if not exists payout_batches (
   id text primary key,
   night_id text not null references nights(id),
-  paypal_batch_id text,
+  paypal_batch_id text unique,
   status text not null,
-  created_at text not null
+  created_at text not null,
+  updated_at text not null
 );
 
 create table if not exists payout_items (
   id text primary key,
   batch_id text not null references payout_batches(id),
   staff_id text not null references staff(id),
-  amount_cents integer not null,
-  paypal_item_id text,
-  status text not null
+  wallet text not null,
+  receiver text not null,
+  amount_cents integer not null check (amount_cents > 0),
+  paypal_item_id text unique,
+  status text not null,
+  error text,
+  updated_at text not null
 );
 `;

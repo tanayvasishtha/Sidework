@@ -40,7 +40,9 @@ export function createPayPalClient(config: PayPalConfig) {
     try {
       return await rawFetch(url, init);
     } catch (err) {
-      const cause = err instanceof Error ? ((err.cause as Error | undefined)?.message ?? err.message) : String(err);
+      // fetch reports network failures as TypeError. Anything else, such as a replay miss, passes through.
+      if (!(err instanceof TypeError)) throw err;
+      const cause = (err.cause as Error | undefined)?.message ?? err.message;
       throw new PayPalError(`Couldn't reach PayPal at ${base}: ${cause}`, 0, "NETWORK_ERROR");
     }
   }

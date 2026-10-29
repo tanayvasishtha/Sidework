@@ -356,6 +356,58 @@
   cursor: not-allowed;
 }
 
+.payError {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--amber);
+}
+
+.sent {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: #fff;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.sent b {
+  display: block;
+  font-size: 16px;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.status {
+  font-size: 12px;
+  font-weight: 400;
+  white-space: nowrap;
+  transition: color 400ms ease;
+}
+
+.sending {
+  color: var(--ink-soft);
+}
+
+.done {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.done::before {
+  content: "¹3  ";
+}
+
+.waiting {
+  color: var(--amber);
+  white-space: normal;
+}
+
+.failed {
+  color: var(--amber);
+  white-space: normal;
+}
+
 .warnings {
   margin: 16px 0 0;
   padding: 0;

@@ -68,7 +68,13 @@ export function requestKey(method: string, url: string, body: unknown): string {
     .slice(0, 16);
 }
 
-export function replayFetch(opts: { mode: ServiceMode; dir: string; fetch?: typeof fetch }): typeof fetch {
+export function replayFetch(opts: {
+  mode: ServiceMode;
+  dir: string;
+  fetch?: typeof fetch;
+  /** Drops fields that change on every run, such as a fresh batch id, before the request is keyed. */
+  keyBody?: (url: string, body: unknown) => unknown;
+}): typeof fetch {
   const live = opts.fetch ?? fetch;
   if (opts.mode === "live") return live;
 
@@ -76,7 +82,7 @@ export function replayFetch(opts: { mode: ServiceMode; dir: string; fetch?: type
     const url = input instanceof Request ? input.url : String(input);
     const method = (init.method ?? (input instanceof Request ? input.method : "GET")).toUpperCase();
     const body = canonicalBody(bodyText(init.body));
-    const key = requestKey(method, url, body);
+    const key = requestKey(method, url, opts.keyBody ? opts.keyBody(url, body) : body);
     const file = join(opts.dir, `${key}.json`);
 
     if (opts.mode === "replay") {
