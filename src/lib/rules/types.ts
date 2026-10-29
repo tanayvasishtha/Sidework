@@ -1,13 +1,6 @@
-export type Role =
-  | "server"
-  | "bartender"
-  | "busser"
-  | "runner"
-  | "barback"
-  | "host"
-  | "cook"
-  | "dishwasher"
-  | "manager";
+export const ROLES = ["server", "bartender", "busser", "runner", "barback", "host", "cook", "dishwasher", "manager"] as const;
+
+export type Role = (typeof ROLES)[number];
 
 export type StaffMember = {
   id: string;
@@ -43,6 +36,7 @@ export type RuleId =
   | "FLSA-CRT"
   | "FLSA-FULL"
   | "FLSA-FEE"
+  | "FLSA-PAY"
   | "IRS-AUTO"
   | "IRS-OVER"
   | "IRS-TTOC";

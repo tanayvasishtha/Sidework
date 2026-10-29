@@ -12,6 +12,8 @@
     "sandbox:check": "tsx scripts/sandbox-check.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.93",
+    "ai": "^7.0.139",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0",

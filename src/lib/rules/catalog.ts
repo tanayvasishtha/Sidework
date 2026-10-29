@@ -28,6 +28,11 @@ export const RULES: Record<RuleId, RuleInfo> = {
     source: "DOL Fact Sheet 15",
     url: "https://www.dol.gov/agencies/whd/fact-sheets/15-tipped-employees-flsa",
   },
+  "FLSA-PAY": {
+    title: "Tips are due by the regular payday for the week they were earned",
+    source: "29 CFR 531.54(b)(2)",
+    url: "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-B/part-531/subpart-D/section-531.54",
+  },
   "IRS-AUTO": {
     title: "An added gratuity is a service charge, not a qualified tip, unless the guest could change it",
     source: "26 CFR 1.224-1(c)(4), final regulations T.D. 10044",
