@@ -18,6 +18,11 @@ if (!values.venmo && !values.paypal) {
   process.exit(2);
 }
 
+if (settings().paypalMode === "replay") {
+  console.error("PayPal keys are not set. Add PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET to .env.local.");
+  process.exit(2);
+}
+
 const base = settings().PAYPAL_API_BASE;
 if (!base.includes("sandbox")) {
   console.error(`Refusing to send money: PAYPAL_API_BASE is ${base}, not the sandbox.`);

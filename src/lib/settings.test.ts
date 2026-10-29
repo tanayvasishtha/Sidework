@@ -21,6 +21,16 @@ describe("loadSettings", () => {
     expect(loadSettings({ OPENAI_API_KEY: "sk-test" }).mode).toBe("replay");
   });
 
+  it("runs PayPal live as soon as its keys are set", () => {
+    const s = loadSettings({ PAYPAL_CLIENT_ID: "id", PAYPAL_CLIENT_SECRET: "secret" });
+    expect([s.paypalMode, s.llmMode]).toEqual(["live", "replay"]);
+  });
+
+  it("records both services with REPLAY=record", () => {
+    const s = loadSettings({ REPLAY: "record" });
+    expect([s.paypalMode, s.llmMode]).toEqual(["record", "record"]);
+  });
+
   it("names the bad field in its error", () => {
     expect(() => loadSettings({ REPLAY: "sometimes" })).toThrow("REPLAY");
   });
