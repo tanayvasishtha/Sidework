@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { localTime, money, night as nightName } from "@/lib/format";
 import type { Role } from "@/lib/rules";
 import { settings } from "@/lib/settings";
+import { AskWhy } from "./AskWhy";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = { title: "Your tips", robots: { index: false } };
@@ -49,12 +50,20 @@ async function Check({ params }: { params: PageProps<"/check/[token]">["params"]
   return (
     <>
       <Slip check={check} />
+      {check.share ? <AskWhy token={token} suggested={suggestedQuestion(check)} /> : null}
       <Year check={check} />
       <p className={styles.fine}>
         Sidework follows federal tip rules. It isn&apos;t tax or legal advice. Questions about your pay go to your manager.
       </p>
     </>
   );
+}
+
+/** The question most people ask next: why tonight differs from their last shift. */
+function suggestedQuestion(c: WorkerCheck): string {
+  if (!c.share || !c.previous) return "How was my share figured?";
+  const day = new Date(`${c.previous.date}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" });
+  return c.share.cents < c.previous.cents ? `Why less than ${day}?` : `Why more than ${day}?`;
 }
 
 function Slip({ check: c }: { check: WorkerCheck }) {

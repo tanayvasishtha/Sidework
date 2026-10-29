@@ -99,6 +99,67 @@
   color: var(--ink);
 }
 
+.askBox {
+  margin-top: 14px;
+}
+
+.ask {
+  display: flex;
+  gap: 8px;
+}
+
+.ask input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 11px 12px;
+  font-size: 15px;
+  background: #fff;
+  color: var(--graphite);
+}
+
+.ask button {
+  border: 0;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 10px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ask button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.askError {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--amber);
+}
+
+.answer {
+  margin-top: 10px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.answer p {
+  margin: 0 0 6px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--graphite);
+}
+
+.answer small {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
 .year {
   margin-top: 18px;
   background: #fff;
