@@ -4,16 +4,12 @@ import styles from "./Shell.module.css";
 
 const links = [{ href: "/tonight", label: "Tonight" }];
 
-export function Shell({
-  current,
-  restaurant,
-  children,
-}: {
-  current: string;
-  restaurant: string;
-  children: React.ReactNode;
-}) {
-  const { mode } = settings();
+const MODE_LABEL = { live: "live", record: "recording", replay: "replay" } as const;
+
+export function Shell({ current, children }: { current: string; children: React.ReactNode }) {
+  const { mode, paypalMode, llmMode } = settings();
+  const label =
+    paypalMode === llmMode ? (mode === "replay" ? "Replay" : "Live sandbox") : `PayPal ${MODE_LABEL[paypalMode]}, AI ${MODE_LABEL[llmMode]}`;
   return (
     <>
       <header className={styles.bar}>
@@ -28,12 +24,15 @@ export function Shell({
           ))}
         </nav>
         <div className={styles.meta}>
-          <span>{restaurant}</span>
           <span
             className={styles.mode}
-            title={mode === "replay" ? "Running from recorded responses. Add keys to go live." : "Calling PayPal sandbox and OpenAI"}
+            title={
+              mode === "replay"
+                ? "Running from responses recorded against the PayPal sandbox and OpenAI. Add keys to go live."
+                : "Calling the PayPal sandbox and OpenAI"
+            }
           >
-            {mode === "replay" ? "Replay" : "Live sandbox"}
+            {label}
           </span>
         </div>
       </header>

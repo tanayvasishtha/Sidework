@@ -2,7 +2,7 @@ import type { DatabaseSync } from "node:sqlite";
 import type { Role } from "@/lib/rules";
 
 export const HARTLEYS = "hartleys";
-export const HARTLEYS_FRIDAY = "hartleys-2026-11-07";
+export const HARTLEYS_FRIDAY = "hartleys-2026-11-06";
 
 // Built on the facts in Paschal v. Perry's Restaurants (W.D. Tex.): servers at $2.13
 // an hour with a tip credit, and a pool that also pays a morning crew who set up and
@@ -73,7 +73,7 @@ export function seedHartleys(db: DatabaseSync): void {
     db.prepare("insert into nights (id, restaurant_id, date, status) values (?, ?, ?, 'open')").run(
       HARTLEYS_FRIDAY,
       HARTLEYS,
-      "2026-11-07",
+      "2026-11-06",
     );
 
     const addShift = db.prepare("insert into shifts (night_id, staff_id, station, start, end) values (?, ?, ?, ?, ?)");

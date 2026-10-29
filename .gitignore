@@ -43,3 +43,9 @@ next-env.d.ts
 
 # local database
 /data/
+
+# assistant and editor files stay out of the repo
+.claude/
+CLAUDE.md
+AGENTS.md
+.cursor/

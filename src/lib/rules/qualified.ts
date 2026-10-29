@@ -11,6 +11,8 @@ export type TipLine = {
   autoGratuityCents: number;
   /** True only when the bill told the guest they could change or remove the added gratuity. */
   guestCouldChangeAutoGratuity: boolean;
+  /** How the manager knows this payment, such as "Table 12". Falls back to the id. */
+  label?: string;
 };
 
 export type NightMoney = {
@@ -49,7 +51,7 @@ export function classifyNight(lines: TipLine[], policy: Policy): NightMoney {
       flags.push({
         ruleId: "IRS-AUTO",
         severity: "warn",
-        message: `Payment ${line.id}: the added gratuity counts as a tip because the guest could change it. Keep the receipt that shows that.`,
+        message: `${line.label ?? `Payment ${line.id}`}: the added gratuity counts as a tip because the guest could change it. Keep the receipt that shows that.`,
       });
     } else {
       serviceChargeCents += line.autoGratuityCents;
@@ -57,7 +59,7 @@ export function classifyNight(lines: TipLine[], policy: Policy): NightMoney {
         flags.push({
           ruleId: "IRS-OVER",
           severity: "warn",
-          message: `Payment ${line.id}: the guest added a tip on top of the added gratuity. That part is a qualified tip, the gratuity isn't.`,
+          message: `${line.label ?? `Payment ${line.id}`}: the guest added a tip on top of the added gratuity. That part is a qualified tip, the gratuity isn't.`,
         });
       }
     }

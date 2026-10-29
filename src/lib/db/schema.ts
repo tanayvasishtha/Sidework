@@ -1,10 +1,11 @@
 /** Bump when a table changes. The demo database is rebuilt and reseeded on a mismatch. */
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 4;
 
 export const TABLES = [
   "payout_items",
   "payout_batches",
   "flags",
+  "shift_notes",
   "allocations",
   "tip_lines",
   "shifts",
@@ -51,7 +52,17 @@ create table if not exists shifts (
   staff_id text not null references staff(id),
   station text not null,
   start text not null,
-  end text not null
+  end text not null,
+  edited integer not null default 0
+);
+
+create table if not exists shift_notes (
+  id integer primary key autoincrement,
+  night_id text not null references nights(id),
+  note text not null,
+  applied text not null,
+  rejected text not null,
+  created_at text not null
 );
 
 create table if not exists tip_lines (

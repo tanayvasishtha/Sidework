@@ -2,7 +2,7 @@ import type { DatabaseSync } from "node:sqlite";
 import type { Role } from "@/lib/rules";
 
 export const LUCIAS = "lucias";
-export const SATURDAY = "lucias-2026-11-08";
+export const SATURDAY = "lucias-2026-11-07";
 
 type SeedStaff = {
   id: string;
@@ -97,7 +97,7 @@ export function seedLucias(db: DatabaseSync): void {
     db.prepare("insert into nights (id, restaurant_id, date, status) values (?, ?, ?, 'open')").run(
       SATURDAY,
       LUCIAS,
-      "2026-11-08",
+      "2026-11-07",
     );
 
     const addShift = db.prepare("insert into shifts (night_id, staff_id, station, start, end) values (?, ?, ?, ?, ?)");

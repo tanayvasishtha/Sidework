@@ -32,6 +32,15 @@ export function db(): DatabaseSync {
   return shared;
 }
 
+/** Puts the demo back to the seeded nights, before any notes, fixes or payouts. */
+export function resetDemo(): void {
+  const d = db();
+  for (const table of TABLES) d.exec(`drop table if exists ${table}`);
+  d.exec(SCHEMA);
+  seedLucias(d);
+  seedHartleys(d);
+}
+
 export type Restaurant = { id: string; name: string; state: string; policy: Policy; policyText: string };
 
 export type Staff = StaffMember & {
@@ -91,6 +100,7 @@ export function getTipLines(d: DatabaseSync, nightId: string): (TipLine & { tabl
     id: r.id,
     source: r.source,
     table: r.table_label,
+    label: r.table_label.startsWith("bar") ? `Bar tab ${r.table_label.slice(4)}` : `Table ${r.table_label}`,
     tipCents: r.tip_cents,
     autoGratuityCents: r.auto_gratuity_cents,
     guestCouldChangeAutoGratuity: r.guest_could_change_auto === 1,

@@ -1,14 +1,417 @@
-.empty {
-  max-width: 520px;
+.loading {
+  color: var(--ink-soft);
   padding: 48px 0;
 }
 
-.empty h1 {
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 16px;
+}
+
+.head h1 {
   font-size: 22px;
+  font-weight: 600;
+}
+
+.nights {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.nights a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 3px 12px;
+}
+
+.nights a[aria-current="page"] {
+  color: var(--ink);
+  border-color: var(--ink);
+  font-weight: 600;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--thermal);
+}
+
+.grid h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.left {
+  padding: 18px 22px;
+  border-right: 1px solid var(--line);
+  min-width: 0;
+}
+
+/* Schedule */
+
+.schedule {
+  --who: 132px;
+  overflow-x: auto;
+}
+
+.hours {
+  display: grid;
+  grid-template-columns: var(--who) repeat(var(--hours), 1fr);
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  min-width: 560px;
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 560px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--who) 1fr;
+  align-items: center;
+  min-height: 38px;
+  border-top: 1px solid var(--line);
+}
+
+.who {
+  font-size: 14px;
+  line-height: 1.25;
+  padding: 4px 8px 4px 0;
+}
+
+.who em {
+  font-style: normal;
+  color: var(--ink-soft);
+  font-size: 12px;
+  display: block;
+}
+
+.track {
+  position: relative;
+  height: 38px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent calc(100% / var(--hours) - 1px),
+    var(--line) calc(100% / var(--hours) - 1px),
+    var(--line) calc(100% / var(--hours))
+  );
+}
+
+.shift {
+  position: absolute;
+  top: 8px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 11px;
+  line-height: 22px;
+  padding: 0 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition:
+    left 300ms ease,
+    width 300ms ease;
+}
+
+.boh {
+  background: var(--ink-soft);
+}
+
+.edited {
+  outline: 2px dashed var(--ink-soft);
+  outline-offset: 2px;
+}
+
+.blocked {
+  background: transparent;
+  border: 1.5px dashed var(--red);
+  color: var(--red);
+  line-height: 19px;
+}
+
+.out {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+  line-height: 20px;
+}
+
+/* Shift note */
+
+.note {
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  background: #fff;
+}
+
+.note label {
+  font-size: 13px;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.note textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 15px;
+  resize: vertical;
+  background: var(--thermal);
+  color: var(--graphite);
+}
+
+.noteBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 8px;
+}
+
+.noteBar button,
+.reset button,
+.flag button {
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.noteBar button {
+  border: 0;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.noteBar button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.noteError {
+  margin: 0;
+  font-size: 13px;
+  color: var(--amber);
+}
+
+.edits {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 10px 0 0;
+  padding-left: 18px;
+}
+
+.edits li {
+  margin: 2px 0;
+}
+
+.skipped {
+  color: var(--amber);
+}
+
+/* Tips panel, on guest check paper */
+
+.right {
+  padding: 18px 22px;
+  background: var(--paper);
+  min-width: 0;
+}
+
+.big {
+  font-size: 40px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+  margin: 4px 0 2px;
+}
+
+.sub {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+
+.money {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--paper-rule);
+  font-size: 14px;
+}
+
+.money b {
+  font-weight: 600;
+}
+
+.apart {
+  color: var(--ink-soft);
+  border-bottom-style: dashed;
+}
+
+.apart + .sub {
+  margin-top: 8px;
+}
+
+.flag {
+  background: var(--red-wash);
+  border-left: 3px solid var(--red);
+  padding: 10px 12px;
+  margin: 14px 0;
+  font-size: 14px;
+  color: #6e1c18;
+}
+
+.flag b {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--red);
+}
+
+.cite {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #6e1c18;
+}
+
+.flag button {
+  margin-top: 8px;
+  border: 1px solid var(--red);
+  background: transparent;
+  color: var(--red);
+  font-weight: 600;
+}
+
+.resolved {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 14px 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--paper-rule);
+}
+
+.split {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+.split td {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--paper-rule);
+  vertical-align: top;
+}
+
+.split td:last-child {
+  text-align: right;
+  padding-left: 12px;
+}
+
+.muted {
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.pay {
+  margin-top: 16px;
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  border-radius: var(--radius);
+  padding: 14px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.pay:disabled {
+  background: var(--ink-soft);
+  cursor: not-allowed;
+}
+
+.warnings {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.warnings li {
+  border-left: 3px solid var(--amber);
+  padding: 4px 0 4px 10px;
   margin-bottom: 8px;
 }
 
-.empty p {
+.warnings a {
   color: var(--ink-soft);
-  margin: 0;
+}
+
+.reset {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.reset button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 640px) {
+  .left,
+  .right {
+    padding: 16px;
+  }
+
+  .big {
+    font-size: 34px;
+  }
 }
