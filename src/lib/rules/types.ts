@@ -33,11 +33,14 @@ export type Policy = {
   takesTipCredit: boolean;
   /** Processing fee taken from card, PayPal and Venmo tips before the split, as a fraction. 0 for none. */
   cardFeeRate: number;
+  /** When guests are served, "16:00" to "23:00". A close at or before the open runs past midnight. */
+  serviceHours?: { open: string; close: string };
 };
 
 export type RuleId =
   | "FLSA-MGR"
   | "FLSA-BOH"
+  | "FLSA-CRT"
   | "FLSA-FULL"
   | "FLSA-FEE"
   | "IRS-AUTO"

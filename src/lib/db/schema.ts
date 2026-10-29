@@ -1,3 +1,18 @@
+/** Bump when a table changes. The demo database is rebuilt and reseeded on a mismatch. */
+export const SCHEMA_VERSION = 2;
+
+export const TABLES = [
+  "payout_items",
+  "payout_batches",
+  "flags",
+  "allocations",
+  "tip_lines",
+  "shifts",
+  "nights",
+  "staff",
+  "restaurants",
+];
+
 export const SCHEMA = `
 create table if not exists restaurants (
   id text primary key,
@@ -6,6 +21,8 @@ create table if not exists restaurants (
   takes_tip_credit integer not null,
   card_fee_rate real not null,
   points_per_hour text not null,
+  service_open text,
+  service_close text,
   policy_text text not null
 );
 

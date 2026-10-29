@@ -3,17 +3,25 @@ import { dirname } from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import type { Policy, Role, Shift, StaffMember, TipLine } from "@/lib/rules";
 import { settings } from "@/lib/settings";
-import { SCHEMA } from "./schema";
+import { seedHartleys } from "./hartleys";
+import { SCHEMA, SCHEMA_VERSION, TABLES } from "./schema";
 import { seedLucias } from "./seed";
 
+export { HARTLEYS, HARTLEYS_FRIDAY } from "./hartleys";
 export { LUCIAS, SATURDAY } from "./seed";
 
 export function openDb(path: string): DatabaseSync {
   if (path !== ":memory:") mkdirSync(dirname(path), { recursive: true });
   const db = new DatabaseSync(path);
+  const { user_version: version } = db.prepare("pragma user_version").get() as { user_version: number };
+  if (version !== SCHEMA_VERSION) {
+    for (const table of TABLES) db.exec(`drop table if exists ${table}`);
+    db.exec(`pragma user_version = ${SCHEMA_VERSION}`);
+  }
   db.exec("pragma foreign_keys = on");
   db.exec(SCHEMA);
   seedLucias(db);
+  seedHartleys(db);
   return db;
 }
 
@@ -34,7 +42,10 @@ export type Staff = StaffMember & {
 
 export function getRestaurant(d: DatabaseSync, id: string): Restaurant {
   const row = d.prepare("select * from restaurants where id = ?").get(id) as
-    | { id: string; name: string; state: string; takes_tip_credit: number; card_fee_rate: number; points_per_hour: string; policy_text: string }
+    | {
+        id: string; name: string; state: string; takes_tip_credit: number; card_fee_rate: number; points_per_hour: string;
+        service_open: string | null; service_close: string | null; policy_text: string;
+      }
     | undefined;
   if (!row) throw new Error(`No restaurant with id ${id}.`);
   return {
@@ -46,6 +57,7 @@ export function getRestaurant(d: DatabaseSync, id: string): Restaurant {
       pointsPerHour: JSON.parse(row.points_per_hour) as Policy["pointsPerHour"],
       takesTipCredit: row.takes_tip_credit === 1,
       cardFeeRate: row.card_fee_rate,
+      serviceHours: row.service_open && row.service_close ? { open: row.service_open, close: row.service_close } : undefined,
     },
   };
 }

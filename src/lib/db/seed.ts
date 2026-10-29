@@ -69,15 +69,18 @@ export function seedLucias(db: DatabaseSync): void {
   db.exec("begin");
   try {
     db.prepare(
-      `insert into restaurants (id, name, state, takes_tip_credit, card_fee_rate, points_per_hour, policy_text)
-       values (?, ?, ?, ?, ?, ?, ?)`,
+      `insert into restaurants (id, name, state, takes_tip_credit, card_fee_rate, points_per_hour, service_open, service_close, policy_text)
+       values (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     ).run(
       LUCIAS,
       "Lucia's",
-      "NY",
+      // Texas follows the federal pool rules. New York, for one, bars the kitchen from pools outright.
+      "TX",
       0,
       0.029,
       JSON.stringify({ server: 1, bartender: 1.5, barback: 0.5, busser: 0.5, runner: 0.5, host: 0.5, cook: 0.5, dishwasher: 0.5 }),
+      "17:00",
+      "23:00",
       "All tips go in one pool at close. Servers get 1 point an hour, bartenders 1.5, barbacks, bussers, runners and hosts 0.5. " +
         "The kitchen shares too, 0.5 an hour, since we pay everyone at least $16.50. Managers don't share. " +
         "Card, PayPal and Venmo fees come off the top. Parties of 8 or more get 18% added automatically.",

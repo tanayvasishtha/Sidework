@@ -13,6 +13,11 @@ export const RULES: Record<RuleId, RuleInfo> = {
     source: "29 CFR 531.54(c) and (d)",
     url: "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-B/part-531/subpart-D/section-531.54",
   },
+  "FLSA-CRT": {
+    title: "With a tip credit, only staff who customarily and regularly get tips can share",
+    source: "29 U.S.C. 203(m)(2)(A); 29 CFR 531.54(c); Paschal v. Perry's Restaurants, W.D. Tex. 2026",
+    url: "https://www.govinfo.gov/content/pkg/USCOURTS-txwd-1_22-cv-00027/pdf/USCOURTS-txwd-1_22-cv-00027-7.pdf",
+  },
   "FLSA-FULL": {
     title: "Every dollar in the pool goes to the people in it",
     source: "29 CFR 531.54",
