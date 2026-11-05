@@ -387,6 +387,34 @@
   z-index: 1;
 }
 
+.checked {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.diff {
+  width: 100%;
+  margin-top: 8px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.diff th {
+  text-align: right;
+  font-weight: 600;
+}
+
+.diff th:first-child,
+.diff td:first-child {
+  text-align: left;
+}
+
+.diff td {
+  text-align: right;
+  padding-top: 3px;
+}
+
 .pay {
   width: 100%;
   background: var(--ink);

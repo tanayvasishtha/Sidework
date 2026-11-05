@@ -2,16 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import { applyShiftNote } from "@/lib/agent/shifts";
-import { getCloseout, NIGHT_LOCKED, saveShiftEdits, takeOut } from "@/lib/closeout";
+import { acceptEngineSplit, getCloseout, NIGHT_LOCKED, saveShiftEdits, takeOut } from "@/lib/closeout";
 import { db, getStaff, resetDemo } from "@/lib/db";
 import { PayRefusedError, PayUncertainError, payNight, refreshPayout } from "@/lib/pay";
 import { PayPalError, paypal } from "@/lib/paypal";
 import { ReplayMissError } from "@/lib/replay";
 import { RULES, type RuleId } from "@/lib/rules";
 import { settings } from "@/lib/settings";
+import { runSplitCheck } from "@/lib/splitcheck";
 
 export type NoteState = { error?: string };
 export type PayState = { error?: string };
+export type CheckState = { error?: string };
 
 export async function takeOutAction(formData: FormData): Promise<void> {
   const nightId = String(formData.get("night"));
@@ -47,6 +49,21 @@ export async function updateScheduleAction(_prev: NoteState, formData: FormData)
   }
   revalidatePath("/tonight");
   return {};
+}
+
+export async function checkSplitAction(_prev: CheckState, formData: FormData): Promise<CheckState> {
+  try {
+    await runSplitCheck(db(), String(formData.get("night")));
+  } catch (err) {
+    return { error: err instanceof Error ? err.message : "The split couldn't be checked. Try again." };
+  }
+  revalidatePath("/tonight");
+  return {};
+}
+
+export async function acceptEngineAction(formData: FormData): Promise<void> {
+  acceptEngineSplit(db(), String(formData.get("night")));
+  revalidatePath("/tonight");
 }
 
 export async function payAction(_prev: PayState, formData: FormData): Promise<PayState> {

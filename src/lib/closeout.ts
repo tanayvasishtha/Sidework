@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { getRestaurant, getStaff, getTipLines, type Restaurant, type Staff } from "@/lib/db";
 import {
@@ -31,6 +32,14 @@ export type Share = {
   wallet: Staff["payoutWallet"];
 };
 
+/** The agent's reading of the night, compared with the engine's split to the cent. */
+export type SplitCheck = {
+  status: "match" | "mismatch" | "unavailable";
+  differences: { staffId: string; name: string; proposedCents: number; checkedCents: number }[];
+  /** A person looked at a mismatch and chose the engine's numbers. */
+  accepted: boolean;
+};
+
 export type Closeout = {
   restaurant: Restaurant;
   night: { id: string; date: string; status: string };
@@ -48,6 +57,9 @@ export type Closeout = {
   blocking: number;
   /** Money has left, or may have left, for this night, so its numbers can't change. */
   locked: boolean;
+  /** Changes whenever the split does, so a check only ever vouches for the numbers it saw. */
+  splitKey: string;
+  check: SplitCheck | null;
   note: { text: string; applied: string[]; rejected: string[] } | null;
 };
 
@@ -150,6 +162,11 @@ export function getCloseout(d: DatabaseSync, nightId: string): Closeout {
     })
     .sort((a, b) => b.cents - a.cents || a.name.localeCompare(b.name));
 
+  const splitKey = createHash("sha256")
+    .update(JSON.stringify([money.tipPoolCents, shares.map((s) => [s.staffId, s.cents])]))
+    .digest("hex")
+    .slice(0, 16);
+
   const latest = d
     .prepare("select note, applied, rejected from shift_notes where night_id = ? order by id desc limit 1")
     .get(nightId) as { note: string; applied: string; rejected: string } | undefined;
@@ -175,10 +192,50 @@ export function getCloseout(d: DatabaseSync, nightId: string): Closeout {
     split: shares,
     blocking: flags.filter((f) => f.severity === "block" && !f.resolved).length,
     locked: nightLocked(d, nightId),
+    splitKey,
+    check: readSplitCheck(d, nightId, splitKey),
     note: latest
       ? { text: latest.note, applied: JSON.parse(latest.applied) as string[], rejected: JSON.parse(latest.rejected) as string[] }
       : null,
   };
+}
+
+function readSplitCheck(d: DatabaseSync, nightId: string, splitKey: string): SplitCheck | null {
+  const row = d
+    .prepare("select status, differences, accepted_at from split_checks where night_id = ? and split_key = ? order by id desc limit 1")
+    .get(nightId, splitKey) as { status: SplitCheck["status"]; differences: string; accepted_at: string | null } | undefined;
+  if (!row) return null;
+  return { status: row.status, differences: JSON.parse(row.differences) as SplitCheck["differences"], accepted: row.accepted_at !== null };
+}
+
+export function saveSplitCheck(
+  d: DatabaseSync,
+  nightId: string,
+  splitKey: string,
+  status: SplitCheck["status"],
+  differences: SplitCheck["differences"],
+): SplitCheck {
+  d.prepare("insert into split_checks (night_id, split_key, status, differences, created_at) values (?, ?, ?, ?, ?)").run(
+    nightId,
+    splitKey,
+    status,
+    JSON.stringify(differences),
+    new Date().toISOString(),
+  );
+  return { status, differences, accepted: false };
+}
+
+/** The manager has seen the disagreement and chooses the engine's numbers. */
+export function acceptEngineSplit(d: DatabaseSync, nightId: string): void {
+  if (nightLocked(d, nightId)) throw new Error(NIGHT_LOCKED);
+  const c = getCloseout(d, nightId);
+  if (c.check?.status !== "mismatch") throw new Error("There's no disagreement to settle.");
+  d.prepare("update split_checks set accepted_at = ? where night_id = ? and split_key = ?").run(new Date().toISOString(), nightId, c.splitKey);
+}
+
+/** Everyone on staff, for the agent to match names against. */
+export function staffRoster(d: DatabaseSync, restaurantId: string): { id: string; name: string; title: string }[] {
+  return getStaff(d, restaurantId).map((p) => ({ id: p.id, name: p.name, title: p.title }));
 }
 
 export const NIGHT_LOCKED = "Tonight's tips have gone out, so the schedule and the pool can't change.";

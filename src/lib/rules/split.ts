@@ -17,10 +17,6 @@ export function splitPool(
   policy: Policy,
   excludedStaffIds: ReadonlySet<string> = new Set(),
 ): Allocation[] {
-  if (!Number.isInteger(poolCents) || poolCents < 0) {
-    throw new Error(`Pool must be a whole number of cents, got ${poolCents}.`);
-  }
-
   const byStaff = new Map<string, { minutes: number; points: number }>();
   for (const shift of shifts) {
     if (excludedStaffIds.has(shift.staffId)) continue;
@@ -32,12 +28,20 @@ export function splitPool(
     entry.points += (minutes / 60) * rate;
     byStaff.set(shift.staffId, entry);
   }
+  return allocatePool(poolCents, [...byStaff.entries()].map(([staffId, e]) => ({ staffId, ...e })));
+}
 
-  const totalPoints = [...byStaff.values()].reduce((sum, e) => sum + e.points, 0);
+/** Turns each person's points into cents. Shared by the engine and the agent's check, so they can only differ on the inputs. */
+export function allocatePool(poolCents: number, entries: { staffId: string; minutes: number; points: number }[]): Allocation[] {
+  if (!Number.isInteger(poolCents) || poolCents < 0) {
+    throw new Error(`Pool must be a whole number of cents, got ${poolCents}.`);
+  }
+  const earning = entries.filter((e) => e.points > 0);
+  const totalPoints = earning.reduce((sum, e) => sum + e.points, 0);
   if (totalPoints === 0) return [];
 
-  const allocations: Allocation[] = [...byStaff.entries()].map(([staffId, e]) => ({
-    staffId,
+  const allocations: Allocation[] = earning.map((e) => ({
+    staffId: e.staffId,
     minutes: e.minutes,
     points: round2(e.points),
     cents: Math.floor((poolCents * e.points) / totalPoints),

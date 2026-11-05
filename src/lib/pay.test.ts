@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getCloseout, saveShiftEdits, takeOut } from "@/lib/closeout";
+import { acceptEngineSplit, getCloseout, saveShiftEdits, saveSplitCheck, takeOut } from "@/lib/closeout";
 import { openDb, SATURDAY } from "@/lib/db";
 import { createPayPalClient } from "@/lib/paypal";
 import { applyPayoutEvent, getNightPayout, payoutStands, PayRefusedError, PayUncertainError, payNight, refreshPayout } from "./pay";
@@ -45,6 +45,7 @@ function fakeSandbox(itemStatus = "SUCCESS") {
 function readyNight() {
   const d = openDb(":memory:");
   takeOut(d, SATURDAY, "dave", "FLSA-MGR");
+  saveSplitCheck(d, SATURDAY, getCloseout(d, SATURDAY).splitKey, "match", []);
   return d;
 }
 
@@ -87,6 +88,29 @@ describe("payNight", () => {
     const { client, batches } = fakeSandbox();
     await payNight(d, SATURDAY, client, { baseUrl: SANDBOX });
     await expect(payNight(d, SATURDAY, client, { baseUrl: SANDBOX })).rejects.toThrow("already been sent");
+    expect(batches).toHaveLength(1);
+  });
+
+  it("won't pay a split nobody checked", async () => {
+    const d = openDb(":memory:");
+    takeOut(d, SATURDAY, "dave", "FLSA-MGR");
+    const { client, batches } = fakeSandbox();
+    await expect(payNight(d, SATURDAY, client, { baseUrl: SANDBOX })).rejects.toThrow("Check the split");
+    expect(batches).toHaveLength(0);
+  });
+
+  it("holds a disagreement until a person chooses the engine's numbers", async () => {
+    const d = openDb(":memory:");
+    takeOut(d, SATURDAY, "dave", "FLSA-MGR");
+    saveSplitCheck(d, SATURDAY, getCloseout(d, SATURDAY).splitKey, "mismatch", [
+      { staffId: "jake", name: "Jake Park", proposedCents: 100, checkedCents: 200 },
+    ]);
+    const { client, batches } = fakeSandbox();
+    await expect(payNight(d, SATURDAY, client, { baseUrl: SANDBOX })).rejects.toThrow("disagree");
+    expect(batches).toHaveLength(0);
+
+    acceptEngineSplit(d, SATURDAY);
+    await payNight(d, SATURDAY, client, { baseUrl: SANDBOX });
     expect(batches).toHaveLength(1);
   });
 

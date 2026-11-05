@@ -4,7 +4,10 @@ import { Suspense } from "react";
 import { settings } from "@/lib/settings";
 import styles from "./Shell.module.css";
 
-const links = [{ href: "/tonight", label: "Tonight" }];
+const links = [
+  { href: "/tonight", label: "Tonight" },
+  { href: "/policy", label: "Tip policy" },
+];
 
 const MODE_LABEL = { live: "live", record: "recording", replay: "replay" } as const;
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect, useTransition } from "react";
-import { type PayState, payAction, refreshPayoutAction } from "./actions";
+import { type CheckState, checkSplitAction, type PayState, payAction, refreshPayoutAction } from "./actions";
 import styles from "./page.module.css";
 
 export function PayButton({ nightId, label, disabled }: { nightId: string; label: string; disabled: boolean }) {
@@ -11,6 +11,24 @@ export function PayButton({ nightId, label, disabled }: { nightId: string; label
       <input type="hidden" name="night" value={nightId} />
       <button className={`${styles.pay} num`} type="submit" disabled={disabled || pending}>
         {pending ? "Sending through PayPal" : label}
+      </button>
+      {state.error ? (
+        <p className={styles.payError} role="alert">
+          {state.error}
+        </p>
+      ) : null}
+    </form>
+  );
+}
+
+/** The second key: the agent reads the night on its own before anyone is paid. */
+export function CheckSplitButton({ nightId }: { nightId: string }) {
+  const [state, action, pending] = useActionState<CheckState, FormData>(checkSplitAction, {});
+  return (
+    <form action={action}>
+      <input type="hidden" name="night" value={nightId} />
+      <button className={`${styles.pay} num`} type="submit" disabled={pending}>
+        {pending ? "Checking the split" : "Check the split"}
       </button>
       {state.error ? (
         <p className={styles.payError} role="alert">

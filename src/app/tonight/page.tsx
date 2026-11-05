@@ -4,13 +4,13 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { Shell } from "@/components/Shell";
 import { checkToken } from "@/lib/checks";
-import { type Closeout, type CloseoutFlag, getCloseout, listNights } from "@/lib/closeout";
+import { type Closeout, type CloseoutFlag, getCloseout, listNights, type SplitCheck } from "@/lib/closeout";
 import { db, SATURDAY } from "@/lib/db";
 import { localTime, money, night as nightName, WALLET } from "@/lib/format";
 import { getNightPayout, isSettled, type NightPayout, payoutStands, type PayoutRow } from "@/lib/pay";
 import { settings } from "@/lib/settings";
-import { resetDemoAction, takeOutAction } from "./actions";
-import { PayButton, PayoutWatcher } from "./PayButton";
+import { acceptEngineAction, resetDemoAction, takeOutAction } from "./actions";
+import { CheckSplitButton, PayButton, PayoutWatcher } from "./PayButton";
 import { Schedule } from "./Schedule";
 import { ShiftNote } from "./ShiftNote";
 import styles from "./page.module.css";
@@ -150,28 +150,42 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
         </p>
       ))}
 
+      {!live && c.check?.status === "mismatch" && !c.check.accepted ? <Disagreement check={c.check} /> : null}
+
       {sent ? (
         <SentSummary payout={sent} state={c.restaurant.state} nightId={c.night.id} />
       ) : (
         <div className={styles.payBar}>
+          {c.check ? <CheckLine check={c.check} /> : null}
           {live ? (
             <p className={styles.payError} role="alert">
               PayPal didn&apos;t answer, so this may or may not have gone through. Finishing resends the same batch, so
               nobody gets paid twice.
             </p>
           ) : null}
-          <PayButton
-            key={c.night.id}
-            nightId={c.night.id}
-            disabled={c.blocking > 0 || count === 0}
-            label={
-              c.blocking > 0
-                ? `Fix ${c.blocking === 1 ? "1 problem" : `${c.blocking} problems`} before paying`
-                : live
-                  ? `Finish sending to ${people(live.items.length)}`
-                  : `${payout?.status ? "Try again: pay" : "Pay"} ${people(count)} ${money(c.money.poolCents)}`
-            }
-          />
+          {!live && c.blocking === 0 && count > 0 && !c.check ? (
+            <CheckSplitButton key={c.night.id} nightId={c.night.id} />
+          ) : !live && c.check?.status === "mismatch" && !c.check.accepted ? (
+            <form action={acceptEngineAction}>
+              <input type="hidden" name="night" value={c.night.id} />
+              <button className={`${styles.pay} num`} type="submit">
+                Use the rules engine&apos;s numbers
+              </button>
+            </form>
+          ) : (
+            <PayButton
+              key={c.night.id}
+              nightId={c.night.id}
+              disabled={c.blocking > 0 || count === 0}
+              label={
+                c.blocking > 0
+                  ? `Fix ${c.blocking === 1 ? "1 problem" : `${c.blocking} problems`} before paying`
+                  : live
+                    ? `Finish sending to ${people(live.items.length)}`
+                    : `${payout?.status ? "Try again: pay" : "Pay"} ${people(count)} ${money(c.money.poolCents)}`
+              }
+            />
+          )}
         </div>
       )}
 
@@ -206,6 +220,50 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
         </ul>
       ) : null}
     </section>
+  );
+}
+
+/** Says what stands behind the pay button, in the one line above it. */
+function CheckLine({ check }: { check: SplitCheck }) {
+  if (check.status === "match") {
+    return <p className={styles.checked}>Checked twice. The agent and the rules engine got the same split to the cent.</p>;
+  }
+  if (check.status === "unavailable") {
+    return <p className={styles.checked}>The agent couldn&apos;t be reached, so this split is the rules engine&apos;s alone.</p>;
+  }
+  if (!check.accepted) return null;
+  return (
+    <p className={styles.checked}>
+      You chose the rules engine&apos;s numbers after the agent disagreed on {people(check.differences.length)}.
+    </p>
+  );
+}
+
+function Disagreement({ check }: { check: SplitCheck }) {
+  return (
+    <div className={styles.flag} role="alert">
+      <b>The agent and the rules engine disagree</b>
+      Nobody gets paid until you look. The agent may have read a shift or a rate differently from the rules set for this
+      restaurant.
+      <table className={styles.diff}>
+        <thead>
+          <tr>
+            <th scope="col">Who</th>
+            <th scope="col">Agent</th>
+            <th scope="col">Rules engine</th>
+          </tr>
+        </thead>
+        <tbody className="num">
+          {check.differences.map((d) => (
+            <tr key={d.staffId}>
+              <td>{d.name}</td>
+              <td>{money(d.proposedCents)}</td>
+              <td>{money(d.checkedCents)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

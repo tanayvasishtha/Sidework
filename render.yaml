@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: sidework
+    runtime: node
+    plan: free
+    # Render sets NODE_ENV=production, which would otherwise skip the TypeScript build tools.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /tonight
+    envVars:
+      - key: NODE_VERSION
+        value: "24.15.0"
+      # Signs each worker's private check link.
+      - key: CHECK_SECRET
+        generateValue: true
+      - key: REPLAY
+        value: auto
+      # With no keys the site runs from the recordings in fixtures/. Add them in the Render dashboard to go live.
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: PAYPAL_WEBHOOK_ID
+        sync: false
+      - key: PAYPAL_SANDBOX_RECEIVER
+        sync: false
+      - key: PAYPAL_SANDBOX_VENMO_RECEIVER
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false

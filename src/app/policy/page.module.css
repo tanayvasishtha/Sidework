@@ -1,0 +1,233 @@
+.page {
+  max-width: 760px;
+}
+
+.loading {
+  color: var(--ink-soft);
+  padding: 48px 0;
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+}
+
+.head h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.places {
+  display: flex;
+  gap: 6px;
+  font-size: 14px;
+}
+
+.places a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  border: 1px solid var(--control);
+  border-radius: 20px;
+  padding: 3px 14px;
+}
+
+.places a[aria-current="page"] {
+  color: var(--ink);
+  border-color: var(--ink);
+  font-weight: 600;
+}
+
+.lede {
+  margin: 10px 0 18px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+.form label {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.form textarea {
+  width: 100%;
+  border: 1px solid var(--control);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 16px;
+  line-height: 1.5;
+  resize: vertical;
+  background: #fff;
+  color: var(--graphite);
+}
+
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.bar button {
+  min-height: 44px;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  border: 0;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.bar button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.bar .quiet {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--control);
+  font-weight: 400;
+}
+
+.error {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--amber);
+}
+
+/* Results sit on guest check paper, like the tips panel. */
+.results {
+  margin-top: 22px;
+  padding: 18px 20px;
+  background: var(--paper);
+  border-radius: 14px;
+}
+
+.results h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.results h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 18px 0 6px;
+}
+
+.policy {
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* Red is for what's illegal. Everything else worth fixing is amber. */
+.markBlock {
+  background: var(--red-wash);
+  color: #6e1c18;
+  border-bottom: 2px solid var(--red);
+}
+
+.markWarn {
+  background: transparent;
+  color: inherit;
+  border-bottom: 2px solid var(--amber);
+}
+
+.findings {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+.findings li {
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.findings b {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.findings q {
+  display: block;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+
+.findings a {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: inherit;
+}
+
+.block {
+  background: var(--red-wash);
+  border-left: 3px solid var(--red);
+  color: #6e1c18;
+}
+
+.block b {
+  color: var(--red);
+}
+
+.warn {
+  background: #fff;
+  border-left: 3px solid var(--amber);
+  color: var(--graphite);
+}
+
+.warn b {
+  color: var(--amber);
+}
+
+.rates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.rates div {
+  display: flex;
+  gap: 6px;
+}
+
+.rates dt {
+  text-transform: capitalize;
+  color: var(--ink-soft);
+}
+
+.rates dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.note,
+.dropped {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.note {
+  margin: 12px 0 0;
+}
+
+.dropped {
+  margin: 0;
+  padding-left: 18px;
+}

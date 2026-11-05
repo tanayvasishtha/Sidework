@@ -1,11 +1,12 @@
 /** Bump when a table changes. The demo database is rebuilt and reseeded on a mismatch. */
-export const SCHEMA_VERSION = 8;
+export const SCHEMA_VERSION = 9;
 
 export const TABLES = [
   "payout_items",
   "payout_batches",
   "flags",
   "shift_notes",
+  "split_checks",
   "allocations",
   "tip_lines",
   "shifts",
@@ -74,6 +75,16 @@ create table if not exists tip_lines (
   auto_gratuity_cents integer not null default 0 check (auto_gratuity_cents >= 0),
   guest_could_change_auto integer not null default 0,
   paypal_order_id text
+);
+
+create table if not exists split_checks (
+  id integer primary key autoincrement,
+  night_id text not null references nights(id),
+  split_key text not null,
+  status text not null check (status in ('match', 'mismatch', 'unavailable')),
+  differences text not null,
+  accepted_at text,
+  created_at text not null
 );
 
 create table if not exists allocations (

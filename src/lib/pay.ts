@@ -142,6 +142,12 @@ export async function payNight(
   }
   const shares = c.split.filter((s) => s.cents > 0);
   if (shares.length === 0) throw new PayRefusedError("There's nothing to pay out tonight.");
+  if (!open) {
+    if (!c.check) throw new PayRefusedError("Check the split before paying.");
+    if (c.check.status === "mismatch" && !c.check.accepted) {
+      throw new PayRefusedError("The agent and the rules engine disagree. Look at the difference first.");
+    }
+  }
 
   const note = `Your tips from ${c.restaurant.name}, ${nightName(c.night.date)}`;
   let batchId: string;
