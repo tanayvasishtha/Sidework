@@ -1,6 +1,6 @@
 import { generateText, type LanguageModel, Output } from "ai";
 import { z } from "zod";
-import { allocatePool, type Allocation, ROLES, type Shift } from "@/lib/rules";
+import { allocatePool, type Allocation, pointUnits, ROLES, type Shift } from "@/lib/rules";
 import { model as defaultModel } from "./model";
 
 export const splitReadingSchema = z.object({
@@ -62,7 +62,7 @@ export async function proposeSplit(input: SplitInput, m: LanguageModel = default
     output.people.map((p) => ({
       staffId: p.staffId,
       minutes: p.stations.reduce((t, s) => t + s.minutes, 0),
-      points: p.stations.reduce((t, s) => t + (s.minutes / 60) * s.pointsPerHour, 0),
+      units: p.stations.reduce((t, s) => t + pointUnits(s.minutes, s.pointsPerHour), 0),
     })),
   );
 }

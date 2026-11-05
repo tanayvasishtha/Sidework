@@ -1,0 +1,74 @@
+[
+  {
+    "id": "legal-1-kitchen-no-credit",
+    "legal": true,
+    "takesTipCredit": false,
+    "text": "All tips go in one pool at close. Servers get 1 point an hour, bartenders 1.5, bussers and hosts 0.5. The kitchen shares too at 0.5 an hour, since we pay everyone at least $16.50. Managers don't share. Card fees of 2.9% come off the top.",
+    "expected": []
+  },
+  {
+    "id": "legal-2-front-only",
+    "legal": true,
+    "takesTipCredit": true,
+    "text": "Front of house pools tips each night. Servers and bartenders earn 1 point an hour, bussers earn 0.5. Cooks and dishwashers aren't in the pool. Tipped staff are paid $2.13 an hour plus tips. Pool money is paid with the next regular paycheck.",
+    "expected": []
+  },
+  {
+    "id": "legal-3-gratuity-as-wages",
+    "legal": true,
+    "takesTipCredit": false,
+    "text": "Tips are pooled nightly and shared by hours worked: servers 1 point, hosts 0.5. Parties of 8 or more get an 18% service charge, which we pay out as wages through payroll, so it is not a tip. No manager or supervisor shares in the pool.",
+    "expected": []
+  },
+  {
+    "id": "legal-4-same-night",
+    "legal": true,
+    "takesTipCredit": true,
+    "text": "We share tips the same night through PayPal or Venmo. Servers earn 1 point an hour, bartenders 1.25, barbacks and food runners 0.5. Only staff working during service share. Servers and bartenders are paid $2.13 an hour plus tips.",
+    "expected": []
+  },
+  {
+    "id": "legal-5-morning-crew-no-credit",
+    "legal": true,
+    "takesTipCredit": false,
+    "serviceHours": { "open": "16:00", "close": "23:00" },
+    "text": "All tips are pooled. Everyone is paid at least $18 an hour, so nobody relies on tips for base pay. Servers earn 1 point an hour, cooks 0.5, and the morning prep crew 0.5 as well. The owner and general manager take nothing from the pool.",
+    "expected": []
+  },
+  {
+    "id": "illegal-1-manager-share",
+    "legal": false,
+    "takesTipCredit": false,
+    "text": "All tips go in one pool. Servers earn 1 point an hour and bussers 0.5. Our managers work hard on the floor, so managers get 5% of the pool off the top each night.",
+    "expected": ["FLSA-MGR"]
+  },
+  {
+    "id": "illegal-2-house-share",
+    "legal": false,
+    "takesTipCredit": false,
+    "text": "Tips are pooled at close and split by hours. Servers earn 1 point an hour, hosts 0.5. Before the split, the house keeps 3% of the pool to cover breakage and walkouts.",
+    "expected": ["FLSA-FULL"]
+  },
+  {
+    "id": "illegal-3-kitchen-with-credit",
+    "legal": false,
+    "takesTipCredit": true,
+    "text": "Everyone shares in tonight's tips. Servers earn 1 point an hour and cooks earn 0.5 points an hour. Servers are paid $2.13 an hour plus tips.",
+    "expected": ["FLSA-BOH"]
+  },
+  {
+    "id": "illegal-4-morning-crew-with-credit",
+    "legal": false,
+    "takesTipCredit": true,
+    "serviceHours": { "open": "16:00", "close": "23:00" },
+    "text": "Servers pay into the support pool every night. Servers earn 1 point an hour. Bussers and hosts earn 0.5, including the morning crew who set up and clean the dining room before we open at 4pm. Servers are paid $2.13 an hour plus tips.",
+    "expected": ["FLSA-CRT"]
+  },
+  {
+    "id": "illegal-5-supervisor-by-another-name",
+    "legal": false,
+    "takesTipCredit": false,
+    "text": "We pool all tips. Servers earn 1 point an hour. Shift supervisors, who write the schedule and handle hiring, earn 1.5 points an hour from the pool.",
+    "expected": ["FLSA-MGR"]
+  }
+]

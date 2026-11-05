@@ -10,7 +10,9 @@
     "lint": "eslint",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "sandbox:check": "tsx scripts/sandbox-check.ts"
+    "sandbox:check": "tsx scripts/sandbox-check.ts",
+    "eval": "tsx eval/run.ts",
+    "eval:generate": "tsx eval/generate.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.93",

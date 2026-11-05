@@ -1,0 +1,5931 @@
+[
+  {
+    "id": "clean-01",
+    "category": "clean",
+    "planted": "An ordinary night with no problems.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.5,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Everyone is paid at least $15 an hour.",
+    "staff": [
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "eli",
+        "name": "Eli Stone",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "nia",
+        "station": "server",
+        "start": "17:00",
+        "end": "01:30"
+      },
+      {
+        "staffId": "kai",
+        "station": "server",
+        "start": "17:00",
+        "end": "00:20"
+      },
+      {
+        "staffId": "rae",
+        "station": "server",
+        "start": "17:30",
+        "end": "02:00"
+      },
+      {
+        "staffId": "tess",
+        "station": "server",
+        "start": "16:30",
+        "end": "21:10"
+      },
+      {
+        "staffId": "sol",
+        "station": "server",
+        "start": "17:30",
+        "end": "02:00"
+      },
+      {
+        "staffId": "cara",
+        "station": "bartender",
+        "start": "18:00",
+        "end": "00:00"
+      },
+      {
+        "staffId": "owen",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "01:10"
+      },
+      {
+        "staffId": "pia",
+        "station": "busser",
+        "start": "18:00",
+        "end": "01:00"
+      },
+      {
+        "staffId": "fay",
+        "station": "runner",
+        "start": "16:30",
+        "end": "22:20"
+      },
+      {
+        "staffId": "ada",
+        "station": "host",
+        "start": "16:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "eli",
+        "station": "cook",
+        "start": "17:00",
+        "end": "22:40"
+      },
+      {
+        "staffId": "ben",
+        "station": "dishwasher",
+        "start": "18:00",
+        "end": "22:20"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "cash",
+        "tipCents": 8131,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "paypal",
+        "tipCents": 3584,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 4743,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 6183,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "cash",
+        "tipCents": 6293,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 2758,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 4133,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "paypal",
+        "tipCents": 3917,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 3466,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 4662,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "venmo",
+        "tipCents": 504,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-02",
+    "category": "clean",
+    "planted": "Someone titled assistant manager has no manager duties, so they can share.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.75,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.029,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.75 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 2.9% come off the top.",
+    "staff": [
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Assistant manager",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "milo",
+        "station": "server",
+        "start": "17:00",
+        "end": "01:10"
+      },
+      {
+        "staffId": "hana",
+        "station": "server",
+        "start": "16:30",
+        "end": "22:20"
+      },
+      {
+        "staffId": "owen",
+        "station": "server",
+        "start": "16:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "16:30",
+        "end": "01:00"
+      },
+      {
+        "staffId": "kai",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "21:20"
+      },
+      {
+        "staffId": "ben",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "20:20"
+      },
+      {
+        "staffId": "cara",
+        "station": "busser",
+        "start": "17:30",
+        "end": "23:00"
+      },
+      {
+        "staffId": "fay",
+        "station": "runner",
+        "start": "18:00",
+        "end": "02:00"
+      },
+      {
+        "staffId": "rae",
+        "station": "host",
+        "start": "16:00",
+        "end": "22:50"
+      },
+      {
+        "staffId": "sol",
+        "station": "cook",
+        "start": "17:30",
+        "end": "21:40"
+      },
+      {
+        "staffId": "dev",
+        "station": "dishwasher",
+        "start": "17:00",
+        "end": "22:20"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "paypal",
+        "tipCents": 1184,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 2890,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "cash",
+        "tipCents": 1959,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "venmo",
+        "tipCents": 2554,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 708,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 8679,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "venmo",
+        "tipCents": 914,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "cash",
+        "tipCents": 5950,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 9405,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "cash",
+        "tipCents": 8309,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 6588,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 373,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 3723,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 942,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 5415,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "paypal",
+        "tipCents": 7782,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "venmo",
+        "tipCents": 5850,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "paypal",
+        "tipCents": 2567,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-03",
+    "category": "clean",
+    "planted": "The kitchen shares and no tip credit is taken, which is legal.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.75,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0.5,
+        "dishwasher": 0.25
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.025,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.75 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Cooks earn 0.5 points an hour. Dishwashers earn 0.25 points an hour. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 2.5% come off the top.",
+    "staff": [
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "eli",
+        "name": "Eli Stone",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "cara",
+        "station": "server",
+        "start": "17:30",
+        "end": "00:50"
+      },
+      {
+        "staffId": "eli",
+        "station": "server",
+        "start": "17:00",
+        "end": "22:30"
+      },
+      {
+        "staffId": "gus",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:30"
+      },
+      {
+        "staffId": "ben",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:10"
+      },
+      {
+        "staffId": "rae",
+        "station": "server",
+        "start": "17:30",
+        "end": "21:40"
+      },
+      {
+        "staffId": "milo",
+        "station": "bartender",
+        "start": "18:00",
+        "end": "01:10"
+      },
+      {
+        "staffId": "ivan",
+        "station": "bartender",
+        "start": "17:00",
+        "end": "22:10"
+      },
+      {
+        "staffId": "quinn",
+        "station": "busser",
+        "start": "16:30",
+        "end": "21:50"
+      },
+      {
+        "staffId": "ada",
+        "station": "runner",
+        "start": "16:30",
+        "end": "20:50"
+      },
+      {
+        "staffId": "june",
+        "station": "host",
+        "start": "16:30",
+        "end": "22:30"
+      },
+      {
+        "staffId": "hana",
+        "station": "cook",
+        "start": "16:30",
+        "end": "00:30"
+      },
+      {
+        "staffId": "owen",
+        "station": "dishwasher",
+        "start": "16:00",
+        "end": "22:00"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 4059,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 3383,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "venmo",
+        "tipCents": 2205,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 7542,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "paypal",
+        "tipCents": 5822,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 1650,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 6453,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "paypal",
+        "tipCents": 3426,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 6967,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 387,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 893,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "cash",
+        "tipCents": 2132,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 7227,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 8210,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 2188,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 3930,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "card",
+        "tipCents": 1571,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "paypal",
+        "tipCents": 1330,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "card",
+        "tipCents": 3651,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t20",
+        "source": "venmo",
+        "tipCents": 9489,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-04",
+    "category": "clean",
+    "planted": "A morning crew shares, which is legal because no tip credit is taken.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.25,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.25 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. The morning crew shares too. Everyone is paid at least $15 an hour.",
+    "staff": [
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Busser, morning crew",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "16:00",
+        "end": "20:50"
+      },
+      {
+        "staffId": "rae",
+        "station": "server",
+        "start": "18:00",
+        "end": "00:30"
+      },
+      {
+        "staffId": "kai",
+        "station": "server",
+        "start": "17:00",
+        "end": "22:20"
+      },
+      {
+        "staffId": "ben",
+        "station": "server",
+        "start": "16:00",
+        "end": "20:30"
+      },
+      {
+        "staffId": "tess",
+        "station": "server",
+        "start": "16:00",
+        "end": "00:30"
+      },
+      {
+        "staffId": "lena",
+        "station": "bartender",
+        "start": "17:00",
+        "end": "22:40"
+      },
+      {
+        "staffId": "fay",
+        "station": "busser",
+        "start": "09:00",
+        "end": "14:00"
+      },
+      {
+        "staffId": "cara",
+        "station": "runner",
+        "start": "17:00",
+        "end": "22:10"
+      },
+      {
+        "staffId": "dev",
+        "station": "host",
+        "start": "16:00",
+        "end": "20:00"
+      },
+      {
+        "staffId": "milo",
+        "station": "cook",
+        "start": "18:00",
+        "end": "23:20"
+      },
+      {
+        "staffId": "hana",
+        "station": "dishwasher",
+        "start": "17:00",
+        "end": "21:50"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 7267,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "cash",
+        "tipCents": 8391,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "paypal",
+        "tipCents": 5470,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 1252,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 848,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 5765,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 721,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 6524,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 2765,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "paypal",
+        "tipCents": 6170,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 8579,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "paypal",
+        "tipCents": 1038,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "paypal",
+        "tipCents": 3632,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 6634,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "cash",
+        "tipCents": 1538,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 7078,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "card",
+        "tipCents": 6529,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-05",
+    "category": "clean",
+    "planted": "A server also works a kitchen shift that earns no points, so the kitchen rule must not fire.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.25,
+        "busser": 0.75,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.029,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.25 points an hour. Bussers earn 0.75 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 2.9% come off the top.",
+    "staff": [
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "18:00",
+        "end": "20:00"
+      },
+      {
+        "staffId": "ben",
+        "station": "server",
+        "start": "17:00",
+        "end": "21:10"
+      },
+      {
+        "staffId": "gus",
+        "station": "server",
+        "start": "16:30",
+        "end": "21:30"
+      },
+      {
+        "staffId": "lena",
+        "station": "server",
+        "start": "16:30",
+        "end": "00:30"
+      },
+      {
+        "staffId": "milo",
+        "station": "server",
+        "start": "18:00",
+        "end": "23:40"
+      },
+      {
+        "staffId": "fay",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "22:00"
+      },
+      {
+        "staffId": "owen",
+        "station": "busser",
+        "start": "16:30",
+        "end": "20:50"
+      },
+      {
+        "staffId": "pia",
+        "station": "runner",
+        "start": "16:00",
+        "end": "00:10"
+      },
+      {
+        "staffId": "sol",
+        "station": "host",
+        "start": "17:30",
+        "end": "22:00"
+      },
+      {
+        "staffId": "june",
+        "station": "cook",
+        "start": "16:00",
+        "end": "22:40"
+      },
+      {
+        "staffId": "nia",
+        "station": "dishwasher",
+        "start": "17:00",
+        "end": "00:00"
+      },
+      {
+        "staffId": "ada",
+        "station": "bartender",
+        "start": "20:00",
+        "end": "01:10"
+      },
+      {
+        "staffId": "ada",
+        "station": "cook",
+        "start": "10:00",
+        "end": "14:00"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "venmo",
+        "tipCents": 6462,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "venmo",
+        "tipCents": 9392,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 8835,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "paypal",
+        "tipCents": 8371,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 7888,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "cash",
+        "tipCents": 1910,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 1736,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "venmo",
+        "tipCents": 8030,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 7135,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 1910,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-06",
+    "category": "clean",
+    "planted": "An ordinary night with no problems.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.25,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.25 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Everyone is paid at least $15 an hour.",
+    "staff": [
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "dev",
+        "station": "server",
+        "start": "17:00",
+        "end": "19:00"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "16:30",
+        "end": "21:30"
+      },
+      {
+        "staffId": "june",
+        "station": "server",
+        "start": "17:00",
+        "end": "21:30"
+      },
+      {
+        "staffId": "pia",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "22:50"
+      },
+      {
+        "staffId": "ivan",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "20:30"
+      },
+      {
+        "staffId": "ben",
+        "station": "busser",
+        "start": "17:00",
+        "end": "01:00"
+      },
+      {
+        "staffId": "rae",
+        "station": "runner",
+        "start": "17:30",
+        "end": "22:20"
+      },
+      {
+        "staffId": "nia",
+        "station": "host",
+        "start": "18:00",
+        "end": "23:00"
+      },
+      {
+        "staffId": "gus",
+        "station": "cook",
+        "start": "17:00",
+        "end": "00:10"
+      },
+      {
+        "staffId": "fay",
+        "station": "dishwasher",
+        "start": "16:30",
+        "end": "00:10"
+      },
+      {
+        "staffId": "dev",
+        "station": "bartender",
+        "start": "19:00",
+        "end": "22:00"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "cash",
+        "tipCents": 2108,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "paypal",
+        "tipCents": 8182,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 4724,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "venmo",
+        "tipCents": 4082,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 4275,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "paypal",
+        "tipCents": 4397,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 1497,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 2539,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 3023,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 9399,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 2631,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 7377,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "cash",
+        "tipCents": 7910,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "venmo",
+        "tipCents": 8507,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 5855,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "cash",
+        "tipCents": 9389,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "card",
+        "tipCents": 6597,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "paypal",
+        "tipCents": 3575,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-07",
+    "category": "clean",
+    "planted": "Someone titled assistant manager has no manager duties, so they can share.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips.",
+    "staff": [
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Assistant manager",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "june",
+        "station": "server",
+        "start": "17:00",
+        "end": "23:40"
+      },
+      {
+        "staffId": "milo",
+        "station": "server",
+        "start": "18:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "rae",
+        "station": "server",
+        "start": "17:00",
+        "end": "01:20"
+      },
+      {
+        "staffId": "fay",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "21:20"
+      },
+      {
+        "staffId": "hana",
+        "station": "bartender",
+        "start": "17:00",
+        "end": "22:00"
+      },
+      {
+        "staffId": "ben",
+        "station": "busser",
+        "start": "18:00",
+        "end": "02:00"
+      },
+      {
+        "staffId": "ada",
+        "station": "runner",
+        "start": "16:30",
+        "end": "20:40"
+      },
+      {
+        "staffId": "quinn",
+        "station": "host",
+        "start": "16:30",
+        "end": "00:40"
+      },
+      {
+        "staffId": "kai",
+        "station": "cook",
+        "start": "16:30",
+        "end": "20:50"
+      },
+      {
+        "staffId": "sol",
+        "station": "dishwasher",
+        "start": "17:30",
+        "end": "23:30"
+      },
+      {
+        "staffId": "pia",
+        "station": "barback",
+        "start": "18:00",
+        "end": "22:30"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "paypal",
+        "tipCents": 2197,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "cash",
+        "tipCents": 5239,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 9355,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 5705,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "cash",
+        "tipCents": 7004,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "cash",
+        "tipCents": 8129,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "paypal",
+        "tipCents": 5975,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 8111,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 5228,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "cash",
+        "tipCents": 1020,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 6166,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 9030,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 9199,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 564,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 3809,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 9381,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-08",
+    "category": "clean",
+    "planted": "The kitchen shares and no tip credit is taken, which is legal.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.75,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0.5,
+        "dishwasher": 0.25
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.03,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.75 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Cooks earn 0.5 points an hour. Dishwashers earn 0.25 points an hour. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 3.0% come off the top.",
+    "staff": [
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "fay",
+        "station": "server",
+        "start": "17:00",
+        "end": "22:20"
+      },
+      {
+        "staffId": "lena",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:10"
+      },
+      {
+        "staffId": "june",
+        "station": "server",
+        "start": "16:00",
+        "end": "22:20"
+      },
+      {
+        "staffId": "kai",
+        "station": "server",
+        "start": "18:00",
+        "end": "00:30"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "16:30",
+        "end": "20:40"
+      },
+      {
+        "staffId": "ben",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "20:50"
+      },
+      {
+        "staffId": "tess",
+        "station": "bartender",
+        "start": "17:00",
+        "end": "23:30"
+      },
+      {
+        "staffId": "cara",
+        "station": "busser",
+        "start": "17:30",
+        "end": "21:50"
+      },
+      {
+        "staffId": "nia",
+        "station": "runner",
+        "start": "16:30",
+        "end": "23:00"
+      },
+      {
+        "staffId": "sol",
+        "station": "host",
+        "start": "17:30",
+        "end": "22:10"
+      },
+      {
+        "staffId": "quinn",
+        "station": "cook",
+        "start": "16:00",
+        "end": "22:30"
+      },
+      {
+        "staffId": "pia",
+        "station": "dishwasher",
+        "start": "16:30",
+        "end": "23:20"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 4098,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "paypal",
+        "tipCents": 3273,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "venmo",
+        "tipCents": 8638,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 9322,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "paypal",
+        "tipCents": 9261,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "paypal",
+        "tipCents": 4423,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 6516,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "cash",
+        "tipCents": 6643,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "venmo",
+        "tipCents": 4749,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "cash",
+        "tipCents": 3154,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "paypal",
+        "tipCents": 1296,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 3920,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "venmo",
+        "tipCents": 7842,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "cash",
+        "tipCents": 7342,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 3279,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "cash",
+        "tipCents": 4233,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "paypal",
+        "tipCents": 7183,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "card",
+        "tipCents": 4801,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "paypal",
+        "tipCents": 3250,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t20",
+        "source": "card",
+        "tipCents": 1427,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t21",
+        "source": "paypal",
+        "tipCents": 5407,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t22",
+        "source": "card",
+        "tipCents": 7672,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-09",
+    "category": "clean",
+    "planted": "A morning crew shares, which is legal because no tip credit is taken.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.03,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. The morning crew shares too. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 3.0% come off the top.",
+    "staff": [
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Busser, morning crew",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "18:00",
+        "end": "02:20"
+      },
+      {
+        "staffId": "ben",
+        "station": "server",
+        "start": "16:00",
+        "end": "20:40"
+      },
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "17:00",
+        "end": "23:10"
+      },
+      {
+        "staffId": "lena",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "20:40"
+      },
+      {
+        "staffId": "owen",
+        "station": "bartender",
+        "start": "18:00",
+        "end": "00:20"
+      },
+      {
+        "staffId": "kai",
+        "station": "busser",
+        "start": "09:00",
+        "end": "14:00"
+      },
+      {
+        "staffId": "tess",
+        "station": "runner",
+        "start": "18:00",
+        "end": "01:00"
+      },
+      {
+        "staffId": "gus",
+        "station": "host",
+        "start": "16:00",
+        "end": "20:20"
+      },
+      {
+        "staffId": "sol",
+        "station": "cook",
+        "start": "18:00",
+        "end": "23:20"
+      },
+      {
+        "staffId": "ivan",
+        "station": "dishwasher",
+        "start": "17:00",
+        "end": "21:30"
+      },
+      {
+        "staffId": "nia",
+        "station": "barback",
+        "start": "18:00",
+        "end": "00:40"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "paypal",
+        "tipCents": 6818,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 6613,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "cash",
+        "tipCents": 5399,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "paypal",
+        "tipCents": 745,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 436,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 8467,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "cash",
+        "tipCents": 6651,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 4599,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "paypal",
+        "tipCents": 6886,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "venmo",
+        "tipCents": 3769,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "paypal",
+        "tipCents": 7298,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 3818,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "paypal",
+        "tipCents": 5732,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 6392,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 5214,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "cash",
+        "tipCents": 8815,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "card",
+        "tipCents": 9199,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "venmo",
+        "tipCents": 7584,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "venmo",
+        "tipCents": 411,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t20",
+        "source": "paypal",
+        "tipCents": 981,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t21",
+        "source": "card",
+        "tipCents": 4107,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-10",
+    "category": "clean",
+    "planted": "A server also works a kitchen shift that earns no points, so the kitchen rule must not fire.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.25,
+        "busser": 0.75,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.029,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.25 points an hour. Bussers earn 0.75 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 2.9% come off the top.",
+    "staff": [
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "tess",
+        "station": "server",
+        "start": "17:00",
+        "end": "19:00"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "18:00",
+        "end": "00:30"
+      },
+      {
+        "staffId": "owen",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:40"
+      },
+      {
+        "staffId": "ben",
+        "station": "server",
+        "start": "17:00",
+        "end": "01:20"
+      },
+      {
+        "staffId": "rae",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "21:20"
+      },
+      {
+        "staffId": "sol",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "23:00"
+      },
+      {
+        "staffId": "hana",
+        "station": "busser",
+        "start": "16:00",
+        "end": "22:50"
+      },
+      {
+        "staffId": "milo",
+        "station": "runner",
+        "start": "18:00",
+        "end": "23:30"
+      },
+      {
+        "staffId": "dev",
+        "station": "host",
+        "start": "18:00",
+        "end": "22:50"
+      },
+      {
+        "staffId": "june",
+        "station": "cook",
+        "start": "18:00",
+        "end": "02:20"
+      },
+      {
+        "staffId": "quinn",
+        "station": "dishwasher",
+        "start": "18:00",
+        "end": "23:30"
+      },
+      {
+        "staffId": "tess",
+        "station": "bartender",
+        "start": "19:00",
+        "end": "23:30"
+      },
+      {
+        "staffId": "tess",
+        "station": "cook",
+        "start": "10:00",
+        "end": "14:00"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 4865,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 1500,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "paypal",
+        "tipCents": 1037,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "cash",
+        "tipCents": 7188,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 6956,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "paypal",
+        "tipCents": 1400,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 2749,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "venmo",
+        "tipCents": 364,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 3294,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "paypal",
+        "tipCents": 9337,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 6152,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "venmo",
+        "tipCents": 8711,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "venmo",
+        "tipCents": 9018,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-11",
+    "category": "clean",
+    "planted": "An ordinary night with no problems.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.25,
+        "busser": 0.5,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.03,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.25 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 3.0% come off the top.",
+    "staff": [
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "dev",
+        "station": "server",
+        "start": "16:00",
+        "end": "22:00"
+      },
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "18:00",
+        "end": "00:00"
+      },
+      {
+        "staffId": "tess",
+        "station": "server",
+        "start": "16:30",
+        "end": "21:30"
+      },
+      {
+        "staffId": "quinn",
+        "station": "server",
+        "start": "17:30",
+        "end": "23:50"
+      },
+      {
+        "staffId": "ada",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "20:20"
+      },
+      {
+        "staffId": "june",
+        "station": "busser",
+        "start": "17:30",
+        "end": "23:00"
+      },
+      {
+        "staffId": "rae",
+        "station": "runner",
+        "start": "17:00",
+        "end": "22:00"
+      },
+      {
+        "staffId": "hana",
+        "station": "host",
+        "start": "16:30",
+        "end": "23:20"
+      },
+      {
+        "staffId": "lena",
+        "station": "cook",
+        "start": "18:00",
+        "end": "23:30"
+      },
+      {
+        "staffId": "cara",
+        "station": "dishwasher",
+        "start": "17:30",
+        "end": "22:10"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "cash",
+        "tipCents": 3715,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 1351,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 2199,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 3776,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 1116,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 3918,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 6025,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 6998,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "cash",
+        "tipCents": 2941,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "venmo",
+        "tipCents": 9349,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 1690,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 791,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-12",
+    "category": "clean",
+    "planted": "Someone titled assistant manager has no manager duties, so they can share.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.03,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 3.0% come off the top.",
+    "staff": [
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Assistant manager",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "milo",
+        "station": "server",
+        "start": "16:00",
+        "end": "18:00"
+      },
+      {
+        "staffId": "owen",
+        "station": "server",
+        "start": "17:30",
+        "end": "00:00"
+      },
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "17:00",
+        "end": "00:40"
+      },
+      {
+        "staffId": "kai",
+        "station": "server",
+        "start": "16:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "nia",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "21:10"
+      },
+      {
+        "staffId": "ada",
+        "station": "busser",
+        "start": "17:30",
+        "end": "00:00"
+      },
+      {
+        "staffId": "lena",
+        "station": "runner",
+        "start": "16:00",
+        "end": "21:40"
+      },
+      {
+        "staffId": "tess",
+        "station": "host",
+        "start": "18:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "ben",
+        "station": "cook",
+        "start": "16:30",
+        "end": "00:40"
+      },
+      {
+        "staffId": "hana",
+        "station": "dishwasher",
+        "start": "16:00",
+        "end": "20:10"
+      },
+      {
+        "staffId": "fay",
+        "station": "barback",
+        "start": "17:00",
+        "end": "22:10"
+      },
+      {
+        "staffId": "milo",
+        "station": "bartender",
+        "start": "18:00",
+        "end": "20:50"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "venmo",
+        "tipCents": 2824,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 8206,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 1870,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "paypal",
+        "tipCents": 1608,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "paypal",
+        "tipCents": 1000,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "paypal",
+        "tipCents": 2376,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 2551,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "cash",
+        "tipCents": 7350,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "venmo",
+        "tipCents": 3927,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 8783,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 8550,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "venmo",
+        "tipCents": 7659,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 4232,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "cash",
+        "tipCents": 1815,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 9260,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 5712,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "venmo",
+        "tipCents": 1414,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "paypal",
+        "tipCents": 3992,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "card",
+        "tipCents": 1098,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t20",
+        "source": "paypal",
+        "tipCents": 3870,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-13",
+    "category": "clean",
+    "planted": "The kitchen shares and no tip credit is taken, which is legal.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.75,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0.5,
+        "dishwasher": 0.25
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.029,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.75 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Cooks earn 0.5 points an hour. Dishwashers earn 0.25 points an hour. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 2.9% come off the top.",
+    "staff": [
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "rae",
+        "name": "Rae Dunn",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "17:30",
+        "end": "19:30"
+      },
+      {
+        "staffId": "hana",
+        "station": "server",
+        "start": "17:30",
+        "end": "21:30"
+      },
+      {
+        "staffId": "nia",
+        "station": "server",
+        "start": "16:30",
+        "end": "00:50"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "18:00",
+        "end": "02:10"
+      },
+      {
+        "staffId": "tess",
+        "station": "bartender",
+        "start": "18:00",
+        "end": "01:40"
+      },
+      {
+        "staffId": "owen",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "23:10"
+      },
+      {
+        "staffId": "rae",
+        "station": "busser",
+        "start": "18:00",
+        "end": "01:00"
+      },
+      {
+        "staffId": "lena",
+        "station": "runner",
+        "start": "17:30",
+        "end": "21:40"
+      },
+      {
+        "staffId": "ben",
+        "station": "host",
+        "start": "18:00",
+        "end": "00:00"
+      },
+      {
+        "staffId": "cara",
+        "station": "cook",
+        "start": "18:00",
+        "end": "22:30"
+      },
+      {
+        "staffId": "kai",
+        "station": "dishwasher",
+        "start": "17:00",
+        "end": "21:30"
+      },
+      {
+        "staffId": "ivan",
+        "station": "barback",
+        "start": "16:00",
+        "end": "22:40"
+      },
+      {
+        "staffId": "pia",
+        "station": "bartender",
+        "start": "19:30",
+        "end": "00:20"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 2451,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 7559,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "cash",
+        "tipCents": 8729,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 5042,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "venmo",
+        "tipCents": 4809,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "paypal",
+        "tipCents": 3634,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "cash",
+        "tipCents": 9011,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 4950,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "venmo",
+        "tipCents": 531,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "cash",
+        "tipCents": 6790,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 8710,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-14",
+    "category": "clean",
+    "planted": "A morning crew shares, which is legal because no tip credit is taken.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.5,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.025,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.5 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. The morning crew shares too. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 2.5% come off the top.",
+    "staff": [
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "eli",
+        "name": "Eli Stone",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Busser, morning crew",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "tess",
+        "station": "server",
+        "start": "16:00",
+        "end": "20:30"
+      },
+      {
+        "staffId": "eli",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:50"
+      },
+      {
+        "staffId": "ivan",
+        "station": "server",
+        "start": "17:00",
+        "end": "21:40"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "17:30",
+        "end": "01:00"
+      },
+      {
+        "staffId": "nia",
+        "station": "server",
+        "start": "17:30",
+        "end": "00:30"
+      },
+      {
+        "staffId": "owen",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "20:00"
+      },
+      {
+        "staffId": "quinn",
+        "station": "busser",
+        "start": "09:00",
+        "end": "14:00"
+      },
+      {
+        "staffId": "ben",
+        "station": "runner",
+        "start": "16:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "cara",
+        "station": "host",
+        "start": "17:30",
+        "end": "01:20"
+      },
+      {
+        "staffId": "gus",
+        "station": "cook",
+        "start": "16:30",
+        "end": "00:20"
+      },
+      {
+        "staffId": "dev",
+        "station": "dishwasher",
+        "start": "18:00",
+        "end": "22:20"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 3672,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 7302,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "cash",
+        "tipCents": 2047,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "paypal",
+        "tipCents": 7480,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 3234,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 7894,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 2576,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 8756,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 9368,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 9283,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "card",
+        "tipCents": 7862,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 4241,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "cash",
+        "tipCents": 4122,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 9325,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "venmo",
+        "tipCents": 6713,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 1425,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "card",
+        "tipCents": 2750,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "paypal",
+        "tipCents": 8492,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "cash",
+        "tipCents": 993,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-15",
+    "category": "clean",
+    "planted": "A server also works a kitchen shift that earns no points, so the kitchen rule must not fire.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.5,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.025,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.5 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 2.5% come off the top.",
+    "staff": [
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "nia",
+        "station": "server",
+        "start": "17:30",
+        "end": "19:30"
+      },
+      {
+        "staffId": "quinn",
+        "station": "server",
+        "start": "17:30",
+        "end": "00:00"
+      },
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "16:00",
+        "end": "20:40"
+      },
+      {
+        "staffId": "hana",
+        "station": "server",
+        "start": "17:00",
+        "end": "23:10"
+      },
+      {
+        "staffId": "tess",
+        "station": "bartender",
+        "start": "16:00",
+        "end": "23:40"
+      },
+      {
+        "staffId": "owen",
+        "station": "busser",
+        "start": "16:30",
+        "end": "23:30"
+      },
+      {
+        "staffId": "ben",
+        "station": "runner",
+        "start": "17:00",
+        "end": "21:10"
+      },
+      {
+        "staffId": "lena",
+        "station": "host",
+        "start": "16:00",
+        "end": "20:00"
+      },
+      {
+        "staffId": "ada",
+        "station": "cook",
+        "start": "17:30",
+        "end": "23:20"
+      },
+      {
+        "staffId": "kai",
+        "station": "dishwasher",
+        "start": "17:30",
+        "end": "01:20"
+      },
+      {
+        "staffId": "dev",
+        "station": "barback",
+        "start": "18:00",
+        "end": "02:10"
+      },
+      {
+        "staffId": "nia",
+        "station": "bartender",
+        "start": "19:30",
+        "end": "01:00"
+      },
+      {
+        "staffId": "nia",
+        "station": "cook",
+        "start": "10:00",
+        "end": "14:00"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "venmo",
+        "tipCents": 1139,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 2911,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "paypal",
+        "tipCents": 6259,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 648,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "cash",
+        "tipCents": 5403,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 4925,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 4134,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "card",
+        "tipCents": 3714,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "paypal",
+        "tipCents": 3182,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 595,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 3064,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "venmo",
+        "tipCents": 3382,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 7811,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 5269,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 9103,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-16",
+    "category": "clean",
+    "planted": "An ordinary night with no problems.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.029,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 2.9% come off the top.",
+    "staff": [
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "milo",
+        "name": "Milo Reyes",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "sol",
+        "name": "Sol Vega",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "eli",
+        "name": "Eli Stone",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "gus",
+        "station": "server",
+        "start": "17:00",
+        "end": "22:20"
+      },
+      {
+        "staffId": "nia",
+        "station": "server",
+        "start": "18:00",
+        "end": "22:10"
+      },
+      {
+        "staffId": "lena",
+        "station": "server",
+        "start": "18:00",
+        "end": "01:10"
+      },
+      {
+        "staffId": "dev",
+        "station": "server",
+        "start": "16:30",
+        "end": "22:30"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:30"
+      },
+      {
+        "staffId": "cara",
+        "station": "bartender",
+        "start": "18:00",
+        "end": "22:00"
+      },
+      {
+        "staffId": "milo",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "22:00"
+      },
+      {
+        "staffId": "sol",
+        "station": "busser",
+        "start": "18:00",
+        "end": "02:30"
+      },
+      {
+        "staffId": "ben",
+        "station": "runner",
+        "start": "17:00",
+        "end": "22:40"
+      },
+      {
+        "staffId": "owen",
+        "station": "host",
+        "start": "18:00",
+        "end": "01:20"
+      },
+      {
+        "staffId": "kai",
+        "station": "cook",
+        "start": "18:00",
+        "end": "22:20"
+      },
+      {
+        "staffId": "eli",
+        "station": "dishwasher",
+        "start": "16:30",
+        "end": "00:20"
+      },
+      {
+        "staffId": "pia",
+        "station": "barback",
+        "start": "16:30",
+        "end": "22:10"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 7089,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "paypal",
+        "tipCents": 2085,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 910,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "venmo",
+        "tipCents": 3470,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "paypal",
+        "tipCents": 1725,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "cash",
+        "tipCents": 1447,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 1603,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "venmo",
+        "tipCents": 1539,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "card",
+        "tipCents": 7243,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 5199,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 2742,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 9247,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 4575,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 3747,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "card",
+        "tipCents": 302,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 4392,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "cash",
+        "tipCents": 3165,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "card",
+        "tipCents": 9229,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "venmo",
+        "tipCents": 3592,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t20",
+        "source": "cash",
+        "tipCents": 6427,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t21",
+        "source": "venmo",
+        "tipCents": 4767,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t22",
+        "source": "cash",
+        "tipCents": 3273,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t23",
+        "source": "card",
+        "tipCents": 3301,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-17",
+    "category": "clean",
+    "planted": "Someone titled assistant manager has no manager duties, so they can share.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.75,
+        "runner": 0.75,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.75 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips.",
+    "staff": [
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Assistant manager",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "nia",
+        "name": "Nia Grant",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "fay",
+        "station": "server",
+        "start": "17:30",
+        "end": "01:40"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "17:30",
+        "end": "21:40"
+      },
+      {
+        "staffId": "quinn",
+        "station": "server",
+        "start": "16:30",
+        "end": "23:50"
+      },
+      {
+        "staffId": "lena",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "22:30"
+      },
+      {
+        "staffId": "gus",
+        "station": "busser",
+        "start": "16:30",
+        "end": "21:50"
+      },
+      {
+        "staffId": "kai",
+        "station": "runner",
+        "start": "17:30",
+        "end": "00:30"
+      },
+      {
+        "staffId": "nia",
+        "station": "host",
+        "start": "18:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "hana",
+        "station": "cook",
+        "start": "17:00",
+        "end": "22:10"
+      },
+      {
+        "staffId": "ben",
+        "station": "dishwasher",
+        "start": "16:30",
+        "end": "00:20"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "paypal",
+        "tipCents": 5120,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "card",
+        "tipCents": 5911,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 9364,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "cash",
+        "tipCents": 3642,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 7377,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 7670,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 8171,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "paypal",
+        "tipCents": 8403,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "cash",
+        "tipCents": 3468,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 4413,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 7595,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "card",
+        "tipCents": 6062,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "cash",
+        "tipCents": 2372,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "venmo",
+        "tipCents": 6003,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "venmo",
+        "tipCents": 8718,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 4641,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-18",
+    "category": "clean",
+    "planted": "The kitchen shares and no tip credit is taken, which is legal.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.75,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0.5,
+        "dishwasher": 0.25
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.029,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.75 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Cooks earn 0.5 points an hour. Dishwashers earn 0.25 points an hour. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 2.9% come off the top.",
+    "staff": [
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "june",
+        "name": "June Park",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Barback",
+        "role": "barback",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "18:00",
+        "end": "20:00"
+      },
+      {
+        "staffId": "fay",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:40"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "16:00",
+        "end": "20:40"
+      },
+      {
+        "staffId": "ben",
+        "station": "server",
+        "start": "17:00",
+        "end": "00:10"
+      },
+      {
+        "staffId": "tess",
+        "station": "server",
+        "start": "18:00",
+        "end": "00:50"
+      },
+      {
+        "staffId": "cara",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "21:40"
+      },
+      {
+        "staffId": "kai",
+        "station": "busser",
+        "start": "17:30",
+        "end": "00:10"
+      },
+      {
+        "staffId": "hana",
+        "station": "runner",
+        "start": "18:00",
+        "end": "01:00"
+      },
+      {
+        "staffId": "dev",
+        "station": "host",
+        "start": "17:00",
+        "end": "22:30"
+      },
+      {
+        "staffId": "ivan",
+        "station": "cook",
+        "start": "16:30",
+        "end": "21:10"
+      },
+      {
+        "staffId": "june",
+        "station": "dishwasher",
+        "start": "16:30",
+        "end": "21:30"
+      },
+      {
+        "staffId": "gus",
+        "station": "barback",
+        "start": "18:00",
+        "end": "23:20"
+      },
+      {
+        "staffId": "pia",
+        "station": "bartender",
+        "start": "20:00",
+        "end": "22:40"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 2880,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "cash",
+        "tipCents": 4591,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 802,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "cash",
+        "tipCents": 5541,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 3396,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 2109,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "card",
+        "tipCents": 3542,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "paypal",
+        "tipCents": 5889,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "cash",
+        "tipCents": 4463,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 2574,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "cash",
+        "tipCents": 1973,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "paypal",
+        "tipCents": 5130,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "card",
+        "tipCents": 7107,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 2793,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t15",
+        "source": "cash",
+        "tipCents": 2581,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t16",
+        "source": "card",
+        "tipCents": 3282,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t17",
+        "source": "venmo",
+        "tipCents": 7598,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t18",
+        "source": "cash",
+        "tipCents": 6032,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t19",
+        "source": "cash",
+        "tipCents": 8149,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t20",
+        "source": "card",
+        "tipCents": 8590,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t21",
+        "source": "cash",
+        "tipCents": 6167,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t22",
+        "source": "cash",
+        "tipCents": 2315,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t23",
+        "source": "venmo",
+        "tipCents": 8043,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t24",
+        "source": "card",
+        "tipCents": 6481,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-19",
+    "category": "clean",
+    "planted": "A morning crew shares, which is legal because no tip credit is taken.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1.5,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": false,
+      "cardFeeRate": 0.025,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. The morning crew shares too. Everyone is paid at least $15 an hour. Card, PayPal and Venmo fees of 2.5% come off the top.",
+    "staff": [
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "ada",
+        "name": "Ada Morris",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "eli",
+        "name": "Eli Stone",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Busser, morning crew",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ben",
+        "name": "Ben Ortiz",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "lena",
+        "name": "Lena Voss",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "tess",
+        "name": "Tess Boyd",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "cara",
+        "station": "server",
+        "start": "16:30",
+        "end": "18:30"
+      },
+      {
+        "staffId": "ivan",
+        "station": "server",
+        "start": "18:00",
+        "end": "22:50"
+      },
+      {
+        "staffId": "ada",
+        "station": "server",
+        "start": "17:00",
+        "end": "23:00"
+      },
+      {
+        "staffId": "eli",
+        "station": "bartender",
+        "start": "17:30",
+        "end": "23:20"
+      },
+      {
+        "staffId": "gus",
+        "station": "bartender",
+        "start": "17:00",
+        "end": "00:00"
+      },
+      {
+        "staffId": "pia",
+        "station": "busser",
+        "start": "09:00",
+        "end": "14:00"
+      },
+      {
+        "staffId": "ben",
+        "station": "runner",
+        "start": "18:00",
+        "end": "02:00"
+      },
+      {
+        "staffId": "fay",
+        "station": "host",
+        "start": "17:00",
+        "end": "22:20"
+      },
+      {
+        "staffId": "lena",
+        "station": "cook",
+        "start": "18:00",
+        "end": "01:00"
+      },
+      {
+        "staffId": "tess",
+        "station": "dishwasher",
+        "start": "16:00",
+        "end": "21:40"
+      },
+      {
+        "staffId": "cara",
+        "station": "bartender",
+        "start": "18:30",
+        "end": "23:40"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "card",
+        "tipCents": 6934,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "venmo",
+        "tipCents": 4079,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 3768,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 8257,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 9350,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "card",
+        "tipCents": 4692,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "cash",
+        "tipCents": 1108,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "venmo",
+        "tipCents": 9035,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "venmo",
+        "tipCents": 8510,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 6357,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "paypal",
+        "tipCents": 2870,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "cash",
+        "tipCents": 8422,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  },
+  {
+    "id": "clean-20",
+    "category": "clean",
+    "planted": "A server also works a kitchen shift that earns no points, so the kitchen rule must not fire.",
+    "policy": {
+      "pointsPerHour": {
+        "server": 1,
+        "bartender": 1,
+        "busser": 0.5,
+        "runner": 0.5,
+        "host": 0.5,
+        "barback": 0.5,
+        "cook": 0,
+        "dishwasher": 0
+      },
+      "takesTipCredit": true,
+      "cardFeeRate": 0.03,
+      "serviceHours": {
+        "open": "16:00",
+        "close": "23:30"
+      }
+    },
+    "policyText": "All tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 3.0% come off the top.",
+    "staff": [
+      {
+        "id": "kai",
+        "name": "Kai Nolan",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "pia",
+        "name": "Pia Marsh",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "hana",
+        "name": "Hana Sato",
+        "title": "Server",
+        "role": "server",
+        "managerDuties": false
+      },
+      {
+        "id": "quinn",
+        "name": "Quinn Adler",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "fay",
+        "name": "Fay Wong",
+        "title": "Bartender",
+        "role": "bartender",
+        "managerDuties": false
+      },
+      {
+        "id": "dev",
+        "name": "Dev Rao",
+        "title": "Busser",
+        "role": "busser",
+        "managerDuties": false
+      },
+      {
+        "id": "ivan",
+        "name": "Ivan Cole",
+        "title": "Food runner",
+        "role": "runner",
+        "managerDuties": false
+      },
+      {
+        "id": "gus",
+        "name": "Gus Hale",
+        "title": "Host",
+        "role": "host",
+        "managerDuties": false
+      },
+      {
+        "id": "owen",
+        "name": "Owen Fitch",
+        "title": "Line cook",
+        "role": "cook",
+        "managerDuties": false
+      },
+      {
+        "id": "cara",
+        "name": "Cara Lund",
+        "title": "Dishwasher",
+        "role": "dishwasher",
+        "managerDuties": false
+      }
+    ],
+    "shifts": [
+      {
+        "staffId": "kai",
+        "station": "server",
+        "start": "18:00",
+        "end": "23:10"
+      },
+      {
+        "staffId": "pia",
+        "station": "server",
+        "start": "17:30",
+        "end": "22:40"
+      },
+      {
+        "staffId": "hana",
+        "station": "server",
+        "start": "18:00",
+        "end": "00:10"
+      },
+      {
+        "staffId": "quinn",
+        "station": "bartender",
+        "start": "16:30",
+        "end": "22:30"
+      },
+      {
+        "staffId": "fay",
+        "station": "bartender",
+        "start": "17:00",
+        "end": "00:40"
+      },
+      {
+        "staffId": "dev",
+        "station": "busser",
+        "start": "17:00",
+        "end": "23:50"
+      },
+      {
+        "staffId": "ivan",
+        "station": "runner",
+        "start": "17:30",
+        "end": "21:40"
+      },
+      {
+        "staffId": "gus",
+        "station": "host",
+        "start": "16:30",
+        "end": "21:30"
+      },
+      {
+        "staffId": "owen",
+        "station": "cook",
+        "start": "16:30",
+        "end": "00:40"
+      },
+      {
+        "staffId": "cara",
+        "station": "dishwasher",
+        "start": "16:00",
+        "end": "22:40"
+      },
+      {
+        "staffId": "kai",
+        "station": "cook",
+        "start": "10:00",
+        "end": "14:00"
+      }
+    ],
+    "lines": [
+      {
+        "id": "t1",
+        "source": "paypal",
+        "tipCents": 4665,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t2",
+        "source": "cash",
+        "tipCents": 8153,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t3",
+        "source": "card",
+        "tipCents": 646,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t4",
+        "source": "card",
+        "tipCents": 2421,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t5",
+        "source": "card",
+        "tipCents": 4316,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t6",
+        "source": "venmo",
+        "tipCents": 7259,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t7",
+        "source": "venmo",
+        "tipCents": 4557,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t8",
+        "source": "venmo",
+        "tipCents": 2597,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t9",
+        "source": "paypal",
+        "tipCents": 1208,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t10",
+        "source": "card",
+        "tipCents": 8287,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t11",
+        "source": "venmo",
+        "tipCents": 8862,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t12",
+        "source": "venmo",
+        "tipCents": 1156,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t13",
+        "source": "cash",
+        "tipCents": 4183,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      },
+      {
+        "id": "t14",
+        "source": "card",
+        "tipCents": 3578,
+        "autoGratuityCents": 0,
+        "guestCouldChangeAutoGratuity": false
+      }
+    ],
+    "truth": {
+      "violations": []
+    }
+  }
+]

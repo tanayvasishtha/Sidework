@@ -1,9 +1,15 @@
 import { shiftMinutes } from "./pool";
 import type { Allocation, Policy, Shift } from "./types";
 
-/** Card fee on card tips, rounded to the nearest cent. */
+/** Card fee on card tips, rounded to the nearest cent. Worked in whole numbers, as all money is here. */
 export function cardFeeCents(cardTipCents: number, rate: number): number {
-  return Math.round(cardTipCents * rate);
+  const millionths = BigInt(Math.round(rate * 1_000_000));
+  return Number((BigInt(cardTipCents) * millionths * 2n + 1_000_000n) / 2_000_000n);
+}
+
+/** Minutes times points per hour, in thousandths of a point, so shares never depend on float rounding. */
+export function pointUnits(minutes: number, pointsPerHour: number): number {
+  return Math.round(minutes * pointsPerHour * 1000);
 }
 
 /**
@@ -17,40 +23,39 @@ export function splitPool(
   policy: Policy,
   excludedStaffIds: ReadonlySet<string> = new Set(),
 ): Allocation[] {
-  const byStaff = new Map<string, { minutes: number; points: number }>();
+  const byStaff = new Map<string, { minutes: number; units: number }>();
   for (const shift of shifts) {
     if (excludedStaffIds.has(shift.staffId)) continue;
     const rate = policy.pointsPerHour[shift.station] ?? 0;
     if (rate <= 0) continue;
     const minutes = shiftMinutes(shift);
-    const entry = byStaff.get(shift.staffId) ?? { minutes: 0, points: 0 };
+    const entry = byStaff.get(shift.staffId) ?? { minutes: 0, units: 0 };
     entry.minutes += minutes;
-    entry.points += (minutes / 60) * rate;
+    entry.units += pointUnits(minutes, rate);
     byStaff.set(shift.staffId, entry);
   }
   return allocatePool(poolCents, [...byStaff.entries()].map(([staffId, e]) => ({ staffId, ...e })));
 }
 
 /** Turns each person's points into cents. Shared by the engine and the agent's check, so they can only differ on the inputs. */
-export function allocatePool(poolCents: number, entries: { staffId: string; minutes: number; points: number }[]): Allocation[] {
+export function allocatePool(poolCents: number, entries: { staffId: string; minutes: number; units: number }[]): Allocation[] {
   if (!Number.isInteger(poolCents) || poolCents < 0) {
     throw new Error(`Pool must be a whole number of cents, got ${poolCents}.`);
   }
-  const earning = entries.filter((e) => e.points > 0);
-  const totalPoints = earning.reduce((sum, e) => sum + e.points, 0);
-  if (totalPoints === 0) return [];
+  const earning = entries.filter((e) => e.units > 0);
+  const totalUnits = BigInt(earning.reduce((sum, e) => sum + e.units, 0));
+  if (totalUnits === 0n) return [];
 
   const allocations: Allocation[] = earning.map((e) => ({
     staffId: e.staffId,
     minutes: e.minutes,
-    points: round2(e.points),
-    cents: Math.floor((poolCents * e.points) / totalPoints),
+    points: round2(e.units / 60_000),
+    cents: Number((BigInt(poolCents) * BigInt(e.units)) / totalUnits),
     remainderCents: 0,
   }));
 
   const leftover = poolCents - allocations.reduce((sum, a) => sum + a.cents, 0);
-  // Usually a few cents up. Float rounding can also land it a cent over, so this settles either way.
-  if (leftover !== 0) {
+  if (leftover > 0) {
     const longest = [...allocations].sort(
       (a, b) => b.minutes - a.minutes || a.staffId.localeCompare(b.staffId),
     )[0];
