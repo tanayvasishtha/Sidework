@@ -4,10 +4,13 @@ export type PayPalConfig = {
   clientSecret: string;
   fetch?: typeof fetch;
   now?: () => number;
+  timeoutMs?: number;
 };
 
 export type RequestOptions = {
   body?: unknown;
+  /** JSON sent exactly as given, for when PayPal must see the original bytes. */
+  rawBody?: string;
   query?: Record<string, string | number | undefined>;
   /** Sent as PayPal-Request-Id, so a retried POST is not run twice. */
   requestId?: string;
@@ -30,6 +33,7 @@ export class PayPalError extends Error {
 
 // Refresh a minute early so a token never expires mid-request.
 const EARLY_REFRESH_MS = 60_000;
+const TIMEOUT_MS = 30_000;
 
 export function createPayPalClient(config: PayPalConfig) {
   const rawFetch = config.fetch ?? fetch;
@@ -38,8 +42,11 @@ export function createPayPalClient(config: PayPalConfig) {
 
   async function doFetch(url: string | URL, init: RequestInit): Promise<Response> {
     try {
-      return await rawFetch(url, init);
+      return await rawFetch(url, { ...init, signal: AbortSignal.timeout(config.timeoutMs ?? TIMEOUT_MS) });
     } catch (err) {
+      if (err instanceof Error && err.name === "TimeoutError") {
+        throw new PayPalError(`PayPal at ${base} didn't answer in time.`, 0, "TIMEOUT");
+      }
       // fetch reports network failures as TypeError. Anything else, such as a replay miss, passes through.
       if (!(err instanceof TypeError)) throw err;
       const cause = (err.cause as Error | undefined)?.message ?? err.message;
@@ -93,13 +100,10 @@ export function createPayPalClient(config: PayPalConfig) {
       if (v !== undefined) url.searchParams.set(k, String(v));
     }
     const headers: Record<string, string> = { Authorization: `Bearer ${bearer}`, Accept: "application/json" };
-    if (opts.body !== undefined) headers["Content-Type"] = "application/json";
+    const body = opts.rawBody ?? (opts.body === undefined ? undefined : JSON.stringify(opts.body));
+    if (body !== undefined) headers["Content-Type"] = "application/json";
     if (opts.requestId) headers["PayPal-Request-Id"] = opts.requestId;
-    return doFetch(url, {
-      method,
-      headers,
-      body: opts.body === undefined ? undefined : JSON.stringify(opts.body),
-    });
+    return doFetch(url, { method, headers, body });
   }
 
   async function request<T>(method: string, path: string, opts: RequestOptions = {}): Promise<T> {

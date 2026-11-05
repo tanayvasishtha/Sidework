@@ -1,7 +1,7 @@
 import { generateText, type LanguageModel, Output } from "ai";
 import { z } from "zod";
 import type { WorkerCheck } from "@/lib/checks";
-import { money, night as nightName } from "@/lib/format";
+import { money, night as nightName, tenths } from "@/lib/format";
 import { model as defaultModel } from "./model";
 
 export type Explanation = {
@@ -11,7 +11,7 @@ export type Explanation = {
 };
 
 function hrs(minutes: number): string {
-  return (Math.round((minutes / 60) * 10) / 10).toString();
+  return tenths(minutes / 60).toString();
 }
 
 /** Every figure the answer may use, as lines of text. Nothing else about the restaurant is shared. */
@@ -26,7 +26,7 @@ export function shareFacts(c: WorkerCheck): { lines: string[]; amounts: Set<numb
   if (c.share) {
     lines.push(
       `Tonight (${nightName(c.night.date)}): worked ${c.stations.map((s) => `${hrs(s.minutes)} hours at ${s.station}, ${s.pointsPerHour} points per hour`).join("; ")}.`,
-      `Tonight: their points ${Math.round(c.share.points * 10) / 10}, everyone's points ${c.pool.points}, ${c.pool.people} people shared.`,
+      `Tonight: their points ${tenths(c.share.points)}, everyone's points ${c.pool.points}, ${c.pool.people} people shared.`,
       `Tonight: pool after card fees ${$(c.pool.cents)}. Card fees taken from the whole pool ${$(c.pool.feeCents)}.`,
       `Tonight: their tips ${$(c.share.cents)}, figured as pool times their points divided by everyone's points.`,
     );
@@ -47,18 +47,24 @@ export function shareFacts(c: WorkerCheck): { lines: string[]; amounts: Set<numb
   return { lines, amounts };
 }
 
-/** Dollar figures in a piece of text, in cents. "$84.26" and "$2,310" both count. */
+const toCents = (whole: string, part = "0") => Number(whole.replace(/,/g, "")) * 100 + Number(part.padEnd(2, "0"));
+
+/** Money in a piece of text, in cents, however it's written: "$84.26", "$2000", "12 dollars", "50 cents". */
 export function dollarFigures(text: string): number[] {
-  return [...text.matchAll(/\$\s?(\d{1,3}(?:,\d{3})*|\d+)(?:\.(\d{1,2}))?/g)].map(
-    (m) => Number(m[1].replace(/,/g, "")) * 100 + Number((m[2] ?? "0").padEnd(2, "0")),
+  const number = String.raw`(\d[\d,]*)(?:\.(\d{1,2}))?`;
+  const signed = [...text.matchAll(new RegExp(String.raw`\$\s?${number}`, "g"))].map((m) => toCents(m[1], m[2]));
+  const worded = [...text.matchAll(new RegExp(String.raw`(?<![$\d.,])${number}\s*(?:dollars?|bucks?|usd)\b`, "gi"))].map((m) =>
+    toCents(m[1], m[2]),
   );
+  const cents = [...text.matchAll(/(?<![$\d.,])(\d+)\s*(?:cents?\b|\u00a2)/gi)].map((m) => Number(m[1]));
+  return [...signed, ...worded, ...cents];
 }
 
 /** The plain-math answer, built only from the ledger. Used when the model's answer can't be trusted. */
 export function ledgerAnswer(c: WorkerCheck): string {
   if (!c.share) return `You weren't in tonight's tip pool. ${c.outReason ?? ""}`.trim();
   const parts = [
-    `Tonight you had ${Math.round(c.share.points * 10) / 10} of the ${c.pool.points} points in a ${money(c.pool.cents)} pool, so your share was ${money(c.share.cents)}.`,
+    `Tonight you had ${tenths(c.share.points)} of the ${c.pool.points} points in a ${money(c.pool.cents)} pool, so your share was ${money(c.share.cents)}.`,
   ];
   if (c.previous) {
     parts.push(

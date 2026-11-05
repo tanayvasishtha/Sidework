@@ -58,6 +58,14 @@ describe("replay", () => {
     expect((JSON.parse(text) as Recording).response.body).toContain('"access_token": "redacted"');
   });
 
+  it("doesn't keep a failed response as a recording", async () => {
+    const dir = tempDir();
+    const live = countingFetch(() => Response.json({ name: "INTERNAL_SERVICE_ERROR" }, { status: 500 }));
+    const res = await replayFetch({ mode: "record", dir, fetch: live.f })("https://api.test/v1/x", { method: "GET" });
+    expect(res.status).toBe(500);
+    expect(readdirSync(dir)).toEqual([]);
+  });
+
   it("says how to record a missing response", async () => {
     const offline = replayFetch({ mode: "replay", dir: tempDir() });
     await expect(offline("https://api.test/v1/x", { method: "GET" })).rejects.toBeInstanceOf(ReplayMissError);

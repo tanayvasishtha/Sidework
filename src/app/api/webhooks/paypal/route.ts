@@ -10,10 +10,21 @@ export async function POST(req: Request): Promise<Response> {
     return Response.json({ error: "PAYPAL_WEBHOOK_ID isn't set, so events can't be verified." }, { status: 503 });
   }
 
-  const event = (await req.json().catch(() => null)) as Parameters<typeof applyPayoutEvent>[1] | null;
+  const raw = await req.text();
+  let event: Parameters<typeof applyPayoutEvent>[1] | null = null;
+  try {
+    event = JSON.parse(raw);
+  } catch {
+    // Handled just below.
+  }
   if (!event || typeof event !== "object") return Response.json({ error: "Expected a JSON event." }, { status: 400 });
 
-  const verified = await verifyWebhook(paypal(), webhookId, req.headers, event).catch(() => false);
+  let verified = false;
+  try {
+    verified = await verifyWebhook(paypal(), webhookId, req.headers, raw);
+  } catch {
+    // PayPal unreachable or misconfigured: treated as unverified, and PayPal will retry.
+  }
   if (!verified) return Response.json({ error: "PayPal didn't confirm this event." }, { status: 401 });
 
   // Unknown payouts still get a 200, or PayPal keeps retrying an event we'll never use.

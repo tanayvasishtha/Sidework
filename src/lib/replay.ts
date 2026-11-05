@@ -18,6 +18,9 @@ export class ReplayMissError extends Error {
   }
 }
 
+// A Response built with one of these statuses must have a null body.
+const NO_BODY = new Set([101, 204, 205, 304]);
+
 // Recorded responses go in a public repo, so anything that grants access is blanked.
 const SECRET_KEYS = new Set(["access_token", "refresh_token", "id_token", "client_secret", "nonce"]);
 
@@ -92,7 +95,7 @@ export function replayFetch(opts: {
       } catch {
         throw new ReplayMissError(method, url, key);
       }
-      return new Response(saved.response.status === 204 ? null : saved.response.body, {
+      return new Response(NO_BODY.has(saved.response.status) ? null : saved.response.body, {
         status: saved.response.status,
         headers: { "content-type": saved.response.contentType },
       });
@@ -111,9 +114,12 @@ export function replayFetch(opts: {
       request: { method, url, body: redact(body) },
       response: { status: res.status, contentType, body: stored },
     };
-    mkdirSync(opts.dir, { recursive: true });
-    writeFileSync(file, `${JSON.stringify(recording, null, 2)}\n`);
+    // A failed call isn't worth keeping: a judge would replay the outage.
+    if (res.ok) {
+      mkdirSync(opts.dir, { recursive: true });
+      writeFileSync(file, `${JSON.stringify(recording, null, 2)}\n`);
+    }
     // The caller still gets the unredacted response.
-    return new Response(res.status === 204 ? null : text, { status: res.status, headers: { "content-type": contentType } });
+    return new Response(NO_BODY.has(res.status) ? null : text, { status: res.status, headers: { "content-type": contentType } });
   }) as typeof fetch;
 }

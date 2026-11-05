@@ -7,9 +7,16 @@ export function money(cents: number): string {
 
 /** 280 -> "4.7 hrs", 240 -> "4 hrs". */
 export function hours(minutes: number): string {
-  const h = Math.round((minutes / 60) * 10) / 10;
+  const h = tenths(minutes / 60);
   return `${h} ${h === 1 ? "hr" : "hrs"}`;
 }
+
+/** 84.93 -> 84.9. */
+export function tenths(n: number): number {
+  return Math.round(n * 10) / 10;
+}
+
+export const WALLET = { VENMO: "Venmo", PAYPAL: "PayPal" } as const;
 
 /** "17:00" -> "5:00", "00:40" -> "12:40". Shift bars read like a paper schedule. */
 export function clock(hhmm: string): string {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { connection } from "next/server";
 import { Suspense } from "react";
@@ -5,14 +6,16 @@ import { Shell } from "@/components/Shell";
 import { checkToken } from "@/lib/checks";
 import { type Closeout, type CloseoutFlag, getCloseout, listNights } from "@/lib/closeout";
 import { db, SATURDAY } from "@/lib/db";
-import { localTime, money, night as nightName } from "@/lib/format";
-import { getNightPayout, isSettled, type NightPayout, type PayoutRow } from "@/lib/pay";
+import { localTime, money, night as nightName, WALLET } from "@/lib/format";
+import { getNightPayout, isSettled, type NightPayout, payoutStands, type PayoutRow } from "@/lib/pay";
 import { settings } from "@/lib/settings";
 import { resetDemoAction, takeOutAction } from "./actions";
 import { PayButton, PayoutWatcher } from "./PayButton";
 import { Schedule } from "./Schedule";
 import { ShiftNote } from "./ShiftNote";
 import styles from "./page.module.css";
+
+export const metadata: Metadata = { title: "Tonight's close-out | Sidework" };
 
 // The notes recorded for replay mode. Anything else needs an OpenAI key.
 const DEMO_NOTES: Record<string, string> = {
@@ -56,8 +59,8 @@ async function CloseoutView({ searchParams }: { searchParams: PageProps<"/tonigh
       <div className={styles.grid}>
         <section className={styles.left} aria-labelledby="who">
           <h2 id="who">Who worked tonight</h2>
+          <ShiftNote key={nightId} nightId={nightId} suggested={DEMO_NOTES[nightId] ?? ""} last={c.note} locked={c.locked} />
           <Schedule closeout={c} />
-          <ShiftNote key={nightId} nightId={nightId} suggested={DEMO_NOTES[nightId] ?? ""} last={c.note} />
         </section>
         <Tips closeout={c} payout={payout} />
       </div>
@@ -68,30 +71,39 @@ async function CloseoutView({ searchParams }: { searchParams: PageProps<"/tonigh
   );
 }
 
-const WALLET = { VENMO: "Venmo", PAYPAL: "PayPal" } as const;
-
 function payoutStatus(item: PayoutRow): { text: string; tone: "sending" | "done" | "waiting" | "failed" } {
   const first = item.name.split(" ")[0];
   switch (item.status) {
-    case "PENDING":
-    case "ONHOLD":
-      return { text: `Sending to ${WALLET[item.wallet]}`, tone: "sending" };
     case "SUCCESS":
       return { text: `Paid to ${WALLET[item.wallet]}`, tone: "done" };
     case "UNCLAIMED":
       return { text: `Sent. Waiting for ${first} to claim it`, tone: "waiting" };
-    default:
+    case "FAILED":
+    case "BLOCKED":
+    case "RETURNED":
+    case "REFUNDED":
+    case "REVERSED":
+    case "CANCELED":
       return { text: `Didn't go through${item.error ? `: ${item.error}` : ""}`, tone: "failed" };
+    default:
+      return { text: `Sending to ${WALLET[item.wallet]}`, tone: "sending" };
   }
 }
 
+const people = (n: number) => `${n} ${n === 1 ? "person" : "people"}`;
+
 function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout | null }) {
   const blocks = c.flags.filter((f) => f.severity === "block");
+  const open = blocks.filter((f) => !f.resolved);
+  // One line per person taken out, however many rules they tripped.
+  const settled = [...new Map(blocks.filter((f) => f.resolved).map((f) => [f.staffId, f])).values()];
   const warnings = c.flags.filter((f) => f.severity === "warn");
-  const paid = c.split.length;
-  const sent = payout && payout.status !== "FAILED" ? payout : null;
+  const blockedIds = new Set(open.map((f) => f.staffId));
+  const count = c.split.length;
+
+  const live = payoutStands(payout) ? payout : null;
+  const sent = live?.paypalBatchId ? live : null;
   const statusFor = new Map(sent?.items.map((i) => [i.staffId, i]) ?? []);
-  const settled = sent ? sent.items.every((i) => isSettled(i.status)) : true;
   const secret = settings().CHECK_SECRET;
 
   return (
@@ -99,7 +111,9 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
       <h2 id="tips">Tonight&apos;s tips</h2>
       <div className={`${styles.big} num`}>{money(c.money.poolCents)}</div>
       <p className={styles.sub}>
-        goes to {paid} {paid === 1 ? "person" : "people"}, all qualified tips under federal rules
+        {c.blocking > 0
+          ? `${people(count)} in the pool, ${c.blocking === 1 ? "1 can't stay" : `${c.blocking} can't stay`}`
+          : `goes to ${people(count)}, all qualified tips under federal rules`}
       </p>
 
       {c.money.lines.map((l) => (
@@ -115,74 +129,78 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
         </div>
       ) : null}
       {c.money.autoGratuities.map((g) => (
-        <div key={g.table} className={`${styles.money} ${styles.apart}`}>
-          <span>Table {g.table} added gratuity</span>
+        <div key={g.label} className={`${styles.money} ${styles.apart}`}>
+          <span>{g.label} added gratuity, kept out</span>
           <b className="num">{money(g.cents)}</b>
         </div>
       ))}
       {c.money.serviceChargeCents > 0 ? (
         <p className={styles.sub}>
-          Added gratuities are service charges. They go out as wages through payroll, so they stay out of the pool and
-          out of the tax-free total.
-          {c.money.autoGratuities.some((g) => g.tipOnTopCents > 0)
-            ? " Tips guests left on top of them are qualified tips and are in the pool."
-            : ""}
+          Added gratuities are service charges. They go out as wages through payroll, so they aren&apos;t qualified tips.
+          {c.money.autoGratuities.some((g) => g.tipOnTopCents > 0) ? " What guests left on top of them is, and it's in the pool." : ""}
         </p>
       ) : null}
 
-      {blocks.map((f) => (
+      {open.map((f) => (
         <BlockFlag key={`${f.ruleId}-${f.staffId}`} flag={f} nightId={c.night.id} />
       ))}
+      {settled.map((f) => (
+        <p key={f.staffId} className={styles.resolved}>
+          {f.staffName?.split(" ")[0]} is out of tonight&apos;s pool. {f.rule.title}.
+        </p>
+      ))}
 
+      {sent ? (
+        <SentSummary payout={sent} state={c.restaurant.state} nightId={c.night.id} />
+      ) : (
+        <div className={styles.payBar}>
+          {live ? (
+            <p className={styles.payError} role="alert">
+              PayPal didn&apos;t answer, so this may or may not have gone through. Finishing resends the same batch, so
+              nobody gets paid twice.
+            </p>
+          ) : null}
+          <PayButton
+            key={c.night.id}
+            nightId={c.night.id}
+            disabled={c.blocking > 0 || count === 0}
+            label={
+              c.blocking > 0
+                ? `Fix ${c.blocking === 1 ? "1 problem" : `${c.blocking} problems`} before paying`
+                : live
+                  ? `Finish sending to ${people(live.items.length)}`
+                  : `${payout?.status ? "Try again: pay" : "Pay"} ${people(count)} ${money(c.money.poolCents)}`
+            }
+          />
+        </div>
+      )}
+
+      <h3 className={styles.splitHead}>Tonight&apos;s split</h3>
       <table className={styles.split}>
-        <caption className={styles.srOnly}>Tonight&apos;s split</caption>
+        <caption className={styles.srOnly}>Each person&apos;s share of tonight&apos;s tips</caption>
         <tbody>
           {c.split.map((s) => (
-            <tr key={s.staffId}>
+            <tr key={s.staffId} className={blockedIds.has(s.staffId) ? styles.blockedRow : undefined}>
               <td>
                 <Link href={`/check/${checkToken(c.night.id, s.staffId, secret)}`} className={styles.person}>
                   {s.name}
                 </Link>
-                <div className={styles.muted}>{s.detail}</div>
+                <div className={styles.muted}>{blockedIds.has(s.staffId) ? "Can't stay in the pool" : s.detail}</div>
               </td>
               <td className="num">
                 {money(s.cents)}
-                {statusFor.has(s.staffId) ? (
-                  <PayoutLine item={statusFor.get(s.staffId)!} />
-                ) : null}
+                {statusFor.has(s.staffId) ? <PayoutLine item={statusFor.get(s.staffId)!} /> : null}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      {sent ? (
-        <div className={styles.sent} role="status">
-          <b className="num">
-            Sent {money(sent.items.reduce((t, i) => t + i.cents, 0))} to {sent.items.length} people at{" "}
-            {localTime(sent.createdAt, c.restaurant.state)}
-          </b>
-          {sent.items.filter((i) => i.status === "SUCCESS").length} of {sent.items.length} paid so far, through PayPal
-          Payouts.
-          <PayoutWatcher nightId={c.night.id} settled={settled} />
-        </div>
-      ) : (
-        <PayButton
-          nightId={c.night.id}
-          disabled={c.blocking > 0 || paid === 0}
-          label={
-            c.blocking > 0
-              ? `Fix ${c.blocking} ${c.blocking === 1 ? "problem" : "problems"} before paying`
-              : `${payout?.status === "FAILED" ? "Try again: pay" : "Pay"} ${paid} ${paid === 1 ? "person" : "people"} ${money(c.money.poolCents)}`
-          }
-        />
-      )}
-
       {warnings.length > 0 ? (
         <ul className={styles.warnings} aria-label="Worth knowing">
           {warnings.map((f, i) => (
             <li key={`${f.ruleId}-${f.staffId ?? i}`}>
-              {f.message} <a href={f.rule.url}>{f.rule.source}</a>
+              {f.message} <Citation flag={f} />
             </li>
           ))}
         </ul>
@@ -191,27 +209,42 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
   );
 }
 
+function SentSummary({ payout, state, nightId }: { payout: NightPayout; state: string; nightId: string }) {
+  const paid = payout.items.filter((i) => i.status === "SUCCESS").length;
+  const failed = payout.items.filter((i) => payoutStatus(i).tone === "failed").length;
+  return (
+    <div className={styles.sent} role="status">
+      <b className="num">
+        Sent {money(payout.items.reduce((t, i) => t + i.cents, 0))} to {people(payout.items.length)} at{" "}
+        {localTime(payout.createdAt, state)}
+      </b>
+      {paid} of {payout.items.length} paid so far, through PayPal Payouts.
+      {failed > 0 ? ` ${failed} didn't go through.` : ""}
+      <PayoutWatcher nightId={nightId} settled={payout.items.every((i) => isSettled(i.status))} />
+    </div>
+  );
+}
+
 function PayoutLine({ item }: { item: PayoutRow }) {
   const { text, tone } = payoutStatus(item);
   return <div className={`${styles.status} ${styles[tone]}`}>{text}</div>;
 }
 
+function Citation({ flag: f, className }: { flag: CloseoutFlag; className?: string }) {
+  return (
+    <a href={f.rule.url} className={className} target="_blank" rel="noreferrer">
+      {f.rule.source}
+    </a>
+  );
+}
+
 function BlockFlag({ flag: f, nightId }: { flag: CloseoutFlag; nightId: string }) {
   const first = f.staffName?.split(" ")[0] ?? "This person";
-  if (f.resolved) {
-    return (
-      <p className={styles.resolved}>
-        {first} is out of tonight&apos;s pool. {f.rule.title}.
-      </p>
-    );
-  }
   return (
     <div className={styles.flag} role="alert">
       <b>{first} can&apos;t share in the pool</b>
       {f.message}
-      <a href={f.rule.url} className={styles.cite}>
-        {f.rule.source}
-      </a>
+      <Citation flag={f} className={styles.cite} />
       {f.staffId ? (
         <form action={takeOutAction}>
           <input type="hidden" name="night" value={nightId} />

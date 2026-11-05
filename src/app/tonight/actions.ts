@@ -2,9 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { applyShiftNote } from "@/lib/agent/shifts";
-import { getCloseout, saveShiftEdits, takeOut } from "@/lib/closeout";
+import { getCloseout, NIGHT_LOCKED, saveShiftEdits, takeOut } from "@/lib/closeout";
 import { db, getStaff, resetDemo } from "@/lib/db";
-import { PayRefusedError, payNight, refreshPayout } from "@/lib/pay";
+import { PayRefusedError, PayUncertainError, payNight, refreshPayout } from "@/lib/pay";
 import { PayPalError, paypal } from "@/lib/paypal";
 import { ReplayMissError } from "@/lib/replay";
 import { RULES, type RuleId } from "@/lib/rules";
@@ -29,13 +29,14 @@ export async function updateScheduleAction(_prev: NoteState, formData: FormData)
   if (note.length > 2000) return { error: "That note is too long. Keep it under 2,000 characters." };
 
   const d = db();
-  const closeout = getCloseout(d, nightId);
-  // The whole staff, not just tonight's schedule, so someone who picked up a shift can be found.
-  const roster = getStaff(d, closeout.restaurant.id).map((p) => ({ id: p.id, name: p.name, role: p.title }));
-  const shifts = closeout.people.flatMap((p) =>
-    p.shifts.map((s) => ({ staffId: s.staffId, station: s.station, start: s.start, end: s.end })),
-  );
   try {
+    const closeout = getCloseout(d, nightId);
+    if (closeout.locked) return { error: NIGHT_LOCKED };
+    // The whole staff, not just tonight's schedule, so someone who picked up a shift can be found.
+    const roster = getStaff(d, closeout.restaurant.id).map((p) => ({ id: p.id, name: p.name, role: p.title }));
+    const shifts = closeout.people.flatMap((p) =>
+      p.shifts.map((s) => ({ staffId: s.staffId, station: s.station, start: s.start, end: s.end })),
+    );
     const result = await applyShiftNote(note, roster, shifts);
     saveShiftEdits(d, nightId, note, result);
   } catch (err) {
@@ -58,7 +59,7 @@ export async function payAction(_prev: PayState, formData: FormData): Promise<Pa
     });
   } catch (err) {
     revalidatePath("/tonight");
-    if (err instanceof PayRefusedError) return { error: err.message };
+    if (err instanceof PayRefusedError || err instanceof PayUncertainError) return { error: err.message };
     if (err instanceof ReplayMissError) {
       return { error: "This demo runs from recorded sandbox payouts, and this one wasn't recorded. Add PayPal sandbox keys to send it for real." };
     }
@@ -71,7 +72,11 @@ export async function payAction(_prev: PayState, formData: FormData): Promise<Pa
 
 /** Reads payout status back from PayPal, for when webhooks can't reach this server. */
 export async function refreshPayoutAction(nightId: string): Promise<void> {
-  await refreshPayout(db(), nightId, paypal()).catch(() => undefined);
+  try {
+    await refreshPayout(db(), nightId, paypal());
+  } catch {
+    // The next poll or a webhook will catch up.
+  }
   revalidatePath("/tonight");
 }
 

@@ -67,6 +67,11 @@ describe("applyShiftEdits", () => {
     expect(result.shifts.find((s) => s.staffId === "maria")?.end).toBe("23:45");
   });
 
+  it("stores times in full HH:MM form", () => {
+    const result = applyShiftEdits(shifts, [{ ...ana, start: "9:00", end: "14:00" }], staff, NOTE);
+    expect(result.shifts.find((s) => s.staffId === "ana")?.start).toBe("09:00");
+  });
+
   it("rejects a quote that isn't in the note, and keeps going", () => {
     const made_up = { ...maria, quote: "Maria left early with a headache" };
     const result = applyShiftEdits(shifts, [made_up, sam], staff, NOTE);
@@ -82,6 +87,7 @@ describe("applyShiftEdits", () => {
       [{ ...jake, at: "02:00" }, "wasn't working at 02:00"],
       [{ ...ana, start: "16:00", end: "18:00", staffId: "maria" }, "two shifts at once"],
       [edit({ kind: "start", staffId: "maria", at: "23:30", quote: "Maria cut at 9" }), "after the shift ends"],
+      [{ ...ana, start: "17:00", end: "17:00" }, "no length"],
     ];
     for (const [bad, reason] of cases) {
       const result = applyShiftEdits(shifts, [bad], staff, NOTE);

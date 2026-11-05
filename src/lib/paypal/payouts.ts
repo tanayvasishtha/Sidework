@@ -26,7 +26,8 @@ export type ItemStatus =
   | "ONHOLD"
   | "BLOCKED"
   | "REFUNDED"
-  | "REVERSED";
+  | "REVERSED"
+  | "CANCELED";
 
 export type PayoutItem = {
   itemId: string;

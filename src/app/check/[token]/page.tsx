@@ -4,7 +4,7 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 import { DEDUCTION_CAP_CENTS, getWorkerCheck, readCheckToken, type WorkerCheck } from "@/lib/checks";
 import { db } from "@/lib/db";
-import { localTime, money, night as nightName } from "@/lib/format";
+import { localTime, money, night as nightName, tenths, WALLET } from "@/lib/format";
 import type { Role } from "@/lib/rules";
 import { settings } from "@/lib/settings";
 import { AskWhy } from "./AskWhy";
@@ -23,8 +23,6 @@ const WHERE: Record<Role, string> = {
   dishwasher: "on dish",
   manager: "managing",
 };
-
-const WALLET = { VENMO: "Venmo", PAYPAL: "PayPal" } as const;
 
 // Bracket used for the savings estimate. Most tipped workers who owe income tax are in the 10% or 12% bracket.
 const EXAMPLE_BRACKET = 0.12;
@@ -63,6 +61,7 @@ async function Check({ params }: { params: PageProps<"/check/[token]">["params"]
 function suggestedQuestion(c: WorkerCheck): string {
   if (!c.share || !c.previous) return "How was my share figured?";
   const day = new Date(`${c.previous.date}T12:00:00Z`).toLocaleDateString("en-US", { weekday: "long", timeZone: "UTC" });
+  if (c.share.cents === c.previous.cents) return `How was tonight figured compared with ${day}?`;
   return c.share.cents < c.previous.cents ? `Why less than ${day}?` : `Why more than ${day}?`;
 }
 
@@ -98,7 +97,7 @@ function Slip({ check: c }: { check: WorkerCheck }) {
           ))}
           <div className={styles.line}>
             <span>Your points</span>
-            <span className="num">{Math.round(c.share.points * 10) / 10}</span>
+            <span className="num">{tenths(c.share.points)}</span>
           </div>
           <div className={styles.line}>
             <span>Everyone&apos;s points, {c.pool.people} people</span>
@@ -112,6 +111,9 @@ function Slip({ check: c }: { check: WorkerCheck }) {
             <span>Your tips</span>
             <span className="num">{money(c.share.cents)}</span>
           </div>
+          {c.provisional ? (
+            <p className={styles.provisional}>Not final yet. Your manager is still checking tonight&apos;s pool, so this can change.</p>
+          ) : null}
           <p className={styles.how}>
             The pool times your points, divided by everyone&apos;s points
             {c.share.remainderCents > 0 ? `, plus ${c.share.remainderCents}¢ left over from rounding` : ""}.
@@ -167,7 +169,7 @@ function Year({ check: c }: { check: WorkerCheck }) {
       </p>
       <p>
         You can deduct up to $25,000 of qualified tips from your federal income tax for {year}. At a 12% bracket,
-        that&apos;s about <b className="num">{money(Math.round(total * EXAMPLE_BRACKET))}</b> less tax so far. Social
+        that&apos;s about <b className="num">{money(Math.round(Math.min(total, DEDUCTION_CAP_CENTS) * EXAMPLE_BRACKET))}</b> less tax so far. Social
         Security and Medicare still apply.
       </p>
       <p>

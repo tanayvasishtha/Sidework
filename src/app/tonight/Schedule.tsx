@@ -1,19 +1,8 @@
 import type { Closeout } from "@/lib/closeout";
 import { clock } from "@/lib/format";
 import { isBackOfHouse } from "@/lib/rules";
+import { shiftSpan } from "@/lib/schedule/night";
 import styles from "./page.module.css";
-
-/** Minutes on the service night, which runs 06:00 to 05:59. */
-function nightMinutes(hhmm: string): number {
-  const [h, m] = hhmm.split(":").map(Number);
-  return (h * 60 + m - 360 + 1440) % 1440;
-}
-
-function span(start: string, end: string): [number, number] {
-  const s = nightMinutes(start);
-  const length = (nightMinutes(end) - s + 1440) % 1440 || 1440;
-  return [s, s + length];
-}
 
 function hourLabel(nightMinute: number): string {
   const h = (Math.round(nightMinute / 60) + 6) % 24;
@@ -21,7 +10,10 @@ function hourLabel(nightMinute: number): string {
 }
 
 export function Schedule({ closeout }: { closeout: Closeout }) {
-  const spans = closeout.people.flatMap((p) => p.shifts.map((s) => span(s.start, s.end)));
+  const spans = closeout.people.flatMap((p) => p.shifts.map(shiftSpan));
+  if (spans.length === 0) {
+    return <p className={styles.noShifts}>Nobody is on tonight&apos;s schedule. Say who worked in the note above.</p>;
+  }
   const from = Math.floor(Math.min(...spans.map((s) => s[0])) / 60) * 60;
   const to = Math.ceil(Math.max(...spans.map((s) => s[1])) / 60) * 60;
   const width = to - from;
@@ -32,7 +24,13 @@ export function Schedule({ closeout }: { closeout: Closeout }) {
   );
 
   return (
-    <div className={styles.schedule} style={{ "--hours": ticks.length } as React.CSSProperties}>
+    <div
+      className={styles.schedule}
+      style={{ "--hours": ticks.length } as React.CSSProperties}
+      role="region"
+      aria-label="Tonight's shifts"
+      tabIndex={0}
+    >
       <div className={`${styles.hours} num`} aria-hidden>
         <span />
         {ticks.map((t) => (
@@ -55,7 +53,7 @@ export function Schedule({ closeout }: { closeout: Closeout }) {
               </div>
               <div className={styles.track}>
                 {p.shifts.map((s) => {
-                  const [a, b] = span(s.start, s.end);
+                  const [a, b] = shiftSpan(s);
                   const cls = [
                     styles.shift,
                     "num",

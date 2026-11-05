@@ -1,7 +1,8 @@
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { getCloseout, type Share } from "@/lib/closeout";
-import { getNightPayout, type PayoutRow } from "@/lib/pay";
+import { getNightPayout, payoutStands, type PayoutRow } from "@/lib/pay";
+import { tenths } from "@/lib/format";
 import { occupationCode, type Role, shiftMinutes } from "@/lib/rules";
 
 /** The federal cap on the qualified tips deduction, per return, 2025 to 2028. */
@@ -37,6 +38,8 @@ export type WorkerCheck = {
   share: Share | null;
   /** Why they weren't in tonight's pool, when they weren't. */
   outReason: string | null;
+  /** Someone else's flag is still open, so this share can still change. */
+  provisional: boolean;
   pool: { cents: number; points: number; feeCents: number; people: number };
   payout: (PayoutRow & { sentAt: string }) | null;
   year: { qualifiedCents: number; includesTonight: boolean; nights: number };
@@ -45,6 +48,8 @@ export type WorkerCheck = {
 };
 
 export function getWorkerCheck(d: DatabaseSync, nightId: string, staffId: string): WorkerCheck | null {
+  // A signed link can outlive its night, for instance after the demo is reseeded.
+  if (!d.prepare("select 1 from nights where id = ?").get(nightId)) return null;
   const c = getCloseout(d, nightId);
   const person = c.people.find((p) => p.id === staffId) ?? null;
   const staffRow = d.prepare("select id, name, title, role, payout_wallet from staff where id = ?").get(staffId) as
@@ -64,7 +69,7 @@ export function getWorkerCheck(d: DatabaseSync, nightId: string, staffId: string
   }
 
   const payout = getNightPayout(d, nightId);
-  const item = payout && payout.status !== "FAILED" ? payout.items.find((i) => i.staffId === staffId) : undefined;
+  const item = payoutStands(payout) && payout.paypalBatchId ? payout.items.find((i) => i.staffId === staffId) : undefined;
 
   const year = c.night.date.slice(0, 4);
   const ytd = d
@@ -94,9 +99,10 @@ export function getWorkerCheck(d: DatabaseSync, nightId: string, staffId: string
     stations: [...byStation].map(([station, minutes]) => ({ station, minutes, pointsPerHour: policy.pointsPerHour[station] ?? 0 })),
     share,
     outReason: out ? (out.resolved ? `${out.rule.title}.` : `${out.rule.title}. The manager hasn't settled this yet.`) : null,
+    provisional: share !== null && c.blocking > 0,
     pool: {
       cents: c.money.poolCents,
-      points: Math.round(c.split.reduce((t, s) => t + s.points, 0) * 10) / 10,
+      points: tenths(c.split.reduce((t, s) => t + s.points, 0)),
       feeCents: c.money.feeCents,
       people: c.split.length,
     },

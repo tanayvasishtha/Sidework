@@ -9,6 +9,8 @@
   --thermal: #fafaf6;
   --graphite: #2b2d2a;
   --line: #dce3d8;
+  /* Borders of things you can use. 3:1 against every surface here, which --line isn't. */
+  --control: #6f8879;
   --radius: 10px;
 }
 

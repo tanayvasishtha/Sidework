@@ -52,14 +52,14 @@ const SCHEDULE: [string, Role, string, string][] = [
 
 // [table, source, tip in cents]
 const TIPS: [string, "paypal" | "venmo" | "card" | "cash", number][] = [
-  ["1", "card", 1840], ["2", "paypal", 2600], ["3", "card", 3150], ["4", "venmo", 2200],
-  ["5", "card", 4420], ["6", "paypal", 1975], ["7", "paypal", 1633], ["8", "card", 5600],
-  ["9", "venmo", 3800], ["10", "card", 2890], ["11", "paypal", 6240], ["14", "card", 3365],
-  ["15", "venmo", 4100], ["16", "card", 2210], ["17", "paypal", 3900], ["18", "card", 7150],
-  ["19", "venmo", 2650], ["20", "card", 4980], ["21", "paypal", 3325], ["22", "cash", 4000],
-  ["23", "card", 6100], ["24", "venmo", 5150], ["25", "paypal", 2745], ["26", "card", 3880],
-  ["bar 1", "card", 9600], ["bar 2", "venmo", 4800], ["bar 3", "cash", 6200], ["bar 4", "paypal", 7400],
-  ["bar 5", "card", 8150], ["bar 6", "venmo", 3200], ["bar 7", "card", 5375], ["bar 8", "paypal", 4900],
+  ["1", "card", 2670], ["2", "paypal", 3770], ["3", "card", 4570], ["4", "venmo", 3190],
+  ["5", "card", 6410], ["6", "paypal", 2865], ["7", "paypal", 2370], ["8", "card", 8120],
+  ["9", "venmo", 5510], ["10", "card", 4190], ["11", "paypal", 9050], ["14", "card", 4880],
+  ["15", "venmo", 5945], ["16", "card", 3205], ["17", "paypal", 5655], ["18", "card", 10370],
+  ["19", "venmo", 3840], ["20", "card", 7220], ["21", "paypal", 4820], ["22", "cash", 5800],
+  ["23", "card", 8845], ["24", "venmo", 7470], ["25", "paypal", 3980], ["26", "card", 5625],
+  ["bar 1", "card", 13920], ["bar 2", "venmo", 6960], ["bar 3", "cash", 8990], ["bar 4", "paypal", 10730],
+  ["bar 5", "card", 11820], ["bar 6", "venmo", 4640], ["bar 7", "card", 7795], ["bar 8", "paypal", 7105],
 ];
 
 export function seedLucias(db: DatabaseSync): void {

@@ -85,6 +85,13 @@
   min-height: 56px;
 }
 
+.provisional {
+  margin: 0;
+  font-size: 13px;
+  line-height: 28px;
+  color: var(--amber);
+}
+
 .how {
   margin: 0;
   font-size: 12px;
@@ -111,10 +118,10 @@
 .ask input {
   flex: 1;
   min-width: 0;
-  border: 1px solid var(--line);
+  border: 1px solid var(--control);
   border-radius: 10px;
   padding: 11px 12px;
-  font-size: 15px;
+  font-size: 16px;
   background: #fff;
   color: var(--graphite);
 }
@@ -124,6 +131,7 @@
   background: var(--ink);
   color: #fff;
   border-radius: 10px;
+  min-height: 44px;
   padding: 0 16px;
   font-size: 15px;
   font-weight: 600;

@@ -123,6 +123,17 @@ describe("PayPal client", () => {
     expect(err.message).toBe("Couldn't reach PayPal at https://api-m.sandbox.paypal.com: ECONNRESET");
   });
 
+  it("gives up on a call PayPal never answers", async () => {
+    const hang = ((_url: RequestInfo | URL, init: RequestInit = {}) =>
+      new Promise((_resolve, reject) => {
+        init.signal?.addEventListener("abort", () => reject(init.signal?.reason));
+      })) as typeof fetch;
+    const c = createPayPalClient({ baseUrl: "https://api-m.sandbox.paypal.com", clientId: "id", clientSecret: "s", fetch: hang, timeoutMs: 20 });
+    const err = await rejection(c.request("GET", "/v1/a"));
+    expect(err.issue).toBe("TIMEOUT");
+    expect(err.status).toBe(0);
+  });
+
   it("explains a failed sign-in in terms of the env vars", async () => {
     const fakeFetch = (async () =>
       Response.json({ error: "invalid_client", error_description: "Client Authentication failed" }, { status: 401 })) as typeof fetch;

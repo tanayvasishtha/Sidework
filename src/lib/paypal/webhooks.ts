@@ -10,13 +10,14 @@ const HEADERS = {
 
 /**
  * Asks PayPal whether a webhook really came from PayPal for our webhook id.
- * Anything missing or unconfirmed counts as not verified.
+ * The event goes back as the exact text PayPal sent, because the signature covers
+ * those bytes. Anything missing or unconfirmed counts as not verified.
  */
 export async function verifyWebhook(
   client: PayPalClient,
   webhookId: string,
   headers: Headers,
-  event: unknown,
+  rawEvent: string,
 ): Promise<boolean> {
   const fields: Record<string, string> = {};
   for (const [field, header] of Object.entries(HEADERS)) {
@@ -25,7 +26,7 @@ export async function verifyWebhook(
     fields[field] = value;
   }
   const res = await client.request<{ verification_status?: string }>("POST", "/v1/notifications/verify-webhook-signature", {
-    body: { ...fields, webhook_id: webhookId, webhook_event: event },
+    rawBody: `${JSON.stringify({ ...fields, webhook_id: webhookId }).slice(0, -1)},"webhook_event":${rawEvent}}`,
   });
   return res.verification_status === "SUCCESS";
 }

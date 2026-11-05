@@ -1,4 +1,5 @@
 import { quoteFound, type Role, type Shift } from "@/lib/rules";
+import { nightMinutes as night, shiftSpan as span } from "./night";
 
 /** One change to tonight's schedule, as read from the manager's note. */
 export type ShiftEdit = {
@@ -23,20 +24,9 @@ export type EditResult = {
 
 const TIME = /^([01]?\d|2[0-3]):[0-5]\d$/;
 
-function minutes(hhmm: string): number {
-  const [h, m] = hhmm.split(":").map(Number);
-  return h * 60 + m;
-}
-
-/** Minutes on the service night, which runs 06:00 to 05:59, so 00:40 sorts after 23:00. */
-function night(hhmm: string): number {
-  return (minutes(hhmm) - 360 + 1440) % 1440;
-}
-
-function span(shift: Shift): [number, number] {
-  const start = night(shift.start);
-  const length = (minutes(shift.end) - minutes(shift.start) + 1440) % 1440 || 1440;
-  return [start, start + length];
+/** "9:00" -> "09:00", so stored times sort and compare as text. */
+function padded(time: string | null): string | null {
+  return time === null ? null : time.padStart(5, "0");
 }
 
 function overlaps(shifts: Shift[]): boolean {
@@ -75,13 +65,12 @@ export function applyShiftEdits(
       reject(`"${edit.quote}" isn't in the note.`);
       continue;
     }
-    for (const t of [edit.at, edit.start, edit.end]) {
-      if (t !== null && !TIME.test(t)) {
-        reject(`"${t}" isn't a time in HH:MM form.`);
-        break;
-      }
+    const badTime = [edit.at, edit.start, edit.end].find((t) => t !== null && !TIME.test(t));
+    if (badTime) {
+      reject(`"${badTime}" isn't a time in HH:MM form.`);
+      continue;
     }
-    if (rejected.at(-1)?.edit === edit) continue;
+    const [at, start, end] = [padded(edit.at), padded(edit.start), padded(edit.end)];
 
     const theirs = current.filter((s) => s.staffId === edit.staffId).sort((a, b) => night(a.start) - night(b.start));
     const others = current.filter((s) => s.staffId !== edit.staffId);
@@ -99,7 +88,6 @@ export function applyShiftEdits(
         break;
 
       case "end": {
-        const at = edit.at;
         if (!at || theirs.length === 0) {
           reject(at ? `${name} wasn't on tonight's schedule.` : "No time given for when they left.");
           break;
@@ -118,7 +106,6 @@ export function applyShiftEdits(
       }
 
       case "start": {
-        const at = edit.at;
         const first = theirs[0];
         if (!at || !first) {
           reject(at ? `${name} wasn't on tonight's schedule.` : "No time given for when they came in.");
@@ -134,7 +121,6 @@ export function applyShiftEdits(
       }
 
       case "move": {
-        const at = edit.at;
         const station = edit.station;
         if (!at || !station) {
           reject("A station change needs both a time and a station.");
@@ -157,12 +143,16 @@ export function applyShiftEdits(
       }
 
       case "add": {
-        if (!edit.start || !edit.end || !edit.station) {
+        if (!start || !end || !edit.station) {
           reject("An extra shift needs a start, an end and a station.");
           break;
         }
-        next = [...current, { staffId: edit.staffId, station: edit.station, start: edit.start, end: edit.end }];
-        said = `${name} worked ${edit.station} ${edit.start} to ${edit.end}`;
+        if (start === end) {
+          reject(`A shift from ${start} to ${end} has no length.`);
+          break;
+        }
+        next = [...current, { staffId: edit.staffId, station: edit.station, start, end }];
+        said = `${name} worked ${edit.station} ${start} to ${end}`;
         break;
       }
     }

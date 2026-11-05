@@ -13,7 +13,8 @@ export { LUCIAS, SATURDAY } from "./seed";
 
 export function openDb(path: string): DatabaseSync {
   if (path !== ":memory:") mkdirSync(dirname(path), { recursive: true });
-  const db = new DatabaseSync(path);
+  // Wait out a brief lock from another connection instead of failing the request.
+  const db = new DatabaseSync(path, { timeout: 5000 });
   const { user_version: version } = db.prepare("pragma user_version").get() as { user_version: number };
   if (version !== SCHEMA_VERSION) {
     for (const table of TABLES) db.exec(`drop table if exists ${table}`);

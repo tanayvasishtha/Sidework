@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { takeOut } from "@/lib/closeout";
+import { getCloseout, saveShiftEdits, takeOut } from "@/lib/closeout";
 import { openDb, SATURDAY } from "@/lib/db";
 import { createPayPalClient } from "@/lib/paypal";
-import { applyPayoutEvent, getNightPayout, PayRefusedError, payNight, refreshPayout } from "./pay";
+import { applyPayoutEvent, getNightPayout, payoutStands, PayRefusedError, PayUncertainError, payNight, refreshPayout } from "./pay";
 
 const SANDBOX = "https://api-m.sandbox.paypal.com";
 
@@ -122,6 +122,101 @@ describe("payNight", () => {
     const { client } = fakeSandbox();
     const retry = await payNight(d, SATURDAY, client, { baseUrl: SANDBOX });
     expect(retry.id).toBe(`${SATURDAY}-2`);
+  });
+});
+
+describe("when PayPal's answer is lost", () => {
+  /** PayPal takes the batch, then the connection drops before the reply. Repeats of a request id are deduped. */
+  function droppingSandbox() {
+    const accepted = new Map<string, Sent>();
+    let drop = true;
+    const f = (async (input: RequestInfo | URL, init: RequestInit = {}) => {
+      const url = new URL(String(input));
+      if (url.pathname === "/v1/oauth2/token") return Response.json({ access_token: "t", expires_in: 32400 });
+      if (init.method === "POST") {
+        const requestId = (init.headers as Record<string, string>)["PayPal-Request-Id"];
+        if (!accepted.has(requestId)) accepted.set(requestId, JSON.parse(String(init.body)) as Sent);
+        if (drop) {
+          drop = false;
+          throw new TypeError("fetch failed", { cause: new Error("ECONNRESET") });
+        }
+        return Response.json({ batch_header: { payout_batch_id: "PB1", batch_status: "PENDING" } }, { status: 201 });
+      }
+      return Response.json({ batch_header: { payout_batch_id: "PB1", batch_status: "SUCCESS" }, items: [] });
+    }) as typeof fetch;
+    return { accepted, client: createPayPalClient({ baseUrl: SANDBOX, clientId: "id", clientSecret: "s", fetch: f }) };
+  }
+
+  it("never sends a second batch on retry", async () => {
+    const d = readyNight();
+    const { client, accepted } = droppingSandbox();
+
+    await expect(payNight(d, SATURDAY, client, { baseUrl: SANDBOX })).rejects.toThrow(PayUncertainError);
+    expect(getNightPayout(d, SATURDAY)?.status).toBe("UNCERTAIN");
+    expect(getCloseout(d, SATURDAY).locked).toBe(true);
+
+    const payout = await payNight(d, SATURDAY, client, { baseUrl: SANDBOX });
+    expect(accepted.size).toBe(1);
+    expect(payout.id).toBe(`${SATURDAY}-1`);
+    expect(payout.paypalBatchId).toBe("PB1");
+  });
+
+  it("treats a batch stuck in SENDING the same way once it has gone stale", async () => {
+    const d = readyNight();
+    const { client, batches } = fakeSandbox();
+    d.prepare("insert into payout_batches (id, night_id, sender_batch_id, status, created_at, updated_at) values ('b', ?, 'sender-b', 'SENDING', ?, ?)").run(
+      SATURDAY,
+      "2026-11-07T06:00:00.000Z",
+      "2026-11-07T06:00:00.000Z",
+    );
+    d.prepare(
+      "insert into payout_items (id, batch_id, staff_id, wallet, receiver, amount_cents, status, updated_at) values ('b:maria', 'b', 'maria', 'VENMO', 'maria@sidework.test', 100, 'PENDING', 'x')",
+    ).run();
+
+    const soon = () => new Date("2026-11-07T06:00:30.000Z");
+    await expect(payNight(d, SATURDAY, client, { baseUrl: SANDBOX, now: soon })).rejects.toThrow("on their way");
+
+    const later = () => new Date("2026-11-07T06:10:00.000Z");
+    const payout = await payNight(d, SATURDAY, client, { baseUrl: SANDBOX, now: later });
+    expect(batches[0].sender_batch_header.sender_batch_id).toBe("sender-b");
+    expect(payout.id).toBe("b");
+  });
+});
+
+describe("after payment", () => {
+  it("locks the night against notes and pool changes", async () => {
+    const d = readyNight();
+    await payNight(d, SATURDAY, fakeSandbox().client, { baseUrl: SANDBOX });
+    expect(() => saveShiftEdits(d, SATURDAY, "note", { shifts: [], applied: [], rejected: [] })).toThrow("can't change");
+    expect(() => takeOut(d, SATURDAY, "maria", "FLSA-MGR")).toThrow("can't change");
+  });
+
+  it("reopens the night when PayPal denies the batch later", async () => {
+    const d = readyNight();
+    await payNight(d, SATURDAY, fakeSandbox("PENDING").client, { baseUrl: SANDBOX });
+
+    applyPayoutEvent(d, {
+      event_type: "PAYMENT.PAYOUTSBATCH.DENIED",
+      resource: { batch_header: { payout_batch_id: "PB1", batch_status: "DENIED" } },
+    });
+
+    const c = getCloseout(d, SATURDAY);
+    expect(c.locked).toBe(false);
+    expect(c.night.status).toBe("open");
+    const saved = d.prepare("select count(*) as n from allocations where night_id = ?").get(SATURDAY) as { n: number };
+    expect(saved.n).toBe(0);
+    expect(payoutStands(getNightPayout(d, SATURDAY))).toBe(false);
+  });
+
+  it("doesn't let an old webhook undo a finished payout", async () => {
+    const d = readyNight();
+    const payout = await payNight(d, SATURDAY, fakeSandbox().client, { baseUrl: SANDBOX });
+    const maria = payout.items.find((i) => i.staffId === "maria")!;
+    applyPayoutEvent(d, {
+      event_type: "PAYMENT.PAYOUTS-ITEM.UNCLAIMED",
+      resource: { transaction_status: "UNCLAIMED", payout_item: { sender_item_id: maria.id } },
+    });
+    expect(getNightPayout(d, SATURDAY)?.items.find((i) => i.staffId === "maria")?.status).toBe("SUCCESS");
   });
 });
 

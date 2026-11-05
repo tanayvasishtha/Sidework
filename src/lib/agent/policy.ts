@@ -1,7 +1,6 @@
 import { generateText, type LanguageModel, Output } from "ai";
 import { z } from "zod";
-import { auditPolicy, type PolicyAudit, type PolicyReading, ROLES } from "@/lib/rules";
-import type { Policy } from "@/lib/rules";
+import { auditPolicy, type Policy, type PolicyAudit, type PolicyReading, ROLES } from "@/lib/rules";
 import { model as defaultModel } from "./model";
 
 const quote = z.string().describe("The policy's exact words, copied character for character. Never reworded.");

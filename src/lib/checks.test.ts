@@ -54,6 +54,17 @@ describe("getWorkerCheck", () => {
     expect(check.outReason).toContain("hasn't settled this yet");
   });
 
+  it("marks a share provisional while someone else's flag is open", () => {
+    const d = openDb(":memory:");
+    expect(getWorkerCheck(d, SATURDAY, "maria")?.provisional).toBe(true);
+    takeOut(d, SATURDAY, "dave", "FLSA-MGR");
+    expect(getWorkerCheck(d, SATURDAY, "maria")?.provisional).toBe(false);
+  });
+
+  it("returns nothing for a night that no longer exists", () => {
+    expect(getWorkerCheck(openDb(":memory:"), "lucias-1999-01-01", "maria")).toBeNull();
+  });
+
   it("returns nothing for someone who doesn't work there", () => {
     expect(getWorkerCheck(openDb(":memory:"), SATURDAY, "nobody")).toBeNull();
   });

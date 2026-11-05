@@ -21,7 +21,7 @@ describe("close-out", () => {
 
   it("shows table 12's added gratuity apart from the tips", () => {
     const c = getCloseout(openDb(":memory:"), SATURDAY);
-    expect(c.money.autoGratuities).toEqual([{ table: "12", cents: 18000, tipOnTopCents: 2000 }]);
+    expect(c.money.autoGratuities).toEqual([{ label: "Table 12", cents: 18000, tipOnTopCents: 2000 }]);
     expect(c.money.serviceChargeCents).toBe(18000);
     const lineTotal = c.money.lines.reduce((t, l) => t + l.cents, 0);
     expect(lineTotal - c.money.feeCents).toBe(c.money.poolCents);
@@ -33,6 +33,20 @@ describe("close-out", () => {
     takeOut(d, HARTLEYS_FRIDAY, "hartleys-ruth", "FLSA-CRT");
     takeOut(d, HARTLEYS_FRIDAY, "hartleys-cole", "FLSA-CRT");
     expect(getCloseout(d, HARTLEYS_FRIDAY).blocking).toBe(0);
+  });
+
+  it("clears every block on a person when they're taken out", () => {
+    const d = openDb(":memory:");
+    d.prepare("update staff set role = 'cook' where id = 'hartleys-ruth'").run();
+    d.prepare("update shifts set station = 'cook' where staff_id = 'hartleys-ruth'").run();
+    d.prepare("update restaurants set points_per_hour = json_set(points_per_hour, '$.cook', 0.5) where id = 'hartleys'").run();
+    const before = getCloseout(d, HARTLEYS_FRIDAY);
+    expect(before.flags.filter((f) => f.staffId === "hartleys-ruth" && f.severity === "block")).toHaveLength(2);
+
+    takeOut(d, HARTLEYS_FRIDAY, "hartleys-ruth", "FLSA-CRT");
+    const after = getCloseout(d, HARTLEYS_FRIDAY);
+    expect(after.flags.filter((f) => f.staffId === "hartleys-ruth").every((f) => f.resolved)).toBe(true);
+    expect(after.blocking).toBe(1);
   });
 
   it("refuses to take out someone with no block flag", () => {

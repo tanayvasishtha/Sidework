@@ -57,6 +57,19 @@ describe("checkPool", () => {
     expect(flags).toContainEqual(expect.objectContaining({ ruleId: "FLSA-BOH", staffId: "luis" }));
   });
 
+  it("doesn't block someone whose kitchen hours sit outside the pool", () => {
+    const dual: Shift[] = [
+      { staffId: "maria", station: "server", start: "17:00", end: "21:00" },
+      { staffId: "maria", station: "cook", start: "11:00", end: "15:00" },
+    ];
+    const flags = checkPool(staff, dual, {
+      ...policy,
+      takesTipCredit: true,
+      pointsPerHour: { ...policy.pointsPerHour, cook: 0 },
+    });
+    expect(flags.some((f) => f.ruleId === "FLSA-BOH")).toBe(false);
+  });
+
   it("ignores people whose station earns no points", () => {
     const flags = checkPool(staff, shifts, {
       ...policy,

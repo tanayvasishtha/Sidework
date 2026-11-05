@@ -31,6 +31,12 @@ describe("dollarFigures", () => {
     expect(dollarFigures("You got $84.26, Friday was $2,310 and $5.5 more")).toEqual([8426, 231000, 550]);
     expect(dollarFigures("6.5 hours and 82.6 points")).toEqual([]);
   });
+
+  it("catches amounts written any other way", () => {
+    expect(dollarFigures("It was $2000 last week")).toEqual([200000]);
+    expect(dollarFigures("about 12 dollars less, and 1,200 bucks")).toEqual([1200, 120000]);
+    expect(dollarFigures("just 50 cents")).toEqual([50]);
+  });
 });
 
 describe("explainShare", () => {

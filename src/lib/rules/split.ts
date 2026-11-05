@@ -45,7 +45,8 @@ export function splitPool(
   }));
 
   const leftover = poolCents - allocations.reduce((sum, a) => sum + a.cents, 0);
-  if (leftover > 0) {
+  // Usually a few cents up. Float rounding can also land it a cent over, so this settles either way.
+  if (leftover !== 0) {
     const longest = [...allocations].sort(
       (a, b) => b.minutes - a.minutes || a.staffId.localeCompare(b.staffId),
     )[0];

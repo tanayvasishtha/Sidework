@@ -27,7 +27,7 @@ describe("verifyWebhook", () => {
   it("sends PayPal's headers, our webhook id and the event to be checked", async () => {
     const seen: unknown[] = [];
     const event = { id: "WH-1", event_type: "PAYMENT.PAYOUTS-ITEM.SUCCEEDED" };
-    await expect(verifyWebhook(client("SUCCESS", seen), "WEBHOOK-ID", headers, event)).resolves.toBe(true);
+    await expect(verifyWebhook(client("SUCCESS", seen), "WEBHOOK-ID", headers, JSON.stringify(event))).resolves.toBe(true);
     expect(seen[0]).toEqual({
       auth_algo: "SHA256withRSA",
       cert_url: "https://api.sandbox.paypal.com/v1/notifications/certs/CERT",
@@ -40,7 +40,24 @@ describe("verifyWebhook", () => {
   });
 
   it("rejects what PayPal won't confirm, and requests missing PayPal's headers", async () => {
-    await expect(verifyWebhook(client("FAILURE"), "W", headers, {})).resolves.toBe(false);
-    await expect(verifyWebhook(client("SUCCESS"), "W", new Headers(), {})).resolves.toBe(false);
+    await expect(verifyWebhook(client("FAILURE"), "W", headers, "{}")).resolves.toBe(false);
+    await expect(verifyWebhook(client("SUCCESS"), "W", new Headers(), "{}")).resolves.toBe(false);
+  });
+
+  it("returns the signed event byte for byte", async () => {
+    const bodies: string[] = [];
+    const raw = String.raw`{"note":"caf\u00e9 \/ tips"}`;
+    const c = createPayPalClient({
+      baseUrl: "https://api-m.sandbox.paypal.com",
+      clientId: "id",
+      clientSecret: "s",
+      fetch: (async (input: RequestInfo | URL, init: RequestInit = {}) => {
+        if (String(input).endsWith("/oauth2/token")) return Response.json({ access_token: "t", expires_in: 32400 });
+        bodies.push(String(init.body));
+        return Response.json({ verification_status: "SUCCESS" });
+      }) as typeof fetch,
+    });
+    await verifyWebhook(c, "W", headers, raw);
+    expect(bodies[0].endsWith(`"webhook_event":${raw}}`)).toBe(true);
   });
 });

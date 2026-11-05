@@ -1,5 +1,5 @@
 /** Bump when a table changes. The demo database is rebuilt and reseeded on a mismatch. */
-export const SCHEMA_VERSION = 6;
+export const SCHEMA_VERSION = 8;
 
 export const TABLES = [
   "payout_items",
@@ -100,6 +100,7 @@ create table if not exists flags (
 create table if not exists payout_batches (
   id text primary key,
   night_id text not null references nights(id),
+  sender_batch_id text not null unique,
   paypal_batch_id text unique,
   status text not null,
   created_at text not null,

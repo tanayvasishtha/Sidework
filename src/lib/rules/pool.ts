@@ -53,7 +53,7 @@ export function checkPool(staff: StaffMember[], shifts: Shift[], policy: Policy)
         ruleId: "FLSA-MGR",
         staffId: person.id,
         severity: "block",
-        message: `${person.name} has manager duties, so ${person.name} can't share in the pool.`,
+        message: `${person.name} can hire, fire or set schedules. Federal law counts that as a manager, whatever the job title says.`,
       });
       continue;
     }
@@ -80,8 +80,8 @@ export function checkPool(staff: StaffMember[], shifts: Shift[], policy: Policy)
       }
     }
 
-    const worksBackOfHouse = shifts.some((s) => s.staffId === person.id && isBackOfHouse(s.station));
-    if (policy.takesTipCredit && worksBackOfHouse) {
+    // Only hours that earn points count: a separate kitchen shift outside the pool is a different job.
+    if (policy.takesTipCredit && poolShifts.some((s) => isBackOfHouse(s.station))) {
       flags.push({
         ruleId: "FLSA-BOH",
         staffId: person.id,

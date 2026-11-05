@@ -37,7 +37,7 @@ export type Closeout = {
   people: (Staff & { shifts: NightShift[] })[];
   money: {
     lines: { label: string; cents: number }[];
-    autoGratuities: { table: string; cents: number; tipOnTopCents: number }[];
+    autoGratuities: { label: string; cents: number; tipOnTopCents: number }[];
     poolCents: number;
     serviceChargeCents: number;
     feeCents: number;
@@ -46,6 +46,8 @@ export type Closeout = {
   split: Share[];
   /** Block flags nobody has dealt with. Payment waits until this is zero. */
   blocking: number;
+  /** Money has left, or may have left, for this night, so its numbers can't change. */
+  locked: boolean;
   note: { text: string; applied: string[]; rejected: string[] } | null;
 };
 
@@ -60,6 +62,14 @@ const STATION_WORD: Record<string, string> = {
   dishwasher: "dish",
   manager: "managing",
 };
+
+/** A batch in one of these never moved money, so the night can be changed and paid again. */
+export const DEAD_BATCH_STATUSES: readonly string[] = ["FAILED", "DENIED", "CANCELED"];
+
+export function nightLocked(d: DatabaseSync, nightId: string): boolean {
+  const rows = d.prepare("select status from payout_batches where night_id = ?").all(nightId) as { status: string }[];
+  return rows.some((r) => !DEAD_BATCH_STATUSES.includes(r.status));
+}
 
 export function getNightShifts(d: DatabaseSync, nightId: string): NightShift[] {
   const rows = d
@@ -102,11 +112,12 @@ export function getCloseout(d: DatabaseSync, nightId: string): Closeout {
   const split = splitPool(money.tipPoolCents, shifts, restaurant.policy, excluded);
   const codeFlags = checkOccupationCodes(staff, split.map((a) => a.staffId));
 
+  // Taking someone out settles every block on them, not just the one that was clicked.
   const flags: CloseoutFlag[] = [...poolFlags, ...codeFlags, ...money.flags].map((f) => ({
     ...f,
     rule: RULES[f.ruleId],
     staffName: f.staffId ? byId.get(f.staffId)?.name : undefined,
-    resolved: resolved.has(`${f.ruleId}:${f.staffId ?? ""}`),
+    resolved: f.severity === "block" && f.staffId ? excluded.has(f.staffId) : resolved.has(`${f.ruleId}:${f.staffId ?? ""}`),
   }));
 
   const sum = (pick: (l: (typeof lines)[number]) => boolean) =>
@@ -155,7 +166,7 @@ export function getCloseout(d: DatabaseSync, nightId: string): Closeout {
       ].filter((l) => l.cents > 0),
       autoGratuities: lines
         .filter((l) => l.autoGratuityCents > 0 && !l.guestCouldChangeAutoGratuity)
-        .map((l) => ({ table: l.table, cents: l.autoGratuityCents, tipOnTopCents: l.tipCents })),
+        .map((l) => ({ label: l.label ?? l.id, cents: l.autoGratuityCents, tipOnTopCents: l.tipCents })),
       poolCents: money.tipPoolCents,
       serviceChargeCents: money.serviceChargeCents,
       feeCents: money.feeCents,
@@ -163,14 +174,18 @@ export function getCloseout(d: DatabaseSync, nightId: string): Closeout {
     flags,
     split: shares,
     blocking: flags.filter((f) => f.severity === "block" && !f.resolved).length,
+    locked: nightLocked(d, nightId),
     note: latest
       ? { text: latest.note, applied: JSON.parse(latest.applied) as string[], rejected: JSON.parse(latest.rejected) as string[] }
       : null,
   };
 }
 
+export const NIGHT_LOCKED = "Tonight's tips have gone out, so the schedule and the pool can't change.";
+
 /** The manager's fix for a block flag: this person comes out of tonight's pool. */
 export function takeOut(d: DatabaseSync, nightId: string, staffId: string, ruleId: Flag["ruleId"]): void {
+  if (nightLocked(d, nightId)) throw new Error(NIGHT_LOCKED);
   const flag = getCloseout(d, nightId).flags.find((f) => f.staffId === staffId && f.ruleId === ruleId && f.severity === "block");
   if (!flag) throw new Error(`There's no ${ruleId} block on ${staffId} tonight.`);
   if (flag.resolved) return;
@@ -181,6 +196,8 @@ export function takeOut(d: DatabaseSync, nightId: string, staffId: string, ruleI
 
 /** Replaces tonight's shifts with the edited schedule, marking what changed, and keeps the note. */
 export function saveShiftEdits(d: DatabaseSync, nightId: string, note: string, result: EditResult): void {
+  // Checked here too: a note can finish reading after the manager has already pressed pay.
+  if (nightLocked(d, nightId)) throw new Error(NIGHT_LOCKED);
   const key = (s: Shift) => `${s.staffId}|${s.station}|${s.start}|${s.end}`;
   const before = new Map(getNightShifts(d, nightId).map((s) => [key(s), s.edited]));
   d.exec("begin");
