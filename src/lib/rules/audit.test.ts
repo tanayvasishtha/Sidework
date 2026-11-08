@@ -6,6 +6,14 @@ const HARTLEYS_POLICY =
   "including the morning crew who set up and clean the dining room before we open at 4pm. " +
   "Servers and bartenders are paid $2.13 an hour plus tips. Card fees come off the top.";
 
+const NONE: PolicyReading["questions"] = {
+  manager_share: { answer: "not stated", quote: null },
+  house_share: { answer: "not stated", quote: null },
+  off_hours_share: { answer: "not stated", quote: null },
+  auto_gratuity_as_tips: { answer: "not stated", quote: null },
+  late_payout: { answer: "not stated", quote: null },
+};
+
 const hartleysReading: PolicyReading = {
   stations: [
     { station: "server", pointsPerHour: 1, quote: "Servers and bartenders earn 1 point an hour" },
@@ -16,13 +24,10 @@ const hartleysReading: PolicyReading = {
   tipCreditQuote: "Servers and bartenders are paid $2.13 an hour plus tips",
   cardFeePercent: null,
   cardFeeQuote: null,
-  clauses: [
-    {
-      kind: "off_hours_share",
-      quote: "including the morning crew who set up and clean the dining room before we open at 4pm",
-      summary: "Morning crew shares",
-    },
-  ],
+  questions: {
+    ...NONE,
+    off_hours_share: { answer: "yes", quote: "including the morning crew who set up and clean the dining room before we open at 4pm" },
+  },
 };
 
 const known = { takesTipCredit: true, serviceHours: { open: "16:00", close: "23:00" } };
@@ -58,7 +63,7 @@ describe("auditPolicy", () => {
     const audit = auditPolicy(
       {
         ...hartleysReading,
-        clauses: [{ kind: "manager_share", quote: "Managers get 5% of the pool", summary: "Managers share" }],
+        questions: { ...NONE, manager_share: { answer: "yes", quote: "Managers get 5% of the pool" } },
       },
       HARTLEYS_POLICY,
       known,
@@ -76,12 +81,12 @@ describe("auditPolicy", () => {
         tipCreditQuote: null,
         cardFeePercent: null,
         cardFeeQuote: null,
-        clauses: [
-          { kind: "manager_share", quote: "Managers get 5% of the pool", summary: "" },
-          { kind: "house_share", quote: "The house keeps 10% for breakage", summary: "" },
-          { kind: "late_payout", quote: "Tips are paid out once a month", summary: "" },
-          { kind: "other", quote: "Tips are paid out once a month", summary: "" },
-        ],
+        questions: {
+          ...NONE,
+          manager_share: { answer: "yes", quote: "Managers get 5% of the pool" },
+          house_share: { answer: "yes", quote: "The house keeps 10% for breakage" },
+          late_payout: { answer: "yes", quote: "Tips are paid out once a month" },
+        },
       },
       text,
       { takesTipCredit: false },
@@ -102,13 +107,30 @@ describe("auditPolicy", () => {
         tipCreditQuote: null,
         cardFeePercent: 8,
         cardFeeQuote: "We take 8% off card tips for processing",
-        clauses: [],
+        questions: NONE,
       },
       text,
       { takesTipCredit: true },
     );
     expect(audit.findings.map((f) => f.ruleId)).toEqual(["FLSA-BOH", "FLSA-FEE"]);
     expect(audit.policy.cardFeeRate).toBe(0.08);
+  });
+
+  it("never flags a sentence that rules a practice out", () => {
+    const text = "Managers don't share. Card, PayPal and Venmo fees come off the top.";
+    const audit = auditPolicy(
+      {
+        stations: [],
+        takesTipCredit: null,
+        tipCreditQuote: null,
+        cardFeePercent: null,
+        cardFeeQuote: null,
+        questions: { ...NONE, manager_share: { answer: "no", quote: "Managers don't share." } },
+      },
+      text,
+      { takesTipCredit: false },
+    );
+    expect(audit.findings).toEqual([]);
   });
 
   it("uses payroll's tip credit setting and says when the policy disagrees", () => {

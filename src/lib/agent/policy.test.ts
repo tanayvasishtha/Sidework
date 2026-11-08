@@ -6,6 +6,14 @@ import { auditHandbook } from "./policy";
 const POLICY =
   "All tips go in one pool at close. Servers earn 1 point an hour. Managers get 5% of the pool for running the floor.";
 
+const NONE: PolicyReading["questions"] = {
+  manager_share: { answer: "not stated", quote: null },
+  house_share: { answer: "not stated", quote: null },
+  off_hours_share: { answer: "not stated", quote: null },
+  auto_gratuity_as_tips: { answer: "not stated", quote: null },
+  late_payout: { answer: "not stated", quote: null },
+};
+
 function mockReading(reading: PolicyReading) {
   return new MockLanguageModelV4({
     doGenerate: {
@@ -28,7 +36,7 @@ describe("auditHandbook", () => {
       tipCreditQuote: null,
       cardFeePercent: null,
       cardFeeQuote: null,
-      clauses: [{ kind: "manager_share", quote: "Managers get 5% of the pool", summary: "Managers take 5%" }],
+      questions: { ...NONE, manager_share: { answer: "yes", quote: "Managers get 5% of the pool" } },
     });
     const audit = await auditHandbook(POLICY, { takesTipCredit: false }, m);
 
@@ -44,7 +52,7 @@ describe("auditHandbook", () => {
       tipCreditQuote: null,
       cardFeePercent: null,
       cardFeeQuote: null,
-      clauses: [],
+      questions: NONE,
     });
     await auditHandbook(POLICY, { takesTipCredit: false }, m);
     expect(m.doGenerateCalls[0].responseFormat).toMatchObject({ type: "json", name: "policy_reading" });

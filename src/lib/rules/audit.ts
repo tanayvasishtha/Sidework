@@ -8,16 +8,19 @@ export type PolicyReading = {
   tipCreditQuote: string | null;
   cardFeePercent: number | null;
   cardFeeQuote: string | null;
-  clauses: { kind: ClauseKind; quote: string; summary: string }[];
+  /** A yes or no on each risky practice, with the sentence that answers it. Only a quoted yes is judged. */
+  questions: Record<ClauseKind, { answer: "yes" | "no" | "not stated"; quote: string | null }>;
 };
 
-export type ClauseKind =
-  | "manager_share"
-  | "house_share"
-  | "off_hours_share"
-  | "auto_gratuity_as_tips"
-  | "late_payout"
-  | "other";
+export type ClauseKind = "manager_share" | "house_share" | "off_hours_share" | "auto_gratuity_as_tips" | "late_payout";
+
+const LABEL: Record<ClauseKind, string> = {
+  manager_share: "Managers share",
+  house_share: "The house keeps part of the pool",
+  off_hours_share: "Off-hours staff share",
+  auto_gratuity_as_tips: "Added gratuities counted as tips",
+  late_payout: "Tips held past payday",
+};
 
 export type AuditFinding = Flag & { quote: string };
 
@@ -141,11 +144,14 @@ export function auditPolicy(
     }
   }
 
-  for (const clause of reading.clauses) {
-    const rule = CLAUSE_RULES[clause.kind]?.(tipCredit);
+  // A sentence that rules a practice out answers "no", so it can never raise a flag.
+  for (const kind of Object.keys(LABEL) as ClauseKind[]) {
+    const answer = reading.questions[kind];
+    if (answer?.answer !== "yes") continue;
+    const rule = CLAUSE_RULES[kind]?.(tipCredit);
     if (!rule) continue;
-    if (!check(clause.quote, clause.summary)) continue;
-    findings.push({ ...rule, quote: clause.quote });
+    if (!check(answer.quote, LABEL[kind])) continue;
+    findings.push({ ...rule, quote: answer.quote });
   }
 
   return {
