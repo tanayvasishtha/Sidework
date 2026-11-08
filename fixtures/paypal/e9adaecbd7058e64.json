@@ -1,0 +1,162 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api-m.sandbox.paypal.com/v1/payments/payouts",
+    "body": {
+      "items": [
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "340.48"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:sam"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "261.90"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:tasha"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "227.05"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:jake"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "170.24"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:priya"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "157.14"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:elena"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "157.14"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:maria"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "157.14"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:omar"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "100.39"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:luis"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "98.21"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:rosa"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "87.30"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:kofi"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "87.30"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:lin"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "78.57"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:ben"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "65.47"
+          },
+          "note": "Your tips from Lucia's, Saturday, Nov 7",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "lucias-2026-11-07-1:ana"
+        }
+      ],
+      "sender_batch_header": {
+        "email_subject": "Your tips from Lucia's",
+        "sender_batch_id": "sidework-lucias-2026-11-07-1-mw7483np"
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "contentType": "application/json",
+    "body": "{\n  \"batch_header\": {\n    \"payout_batch_id\": \"RC6A64UPK9KL4\",\n    \"batch_status\": \"PENDING\",\n    \"sender_batch_header\": {\n      \"sender_batch_id\": \"sidework-lucias-2026-11-07-1-mw7483np\",\n      \"email_subject\": \"Your tips from Lucia's\"\n    }\n  },\n  \"links\": [\n    {\n      \"href\": \"https://api.sandbox.paypal.com/v1/payments/payouts/RC6A64UPK9KL4\",\n      \"rel\": \"self\",\n      \"method\": \"GET\",\n      \"encType\": \"application/json\"\n    }\n  ]\n}"
+  }
+}

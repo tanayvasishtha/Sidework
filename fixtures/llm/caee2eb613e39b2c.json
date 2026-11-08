@@ -1,0 +1,124 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.openai.com/v1/responses",
+    "body": {
+      "input": [
+        {
+          "content": "You turn a restaurant manager's end-of-night note into schedule edits.\nOnly report what the note says happened. Don't guess or add anything.\n\nEdit kinds:\n- end: someone left at a time (\"cut at 9\", \"went home at 10:30\"). Set at.\n- start: someone came in at a different time (\"came in late at 6\"). Set at.\n- move: someone switched station at a time (\"covered bar after 8\"). Set at and station.\n- absent: someone on the schedule didn't work (\"called out\", \"no-show\"). No times.\n- add: someone not on the schedule worked a shift (\"picked up a host shift 5 to 10\"). Set station, start, end.\n\nTimes are 24-hour HH:MM. This is a dinner service, so a bare \"9\" or \"at 8\" means 21:00 or 20:00, and \"1\" after midnight means 01:00.\nMatch people by the names in the roster and use their id.",
+          "role": "developer"
+        },
+        {
+          "content": [
+            {
+              "text": "Roster:\n- Ana Ruiz, id ana, Host\n- Ben Carter, id ben, Food runner\n- Dave Marsh, id dave, Floor manager\n- Elena Rossi, id elena, Server\n- Jake Park, id jake, Server\n- Kofi Mensah, id kofi, Barback\n- Lin Chen, id lin, Busser\n- Luis Ortega, id luis, Line cook\n- Maria Lopez, id maria, Server\n- Omar Haddad, id omar, Server\n- Priya Nair, id priya, Server\n- Rosa Diaz, id rosa, Dishwasher\n- Sam Okafor, id sam, Bartender\n- Tasha Reed, id tasha, Bartender\n\nPosted schedule:\n- Dave Marsh (dave): server 16:00 to 01:00\n- Elena Rossi (elena): server 16:00 to 22:00\n- Jake Park (jake): server 16:00 to 00:40\n- Luis Ortega (luis): cook 16:00 to 23:40\n- Sam Okafor (sam): bartender 16:00 to 00:40\n- Ana Ruiz (ana): host 17:00 to 22:00\n- Ben Carter (ben): runner 17:00 to 23:00\n- Maria Lopez (maria): server 17:00 to 23:00\n- Priya Nair (priya): server 17:00 to 23:30\n- Rosa Diaz (rosa): dishwasher 17:00 to 00:30\n- Kofi Mensah (kofi): barback 18:00 to 00:40\n- Lin Chen (lin): busser 18:00 to 00:40\n- Omar Haddad (omar): server 18:00 to 00:00\n- Tasha Reed (tasha): bartender 18:00 to 00:40\n\nManager's note:\nSam called out sick. Maria cut at 9. Jake covered bar after 8.",
+              "type": "input_text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "gpt-5-mini",
+      "text": {
+        "format": {
+          "name": "shift_edits",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "properties": {
+              "edits": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "at": {
+                      "description": "24-hour \"HH:MM\". Null when this kind of edit has no such time.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "end": {
+                      "description": "24-hour \"HH:MM\". Null when this kind of edit has no such time.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "kind": {
+                      "enum": [
+                        "end",
+                        "start",
+                        "move",
+                        "absent",
+                        "add"
+                      ],
+                      "type": "string"
+                    },
+                    "quote": {
+                      "description": "The words of the note this edit comes from, copied exactly.",
+                      "type": "string"
+                    },
+                    "staffId": {
+                      "description": "The id from the roster.",
+                      "type": "string"
+                    },
+                    "start": {
+                      "description": "24-hour \"HH:MM\". Null when this kind of edit has no such time.",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "station": {
+                      "anyOf": [
+                        {
+                          "enum": [
+                            "server",
+                            "bartender",
+                            "busser",
+                            "runner",
+                            "barback",
+                            "host",
+                            "cook",
+                            "dishwasher",
+                            "manager"
+                          ],
+                          "type": "string"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "staffId",
+                    "at",
+                    "station",
+                    "start",
+                    "end",
+                    "quote"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "edits"
+            ],
+            "type": "object"
+          },
+          "strict": true,
+          "type": "json_schema"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": "{\n  \"id\": \"resp_038103ec5d20767e006aefc780b4bc87d2af66a20bf080de03\",\n  \"object\": \"response\",\n  \"created_at\": 1794099072,\n  \"status\": \"completed\",\n  \"access_programs\": null,\n  \"background\": false,\n  \"billing\": {\n    \"payer\": \"openai\"\n  },\n  \"completed_at\": 1794099081,\n  \"error\": null,\n  \"frequency_penalty\": 0,\n  \"image\": {\n    \"context_compression\": \"disabled\"\n  },\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"max_tool_calls\": null,\n  \"model\": \"gpt-5-mini-2025-08-07\",\n  \"moderation\": null,\n  \"output\": [\n    {\n      \"id\": \"rs_038103ec5d20767e006aefc781ba1887d2bf8d5cff818e0ec5\",\n      \"type\": \"reasoning\",\n      \"content\": [],\n      \"encrypted_content\": \"redacted\",\n      \"summary\": []\n    },\n    {\n      \"id\": \"msg_038103ec5d20767e006aefc788225887d2aa0fb127cc9309ac\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"logprobs\": [],\n          \"text\": \"{\\\"edits\\\":[{\\\"kind\\\":\\\"absent\\\",\\\"staffId\\\":\\\"sam\\\",\\\"at\\\":null,\\\"station\\\":null,\\\"start\\\":null,\\\"end\\\":null,\\\"quote\\\":\\\"Sam called out sick.\\\"},{\\\"kind\\\":\\\"end\\\",\\\"staffId\\\":\\\"maria\\\",\\\"at\\\":\\\"21:00\\\",\\\"station\\\":null,\\\"start\\\":null,\\\"end\\\":null,\\\"quote\\\":\\\"Maria cut at 9.\\\"},{\\\"kind\\\":\\\"move\\\",\\\"staffId\\\":\\\"jake\\\",\\\"at\\\":\\\"20:00\\\",\\\"station\\\":\\\"bartender\\\",\\\"start\\\":null,\\\"end\\\":null,\\\"quote\\\":\\\"Jake covered bar after 8.\\\"}]}\"\n        }\n      ],\n      \"role\": \"assistant\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"presence_penalty\": 0,\n  \"previous_response_id\": null,\n  \"prompt_cache_key\": null,\n  \"prompt_cache_retention\": \"in_memory\",\n  \"reasoning\": {\n    \"context\": \"current_turn\",\n    \"effort\": \"medium\",\n    \"mode\": \"standard\",\n    \"summary\": null\n  },\n  \"safety_identifier\": null,\n  \"service_tier\": \"default\",\n  \"store\": true,\n  \"temperature\": 1,\n  \"text\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"description\": null,\n      \"name\": \"shift_edits\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"edits\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"kind\": {\n                  \"type\": \"string\",\n                  \"enum\": [\n                    \"end\",\n                    \"start\",\n                    \"move\",\n                    \"absent\",\n                    \"add\"\n                  ]\n                },\n                \"staffId\": {\n                  \"type\": \"string\",\n                  \"description\": \"The id from the roster.\"\n                },\n                \"at\": {\n                  \"description\": \"24-hour \\\"HH:MM\\\". Null when this kind of edit has no such time.\",\n                  \"type\": [\n                    \"string\",\n                    \"null\"\n                  ]\n                },\n                \"station\": {\n                  \"anyOf\": [\n                    {\n                      \"type\": \"string\",\n                      \"enum\": [\n                        \"server\",\n                        \"bartender\",\n                        \"busser\",\n                        \"runner\",\n                        \"barback\",\n                        \"host\",\n                        \"cook\",\n                        \"dishwasher\",\n                        \"manager\"\n                      ]\n                    },\n                    {\n                      \"type\": \"null\"\n                    }\n                  ]\n                },\n                \"start\": {\n                  \"description\": \"24-hour \\\"HH:MM\\\". Null when this kind of edit has no such time.\",\n                  \"type\": [\n                    \"string\",\n                    \"null\"\n                  ]\n                },\n                \"end\": {\n                  \"description\": \"24-hour \\\"HH:MM\\\". Null when this kind of edit has no such time.\",\n                  \"type\": [\n                    \"string\",\n                    \"null\"\n                  ]\n                },\n                \"quote\": {\n                  \"type\": \"string\",\n                  \"description\": \"The words of the note this edit comes from, copied exactly.\"\n                }\n              },\n              \"required\": [\n                \"kind\",\n                \"staffId\",\n                \"at\",\n                \"station\",\n                \"start\",\n                \"end\",\n                \"quote\"\n              ],\n              \"additionalProperties\": false\n            }\n          }\n        },\n        \"required\": [\n          \"edits\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": true\n    },\n    \"verbosity\": \"medium\"\n  },\n  \"tool_choice\": \"auto\",\n  \"tool_usage\": {\n    \"image_gen\": {\n      \"input_tokens\": 0,\n      \"input_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"web_search\": {\n      \"num_requests\": 0\n    }\n  },\n  \"tools\": [],\n  \"top_logprobs\": 0,\n  \"top_p\": 1,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 876,\n    \"input_tokens_details\": {\n      \"cache_write_tokens\": 0,\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 871,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 704\n    },\n    \"total_tokens\": 1747\n  },\n  \"user\": null,\n  \"metadata\": {}\n}"
+  }
+}

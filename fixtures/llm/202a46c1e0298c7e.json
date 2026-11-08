@@ -1,0 +1,292 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.openai.com/v1/responses",
+    "body": {
+      "input": [
+        {
+          "content": "You read a US restaurant's written tip pool policy and report what it says.\nYou do not judge whether anything is legal. A separate rules engine does that.\n\nRules for your answer:\n- Every quote must be copied from the policy exactly. If you can't quote it, leave it out.\n- stations: each job given a share rate. Map job names to: server, bartender, busser, runner (food runner), barback, host, cook (any line or prep cook, chef), dishwasher, manager (managers, supervisors, shift leads).\n- questions: answer each one yes, no or not stated, from what the policy actually says.\n  A sentence that rules something out is a no. \"Managers don't share\" answers the manager question no.\n  Answer yes only when the policy says the practice happens.",
+          "role": "developer"
+        },
+        {
+          "content": [
+            {
+              "text": "Tip policy:\n\nTips are pooled at close and split by hours. Servers earn 1 point an hour, hosts 0.5. Before the split, the house keeps 3% of the pool to cover breakage and walkouts.",
+              "type": "input_text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "gpt-5-mini",
+      "text": {
+        "format": {
+          "name": "policy_reading",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "properties": {
+              "cardFeePercent": {
+                "description": "Percent taken off card tips for processing. Null if not mentioned.",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "cardFeeQuote": {
+                "anyOf": [
+                  {
+                    "description": "The policy's exact words, copied character for character. Never reworded.",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "questions": {
+                "additionalProperties": false,
+                "properties": {
+                  "auto_gratuity_as_tips": {
+                    "additionalProperties": false,
+                    "description": "Does the policy put added or automatic gratuities into the tip pool, or call them tips? Only mentioning that a gratuity is added means not stated.",
+                    "properties": {
+                      "answer": {
+                        "enum": [
+                          "yes",
+                          "no",
+                          "not stated"
+                        ],
+                        "type": "string"
+                      },
+                      "quote": {
+                        "anyOf": [
+                          {
+                            "description": "The policy's exact words, copied character for character. Never reworded.",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "description": "The sentence that answers it, copied exactly. Null when not stated."
+                      }
+                    },
+                    "required": [
+                      "answer",
+                      "quote"
+                    ],
+                    "type": "object"
+                  },
+                  "house_share": {
+                    "additionalProperties": false,
+                    "description": "Does the restaurant keep, borrow or spend any part of the pool, for breakage, walkouts or a house share? Card processing fees taken off tips are not this: report those in cardFeePercent.",
+                    "properties": {
+                      "answer": {
+                        "enum": [
+                          "yes",
+                          "no",
+                          "not stated"
+                        ],
+                        "type": "string"
+                      },
+                      "quote": {
+                        "anyOf": [
+                          {
+                            "description": "The policy's exact words, copied character for character. Never reworded.",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "description": "The sentence that answers it, copied exactly. Null when not stated."
+                      }
+                    },
+                    "required": [
+                      "answer",
+                      "quote"
+                    ],
+                    "type": "object"
+                  },
+                  "late_payout": {
+                    "additionalProperties": false,
+                    "description": "Are tips held past the next regular payday, for example paid monthly or at year end?",
+                    "properties": {
+                      "answer": {
+                        "enum": [
+                          "yes",
+                          "no",
+                          "not stated"
+                        ],
+                        "type": "string"
+                      },
+                      "quote": {
+                        "anyOf": [
+                          {
+                            "description": "The policy's exact words, copied character for character. Never reworded.",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "description": "The sentence that answers it, copied exactly. Null when not stated."
+                      }
+                    },
+                    "required": [
+                      "answer",
+                      "quote"
+                    ],
+                    "type": "object"
+                  },
+                  "manager_share": {
+                    "additionalProperties": false,
+                    "description": "Does the policy give managers, supervisors or shift leads any part of the pool? A sentence that keeps them out means no.",
+                    "properties": {
+                      "answer": {
+                        "enum": [
+                          "yes",
+                          "no",
+                          "not stated"
+                        ],
+                        "type": "string"
+                      },
+                      "quote": {
+                        "anyOf": [
+                          {
+                            "description": "The policy's exact words, copied character for character. Never reworded.",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "description": "The sentence that answers it, copied exactly. Null when not stated."
+                      }
+                    },
+                    "required": [
+                      "answer",
+                      "quote"
+                    ],
+                    "type": "object"
+                  },
+                  "off_hours_share": {
+                    "additionalProperties": false,
+                    "description": "Do staff share who only work when no guests are present, such as a morning setup or cleaning crew?",
+                    "properties": {
+                      "answer": {
+                        "enum": [
+                          "yes",
+                          "no",
+                          "not stated"
+                        ],
+                        "type": "string"
+                      },
+                      "quote": {
+                        "anyOf": [
+                          {
+                            "description": "The policy's exact words, copied character for character. Never reworded.",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "description": "The sentence that answers it, copied exactly. Null when not stated."
+                      }
+                    },
+                    "required": [
+                      "answer",
+                      "quote"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "manager_share",
+                  "house_share",
+                  "off_hours_share",
+                  "auto_gratuity_as_tips",
+                  "late_payout"
+                ],
+                "type": "object"
+              },
+              "stations": {
+                "description": "One entry per job the policy gives a share rate to.",
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "pointsPerHour": {
+                      "description": "Pool points per hour worked at this station. 0 if the policy says they don't share.",
+                      "type": "number"
+                    },
+                    "quote": {
+                      "description": "The policy's exact words, copied character for character. Never reworded.",
+                      "type": "string"
+                    },
+                    "station": {
+                      "enum": [
+                        "server",
+                        "bartender",
+                        "busser",
+                        "runner",
+                        "barback",
+                        "host",
+                        "cook",
+                        "dishwasher",
+                        "manager"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "station",
+                    "pointsPerHour",
+                    "quote"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "takesTipCredit": {
+                "description": "True if tipped staff are paid below the full minimum wage (for example $2.13 an hour). Null if the policy doesn't say.",
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "tipCreditQuote": {
+                "anyOf": [
+                  {
+                    "description": "The policy's exact words, copied character for character. Never reworded.",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "stations",
+              "takesTipCredit",
+              "tipCreditQuote",
+              "cardFeePercent",
+              "cardFeeQuote",
+              "questions"
+            ],
+            "type": "object"
+          },
+          "strict": true,
+          "type": "json_schema"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": "{\n  \"id\": \"resp_0ebb71c0dc55ddb2006aefc9844f7087d2a3544f7d8a72d3cc\",\n  \"object\": \"response\",\n  \"created_at\": 1794099588,\n  \"status\": \"completed\",\n  \"access_programs\": null,\n  \"background\": false,\n  \"billing\": {\n    \"payer\": \"openai\"\n  },\n  \"completed_at\": 1794099597,\n  \"error\": null,\n  \"frequency_penalty\": 0,\n  \"image\": {\n    \"context_compression\": \"disabled\"\n  },\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"max_tool_calls\": null,\n  \"model\": \"gpt-5-mini-2025-08-07\",\n  \"moderation\": null,\n  \"output\": [\n    {\n      \"id\": \"rs_0ebb71c0dc55ddb2006aefc9848a7c87d2a41186d2595c612a\",\n      \"type\": \"reasoning\",\n      \"content\": [],\n      \"encrypted_content\": \"redacted\",\n      \"summary\": []\n    },\n    {\n      \"id\": \"msg_0ebb71c0dc55ddb2006aefc98ad64087d2b22ecaf810d1b671\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"logprobs\": [],\n          \"text\": \"{\\n  \\\"stations\\\": [\\n    {\\n      \\\"station\\\": \\\"server\\\",\\n      \\\"pointsPerHour\\\": 1,\\n      \\\"quote\\\": \\\"Servers earn 1 point an hour, hosts 0.5.\\\"\\n    },\\n    {\\n      \\\"station\\\": \\\"host\\\",\\n      \\\"pointsPerHour\\\": 0.5,\\n      \\\"quote\\\": \\\"Servers earn 1 point an hour, hosts 0.5.\\\"\\n    }\\n  ],\\n  \\\"takesTipCredit\\\": null,\\n  \\\"tipCreditQuote\\\": null,\\n  \\\"cardFeePercent\\\": null,\\n  \\\"cardFeeQuote\\\": null,\\n  \\\"questions\\\": {\\n    \\\"manager_share\\\": {\\n      \\\"answer\\\": \\\"not stated\\\",\\n      \\\"quote\\\": null\\n    },\\n    \\\"house_share\\\": {\\n      \\\"answer\\\": \\\"yes\\\",\\n      \\\"quote\\\": \\\"Before the split, the house keeps 3% of the pool to cover breakage and walkouts.\\\"\\n    },\\n    \\\"off_hours_share\\\": {\\n      \\\"answer\\\": \\\"not stated\\\",\\n      \\\"quote\\\": null\\n    },\\n    \\\"auto_gratuity_as_tips\\\": {\\n      \\\"answer\\\": \\\"not stated\\\",\\n      \\\"quote\\\": null\\n    },\\n    \\\"late_payout\\\": {\\n      \\\"answer\\\": \\\"not stated\\\",\\n      \\\"quote\\\": null\\n    }\\n  }\\n}\"\n        }\n      ],\n      \"role\": \"assistant\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"presence_penalty\": 0,\n  \"previous_response_id\": null,\n  \"prompt_cache_key\": null,\n  \"prompt_cache_retention\": \"in_memory\",\n  \"reasoning\": {\n    \"context\": \"current_turn\",\n    \"effort\": \"medium\",\n    \"mode\": \"standard\",\n    \"summary\": null\n  },\n  \"safety_identifier\": null,\n  \"service_tier\": \"default\",\n  \"store\": true,\n  \"temperature\": 1,\n  \"text\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"description\": null,\n      \"name\": \"policy_reading\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"stations\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"station\": {\n                  \"type\": \"string\",\n                  \"enum\": [\n                    \"server\",\n                    \"bartender\",\n                    \"busser\",\n                    \"runner\",\n                    \"barback\",\n                    \"host\",\n                    \"cook\",\n                    \"dishwasher\",\n                    \"manager\"\n                  ]\n                },\n                \"pointsPerHour\": {\n                  \"type\": \"number\",\n                  \"description\": \"Pool points per hour worked at this station. 0 if the policy says they don't share.\"\n                },\n                \"quote\": {\n                  \"type\": \"string\",\n                  \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n                }\n              },\n              \"required\": [\n                \"station\",\n                \"pointsPerHour\",\n                \"quote\"\n              ],\n              \"additionalProperties\": false\n            },\n            \"description\": \"One entry per job the policy gives a share rate to.\"\n          },\n          \"takesTipCredit\": {\n            \"description\": \"True if tipped staff are paid below the full minimum wage (for example $2.13 an hour). Null if the policy doesn't say.\",\n            \"type\": [\n              \"boolean\",\n              \"null\"\n            ]\n          },\n          \"tipCreditQuote\": {\n            \"anyOf\": [\n              {\n                \"type\": \"string\",\n                \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n              },\n              {\n                \"type\": \"null\"\n              }\n            ]\n          },\n          \"cardFeePercent\": {\n            \"description\": \"Percent taken off card tips for processing. Null if not mentioned.\",\n            \"type\": [\n              \"number\",\n              \"null\"\n            ]\n          },\n          \"cardFeeQuote\": {\n            \"anyOf\": [\n              {\n                \"type\": \"string\",\n                \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n              },\n              {\n                \"type\": \"null\"\n              }\n            ]\n          },\n          \"questions\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"manager_share\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"answer\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"yes\",\n                      \"no\",\n                      \"not stated\"\n                    ]\n                  },\n                  \"quote\": {\n                    \"anyOf\": [\n                      {\n                        \"type\": \"string\",\n                        \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n                      },\n                      {\n                        \"type\": \"null\"\n                      }\n                    ],\n                    \"description\": \"The sentence that answers it, copied exactly. Null when not stated.\"\n                  }\n                },\n                \"required\": [\n                  \"answer\",\n                  \"quote\"\n                ],\n                \"description\": \"Does the policy give managers, supervisors or shift leads any part of the pool? A sentence that keeps them out means no.\",\n                \"additionalProperties\": false\n              },\n              \"house_share\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"answer\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"yes\",\n                      \"no\",\n                      \"not stated\"\n                    ]\n                  },\n                  \"quote\": {\n                    \"anyOf\": [\n                      {\n                        \"type\": \"string\",\n                        \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n                      },\n                      {\n                        \"type\": \"null\"\n                      }\n                    ],\n                    \"description\": \"The sentence that answers it, copied exactly. Null when not stated.\"\n                  }\n                },\n                \"required\": [\n                  \"answer\",\n                  \"quote\"\n                ],\n                \"description\": \"Does the restaurant keep, borrow or spend any part of the pool, for breakage, walkouts or a house share? Card processing fees taken off tips are not this: report those in cardFeePercent.\",\n                \"additionalProperties\": false\n              },\n              \"off_hours_share\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"answer\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"yes\",\n                      \"no\",\n                      \"not stated\"\n                    ]\n                  },\n                  \"quote\": {\n                    \"anyOf\": [\n                      {\n                        \"type\": \"string\",\n                        \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n                      },\n                      {\n                        \"type\": \"null\"\n                      }\n                    ],\n                    \"description\": \"The sentence that answers it, copied exactly. Null when not stated.\"\n                  }\n                },\n                \"required\": [\n                  \"answer\",\n                  \"quote\"\n                ],\n                \"description\": \"Do staff share who only work when no guests are present, such as a morning setup or cleaning crew?\",\n                \"additionalProperties\": false\n              },\n              \"auto_gratuity_as_tips\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"answer\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"yes\",\n                      \"no\",\n                      \"not stated\"\n                    ]\n                  },\n                  \"quote\": {\n                    \"anyOf\": [\n                      {\n                        \"type\": \"string\",\n                        \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n                      },\n                      {\n                        \"type\": \"null\"\n                      }\n                    ],\n                    \"description\": \"The sentence that answers it, copied exactly. Null when not stated.\"\n                  }\n                },\n                \"required\": [\n                  \"answer\",\n                  \"quote\"\n                ],\n                \"description\": \"Does the policy put added or automatic gratuities into the tip pool, or call them tips? Only mentioning that a gratuity is added means not stated.\",\n                \"additionalProperties\": false\n              },\n              \"late_payout\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"answer\": {\n                    \"type\": \"string\",\n                    \"enum\": [\n                      \"yes\",\n                      \"no\",\n                      \"not stated\"\n                    ]\n                  },\n                  \"quote\": {\n                    \"anyOf\": [\n                      {\n                        \"type\": \"string\",\n                        \"description\": \"The policy's exact words, copied character for character. Never reworded.\"\n                      },\n                      {\n                        \"type\": \"null\"\n                      }\n                    ],\n                    \"description\": \"The sentence that answers it, copied exactly. Null when not stated.\"\n                  }\n                },\n                \"required\": [\n                  \"answer\",\n                  \"quote\"\n                ],\n                \"description\": \"Are tips held past the next regular payday, for example paid monthly or at year end?\",\n                \"additionalProperties\": false\n              }\n            },\n            \"required\": [\n              \"manager_share\",\n              \"house_share\",\n              \"off_hours_share\",\n              \"auto_gratuity_as_tips\",\n              \"late_payout\"\n            ],\n            \"additionalProperties\": false\n          }\n        },\n        \"required\": [\n          \"stations\",\n          \"takesTipCredit\",\n          \"tipCreditQuote\",\n          \"cardFeePercent\",\n          \"cardFeeQuote\",\n          \"questions\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": true\n    },\n    \"verbosity\": \"medium\"\n  },\n  \"tool_choice\": \"auto\",\n  \"tool_usage\": {\n    \"image_gen\": {\n      \"input_tokens\": 0,\n      \"input_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"web_search\": {\n      \"num_requests\": 0\n    }\n  },\n  \"tools\": [],\n  \"top_logprobs\": 0,\n  \"top_p\": 1,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 1051,\n    \"input_tokens_details\": {\n      \"cache_write_tokens\": 0,\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 1064,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 768\n    },\n    \"total_tokens\": 2115\n  },\n  \"user\": null,\n  \"metadata\": {}\n}"
+  }
+}

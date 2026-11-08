@@ -1,0 +1,49 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.openai.com/v1/responses",
+    "body": {
+      "input": [
+        {
+          "content": "You answer a restaurant worker's question about their tip share.\nUse only the facts given. Speak to the worker as \"you\", in two or three short sentences, plainly.\nEvery dollar amount you write must appear in the facts exactly as written. Don't add, subtract or round to make new amounts.\nHours and points may be restated from the facts.\nIf the facts can't answer the question, say so and suggest asking the manager.\nNever give tax or legal advice beyond what the facts state.",
+          "role": "developer"
+        },
+        {
+          "content": [
+            {
+              "text": "Facts:\n- Worker: Maria Lopez, Server, at Lucia's.\n- Tonight (Saturday, Nov 7): worked 6 hours at server, 1 points per hour.\n- Tonight: their points 6, everyone's points 75.9, 13 people shared.\n- Tonight: pool after card fees $1,988.33. Card fees taken from the whole pool $54.97.\n- Tonight: their tips $157.14, figured as pool times their points divided by everyone's points.\n- Previous shift (Friday, Nov 6): worked 6.5 hours, pool $2,109.82, their tips $201.67.\n- Tonight compared with the previous shift: $44.53 less.\n- Qualified tips so far this year, not counting tonight unless paid: $13,588.39. Deduction limit $25,000.00.\n\nQuestion: Why less than Friday?",
+              "type": "input_text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "gpt-5-mini",
+      "text": {
+        "format": {
+          "name": "share_answer",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "properties": {
+              "answer": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "answer"
+            ],
+            "type": "object"
+          },
+          "strict": true,
+          "type": "json_schema"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": "{\n  \"id\": \"resp_09cec59a1a924cc1006aefc766d79887d2875149f8f6193c00\",\n  \"object\": \"response\",\n  \"created_at\": 1794099046,\n  \"status\": \"completed\",\n  \"access_programs\": null,\n  \"background\": false,\n  \"billing\": {\n    \"payer\": \"openai\"\n  },\n  \"completed_at\": 1794099053,\n  \"error\": null,\n  \"frequency_penalty\": 0,\n  \"image\": {\n    \"context_compression\": \"disabled\"\n  },\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"max_tool_calls\": null,\n  \"model\": \"gpt-5-mini-2025-08-07\",\n  \"moderation\": null,\n  \"output\": [\n    {\n      \"id\": \"rs_09cec59a1a924cc1006aefc7673dc487d29cfa5dd40fe70e11\",\n      \"type\": \"reasoning\",\n      \"content\": [],\n      \"encrypted_content\": \"redacted\",\n      \"summary\": []\n    },\n    {\n      \"id\": \"msg_09cec59a1a924cc1006aefc76c235887d29cada12b78cca016\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"logprobs\": [],\n          \"text\": \"{\\\"answer\\\":\\\"It's less because tonight the pool after card fees was $1,988.33 (card fees $54.97 taken from the whole pool) versus $2,109.82 on Friday. Your share was figured as pool times your points divided by everyone's points, and tonight you had 6 points out of everyone's 75.9 with 13 people sharing.\\\"}\"\n        }\n      ],\n      \"role\": \"assistant\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"presence_penalty\": 0,\n  \"previous_response_id\": null,\n  \"prompt_cache_key\": null,\n  \"prompt_cache_retention\": \"in_memory\",\n  \"reasoning\": {\n    \"context\": \"current_turn\",\n    \"effort\": \"medium\",\n    \"mode\": \"standard\",\n    \"summary\": null\n  },\n  \"safety_identifier\": null,\n  \"service_tier\": \"default\",\n  \"store\": true,\n  \"temperature\": 1,\n  \"text\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"description\": null,\n      \"name\": \"share_answer\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"answer\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"answer\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": true\n    },\n    \"verbosity\": \"medium\"\n  },\n  \"tool_choice\": \"auto\",\n  \"tool_usage\": {\n    \"image_gen\": {\n      \"input_tokens\": 0,\n      \"input_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"web_search\": {\n      \"num_requests\": 0\n    }\n  },\n  \"tools\": [],\n  \"top_logprobs\": 0,\n  \"top_p\": 1,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 318,\n    \"input_tokens_details\": {\n      \"cache_write_tokens\": 0,\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 743,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 640\n    },\n    \"total_tokens\": 1061\n  },\n  \"user\": null,\n  \"metadata\": {}\n}"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api-m.sandbox.paypal.com/v1/payments/payouts",
+    "body": {
+      "items": [
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "101.49"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-devon"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "95.09"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-marcus"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "88.75"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-grace"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "76.07"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-holly"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "44.37"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-pia"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "38.03"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-jules"
+        },
+        {
+          "amount": {
+            "currency": "USD",
+            "value": "38.03"
+          },
+          "note": "Your tips from Hartley's Chophouse, Friday, Nov 6",
+          "receiver": "sb-49hj253772298@personal.example.com",
+          "recipient_type": "EMAIL",
+          "recipient_wallet": "PAYPAL",
+          "sender_item_id": "hartleys-2026-11-06-1:hartleys-tess"
+        }
+      ],
+      "sender_batch_header": {
+        "email_subject": "Your tips from Hartley's Chophouse",
+        "sender_batch_id": "sidework-hartleys-2026-11-06-1-mw74cmu5"
+      }
+    }
+  },
+  "response": {
+    "status": 201,
+    "contentType": "application/json",
+    "body": "{\n  \"batch_header\": {\n    \"payout_batch_id\": \"Z4HDD2TVDCTZS\",\n    \"batch_status\": \"PENDING\",\n    \"sender_batch_header\": {\n      \"sender_batch_id\": \"sidework-hartleys-2026-11-06-1-mw74cmu5\",\n      \"email_subject\": \"Your tips from Hartley's Chophouse\"\n    }\n  },\n  \"links\": [\n    {\n      \"href\": \"https://api.sandbox.paypal.com/v1/payments/payouts/Z4HDD2TVDCTZS\",\n      \"rel\": \"self\",\n      \"method\": \"GET\",\n      \"encType\": \"application/json\"\n    }\n  ]\n}"
+  }
+}

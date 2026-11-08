@@ -1,0 +1,99 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.openai.com/v1/responses",
+    "body": {
+      "input": [
+        {
+          "content": "You work out who shares in a restaurant's tip pool tonight and how many points each person earns.\nUse only the written tip policy and the shifts you are given.\n\nFor each person who shares, list every station they worked, the minutes at that station, and the points per hour the policy gives that station.\nA shift ending at or before its start runs past midnight. \"16:00 to 00:40\" is 520 minutes.\nLeave out anyone listed as out of the pool, and any station the policy gives no share.\nDon't calculate dollars. A separate program does that.",
+          "role": "developer"
+        },
+        {
+          "content": [
+            {
+              "text": "Tip policy:\nAll tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1 point an hour. Bussers earn 0.5 points an hour. Food runners earn 0.5 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Tipped staff are paid $2.13 an hour plus tips. Card, PayPal and Venmo fees of 2.9% come off the top.\n\nRoster:\n- Gus Hale, id gus, Server\n- Nia Grant, id nia, Server\n- Lena Voss, id lena, Server\n- Dev Rao, id dev, Server\n- Ada Morris, id ada, Server\n- Cara Lund, id cara, Bartender\n- Milo Reyes, id milo, Bartender\n- Sol Vega, id sol, Busser\n- Ben Ortiz, id ben, Food runner\n- Owen Fitch, id owen, Host\n- Kai Nolan, id kai, Line cook\n- Eli Stone, id eli, Dishwasher\n- Pia Marsh, id pia, Barback\n\nTonight's shifts:\n- Gus Hale (gus): server 17:00 to 22:20\n- Nia Grant (nia): server 18:00 to 22:10\n- Lena Voss (lena): server 18:00 to 01:10\n- Dev Rao (dev): server 16:30 to 22:30\n- Ada Morris (ada): server 17:30 to 22:30\n- Cara Lund (cara): bartender 18:00 to 22:00\n- Milo Reyes (milo): bartender 17:30 to 22:00\n- Sol Vega (sol): busser 18:00 to 02:30\n- Ben Ortiz (ben): runner 17:00 to 22:40\n- Owen Fitch (owen): host 18:00 to 01:20\n- Kai Nolan (kai): cook 18:00 to 22:20\n- Eli Stone (eli): dishwasher 16:30 to 00:20\n- Pia Marsh (pia): barback 16:30 to 22:10\n\nOut of the pool tonight:\n- Nobody",
+              "type": "input_text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "gpt-5-mini",
+      "text": {
+        "format": {
+          "name": "split_reading",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "properties": {
+              "people": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "staffId": {
+                      "description": "The id from the roster.",
+                      "type": "string"
+                    },
+                    "stations": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "minutes": {
+                            "description": "Minutes worked at this station, counted from the shift times.",
+                            "type": "number"
+                          },
+                          "pointsPerHour": {
+                            "description": "Points per hour for this station, from the written policy.",
+                            "type": "number"
+                          },
+                          "station": {
+                            "enum": [
+                              "server",
+                              "bartender",
+                              "busser",
+                              "runner",
+                              "barback",
+                              "host",
+                              "cook",
+                              "dishwasher",
+                              "manager"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "station",
+                          "minutes",
+                          "pointsPerHour"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "staffId",
+                    "stations"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "people"
+            ],
+            "type": "object"
+          },
+          "strict": true,
+          "type": "json_schema"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": "{\n  \"id\": \"resp_05a9706d528e9bf1006aefc9247aac87d28e2d429a0ac7f5cb\",\n  \"object\": \"response\",\n  \"created_at\": 1794099492,\n  \"status\": \"completed\",\n  \"access_programs\": null,\n  \"background\": false,\n  \"billing\": {\n    \"payer\": \"openai\"\n  },\n  \"completed_at\": 1794099506,\n  \"error\": null,\n  \"frequency_penalty\": 0,\n  \"image\": {\n    \"context_compression\": \"disabled\"\n  },\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"max_tool_calls\": null,\n  \"model\": \"gpt-5-mini-2025-08-07\",\n  \"moderation\": null,\n  \"output\": [\n    {\n      \"id\": \"rs_05a9706d528e9bf1006aefc924e36087d29abb12040707375c\",\n      \"type\": \"reasoning\",\n      \"content\": [],\n      \"encrypted_content\": \"redacted\",\n      \"summary\": []\n    },\n    {\n      \"id\": \"msg_05a9706d528e9bf1006aefc92dcb6887d2a3c5deeba6ccb630\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"logprobs\": [],\n          \"text\": \"{\\n  \\\"people\\\": [\\n    {\\n      \\\"staffId\\\": \\\"gus\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"server\\\",\\n          \\\"minutes\\\": 320,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"nia\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"server\\\",\\n          \\\"minutes\\\": 250,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"lena\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"server\\\",\\n          \\\"minutes\\\": 430,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"dev\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"server\\\",\\n          \\\"minutes\\\": 360,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"ada\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"server\\\",\\n          \\\"minutes\\\": 300,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"cara\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"bartender\\\",\\n          \\\"minutes\\\": 240,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"milo\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"bartender\\\",\\n          \\\"minutes\\\": 270,\\n          \\\"pointsPerHour\\\": 1\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"sol\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"busser\\\",\\n          \\\"minutes\\\": 510,\\n          \\\"pointsPerHour\\\": 0.5\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"ben\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"runner\\\",\\n          \\\"minutes\\\": 340,\\n          \\\"pointsPerHour\\\": 0.5\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"owen\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"host\\\",\\n          \\\"minutes\\\": 440,\\n          \\\"pointsPerHour\\\": 0.5\\n        }\\n      ]\\n    },\\n    {\\n      \\\"staffId\\\": \\\"pia\\\",\\n      \\\"stations\\\": [\\n        {\\n          \\\"station\\\": \\\"barback\\\",\\n          \\\"minutes\\\": 340,\\n          \\\"pointsPerHour\\\": 0.5\\n        }\\n      ]\\n    }\\n  ]\\n}\"\n        }\n      ],\n      \"role\": \"assistant\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"presence_penalty\": 0,\n  \"previous_response_id\": null,\n  \"prompt_cache_key\": null,\n  \"prompt_cache_retention\": \"in_memory\",\n  \"reasoning\": {\n    \"context\": \"current_turn\",\n    \"effort\": \"medium\",\n    \"mode\": \"standard\",\n    \"summary\": null\n  },\n  \"safety_identifier\": null,\n  \"service_tier\": \"default\",\n  \"store\": true,\n  \"temperature\": 1,\n  \"text\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"description\": null,\n      \"name\": \"split_reading\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"people\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"staffId\": {\n                  \"type\": \"string\",\n                  \"description\": \"The id from the roster.\"\n                },\n                \"stations\": {\n                  \"type\": \"array\",\n                  \"items\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"station\": {\n                        \"type\": \"string\",\n                        \"enum\": [\n                          \"server\",\n                          \"bartender\",\n                          \"busser\",\n                          \"runner\",\n                          \"barback\",\n                          \"host\",\n                          \"cook\",\n                          \"dishwasher\",\n                          \"manager\"\n                        ]\n                      },\n                      \"minutes\": {\n                        \"type\": \"number\",\n                        \"description\": \"Minutes worked at this station, counted from the shift times.\"\n                      },\n                      \"pointsPerHour\": {\n                        \"type\": \"number\",\n                        \"description\": \"Points per hour for this station, from the written policy.\"\n                      }\n                    },\n                    \"required\": [\n                      \"station\",\n                      \"minutes\",\n                      \"pointsPerHour\"\n                    ],\n                    \"additionalProperties\": false\n                  }\n                }\n              },\n              \"required\": [\n                \"staffId\",\n                \"stations\"\n              ],\n              \"additionalProperties\": false\n            }\n          }\n        },\n        \"required\": [\n          \"people\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": true\n    },\n    \"verbosity\": \"medium\"\n  },\n  \"tool_choice\": \"auto\",\n  \"tool_usage\": {\n    \"image_gen\": {\n      \"input_tokens\": 0,\n      \"input_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"web_search\": {\n      \"num_requests\": 0\n    }\n  },\n  \"tools\": [],\n  \"top_logprobs\": 0,\n  \"top_p\": 1,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 741,\n    \"input_tokens_details\": {\n      \"cache_write_tokens\": 0,\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 1683,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 1088\n    },\n    \"total_tokens\": 2424\n  },\n  \"user\": null,\n  \"metadata\": {}\n}"
+  }
+}

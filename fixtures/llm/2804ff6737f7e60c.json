@@ -1,0 +1,99 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.openai.com/v1/responses",
+    "body": {
+      "input": [
+        {
+          "content": "You work out who shares in a restaurant's tip pool tonight and how many points each person earns.\nUse only the written tip policy and the shifts you are given.\n\nFor each person who shares, list every station they worked, the minutes at that station, and the points per hour the policy gives that station.\nA shift ending at or before its start runs past midnight. \"16:00 to 00:40\" is 520 minutes.\nLeave out anyone listed as out of the pool, and any station the policy gives no share.\nDon't calculate dollars. A separate program does that.",
+          "role": "developer"
+        },
+        {
+          "content": [
+            {
+              "text": "Tip policy:\nAll tips go in one pool at close. Servers and bartenders earn 1 point an hour. Bussers, hosts and food runners earn 0.5, including the morning crew who set up and clean the dining room before we open at 4pm. Servers and bartenders are paid $2.13 an hour plus tips. Card fees come off the top.\n\nRoster:\n- Cole Barrett, id hartleys-cole, Food runner, morning crew\n- Devon Price, id hartleys-devon, Bartender\n- Grace Kim, id hartleys-grace, Server\n- Holly Vance, id hartleys-holly, Server\n- Jules Avery, id hartleys-jules, Host\n- Marcus Bell, id hartleys-marcus, Server\n- Pia Laurent, id hartleys-pia, Host\n- Ruth Ellis, id hartleys-ruth, Busser, morning crew\n- Tess Moreno, id hartleys-tess, Busser\n\nTonight's shifts:\n- Ruth Ellis (hartleys-ruth): busser 09:00 to 14:00\n- Cole Barrett (hartleys-cole): runner 10:00 to 15:00\n- Pia Laurent (hartleys-pia): host 11:00 to 15:00\n- Pia Laurent (hartleys-pia): host 16:00 to 19:00\n- Devon Price (hartleys-devon): bartender 16:00 to 00:00\n- Grace Kim (hartleys-grace): server 16:00 to 23:00\n- Jules Avery (hartleys-jules): host 16:00 to 22:00\n- Marcus Bell (hartleys-marcus): server 16:00 to 23:30\n- Holly Vance (hartleys-holly): server 17:00 to 23:00\n- Tess Moreno (hartleys-tess): busser 17:00 to 23:00\n\nOut of the pool tonight:\n- Cole Barrett: With a tip credit, only staff who customarily and regularly get tips can share\n- Ruth Ellis: With a tip credit, only staff who customarily and regularly get tips can share",
+              "type": "input_text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "gpt-5-mini",
+      "text": {
+        "format": {
+          "name": "split_reading",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "properties": {
+              "people": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "staffId": {
+                      "description": "The id from the roster.",
+                      "type": "string"
+                    },
+                    "stations": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "minutes": {
+                            "description": "Minutes worked at this station, counted from the shift times.",
+                            "type": "number"
+                          },
+                          "pointsPerHour": {
+                            "description": "Points per hour for this station, from the written policy.",
+                            "type": "number"
+                          },
+                          "station": {
+                            "enum": [
+                              "server",
+                              "bartender",
+                              "busser",
+                              "runner",
+                              "barback",
+                              "host",
+                              "cook",
+                              "dishwasher",
+                              "manager"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "station",
+                          "minutes",
+                          "pointsPerHour"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "staffId",
+                    "stations"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "people"
+            ],
+            "type": "object"
+          },
+          "strict": true,
+          "type": "json_schema"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": "{\n  \"id\": \"resp_081dd56016ccf0df006aefc7fb0c6487d2a0859635a61366e0\",\n  \"object\": \"response\",\n  \"created_at\": 1794099195,\n  \"status\": \"completed\",\n  \"access_programs\": null,\n  \"background\": false,\n  \"billing\": {\n    \"payer\": \"openai\"\n  },\n  \"completed_at\": 1794099206,\n  \"error\": null,\n  \"frequency_penalty\": 0,\n  \"image\": {\n    \"context_compression\": \"disabled\"\n  },\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"max_tool_calls\": null,\n  \"model\": \"gpt-5-mini-2025-08-07\",\n  \"moderation\": null,\n  \"output\": [\n    {\n      \"id\": \"rs_081dd56016ccf0df006aefc7fb4d6887d2875a88fd99d1cacb\",\n      \"type\": \"reasoning\",\n      \"content\": [],\n      \"encrypted_content\": \"redacted\",\n      \"summary\": []\n    },\n    {\n      \"id\": \"msg_081dd56016ccf0df006aefc804a5fc87d2bd1158b2272f76a6\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"logprobs\": [],\n          \"text\": \"{\\\"people\\\":[{\\\"staffId\\\":\\\"hartleys-devon\\\",\\\"stations\\\":[{\\\"station\\\":\\\"bartender\\\",\\\"minutes\\\":480,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"hartleys-grace\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":420,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"hartleys-holly\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":360,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"hartleys-jules\\\",\\\"stations\\\":[{\\\"station\\\":\\\"host\\\",\\\"minutes\\\":360,\\\"pointsPerHour\\\":0.5}]},{\\\"staffId\\\":\\\"hartleys-marcus\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":450,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"hartleys-pia\\\",\\\"stations\\\":[{\\\"station\\\":\\\"host\\\",\\\"minutes\\\":240,\\\"pointsPerHour\\\":0.5},{\\\"station\\\":\\\"host\\\",\\\"minutes\\\":180,\\\"pointsPerHour\\\":0.5}]},{\\\"staffId\\\":\\\"hartleys-tess\\\",\\\"stations\\\":[{\\\"station\\\":\\\"busser\\\",\\\"minutes\\\":360,\\\"pointsPerHour\\\":0.5}]}]}\"\n        }\n      ],\n      \"role\": \"assistant\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"presence_penalty\": 0,\n  \"previous_response_id\": null,\n  \"prompt_cache_key\": null,\n  \"prompt_cache_retention\": \"in_memory\",\n  \"reasoning\": {\n    \"context\": \"current_turn\",\n    \"effort\": \"medium\",\n    \"mode\": \"standard\",\n    \"summary\": null\n  },\n  \"safety_identifier\": null,\n  \"service_tier\": \"default\",\n  \"store\": true,\n  \"temperature\": 1,\n  \"text\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"description\": null,\n      \"name\": \"split_reading\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"people\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"staffId\": {\n                  \"type\": \"string\",\n                  \"description\": \"The id from the roster.\"\n                },\n                \"stations\": {\n                  \"type\": \"array\",\n                  \"items\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"station\": {\n                        \"type\": \"string\",\n                        \"enum\": [\n                          \"server\",\n                          \"bartender\",\n                          \"busser\",\n                          \"runner\",\n                          \"barback\",\n                          \"host\",\n                          \"cook\",\n                          \"dishwasher\",\n                          \"manager\"\n                        ]\n                      },\n                      \"minutes\": {\n                        \"type\": \"number\",\n                        \"description\": \"Minutes worked at this station, counted from the shift times.\"\n                      },\n                      \"pointsPerHour\": {\n                        \"type\": \"number\",\n                        \"description\": \"Points per hour for this station, from the written policy.\"\n                      }\n                    },\n                    \"required\": [\n                      \"station\",\n                      \"minutes\",\n                      \"pointsPerHour\"\n                    ],\n                    \"additionalProperties\": false\n                  }\n                }\n              },\n              \"required\": [\n                \"staffId\",\n                \"stations\"\n              ],\n              \"additionalProperties\": false\n            }\n          }\n        },\n        \"required\": [\n          \"people\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": true\n    },\n    \"verbosity\": \"medium\"\n  },\n  \"tool_choice\": \"auto\",\n  \"tool_usage\": {\n    \"image_gen\": {\n      \"input_tokens\": 0,\n      \"input_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"web_search\": {\n      \"num_requests\": 0\n    }\n  },\n  \"tools\": [],\n  \"top_logprobs\": 0,\n  \"top_p\": 1,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 722,\n    \"input_tokens_details\": {\n      \"cache_write_tokens\": 0,\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 1385,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 1152\n    },\n    \"total_tokens\": 2107\n  },\n  \"user\": null,\n  \"metadata\": {}\n}"
+  }
+}

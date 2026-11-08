@@ -1,0 +1,99 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.openai.com/v1/responses",
+    "body": {
+      "input": [
+        {
+          "content": "You work out who shares in a restaurant's tip pool tonight and how many points each person earns.\nUse only the written tip policy and the shifts you are given.\n\nFor each person who shares, list every station they worked, the minutes at that station, and the points per hour the policy gives that station.\nA shift ending at or before its start runs past midnight. \"16:00 to 00:40\" is 520 minutes.\nLeave out anyone listed as out of the pool, and any station the policy gives no share.\nDon't calculate dollars. A separate program does that.",
+          "role": "developer"
+        },
+        {
+          "content": [
+            {
+              "text": "Tip policy:\nAll tips go in one pool at close. Servers earn 1 point an hour. Bartenders earn 1.5 points an hour. Bussers earn 0.5 points an hour. Food runners earn 0.75 points an hour. Hosts earn 0.5 points an hour. Barbacks earn 0.5 points an hour. Parties of 8 or more get 18% added. Everyone is paid at least $15 an hour.\n\nRoster:\n- Lena Voss, id lena, Server\n- June Park, id june, Server\n- Gus Hale, id gus, Server\n- Ada Morris, id ada, Server\n- Eli Stone, id eli, Server\n- Ben Ortiz, id ben, Bartender\n- Milo Reyes, id milo, Busser\n- Cara Lund, id cara, Food runner\n- Ivan Cole, id ivan, Host\n- Hana Sato, id hana, Line cook\n- Dev Rao, id dev, Dishwasher\n\nTonight's shifts:\n- Lena Voss (lena): server 16:00 to 18:00\n- June Park (june): server 17:00 to 00:10\n- Gus Hale (gus): server 18:00 to 01:50\n- Ada Morris (ada): server 16:30 to 22:40\n- Eli Stone (eli): server 18:00 to 22:30\n- Ben Ortiz (ben): bartender 17:00 to 01:10\n- Milo Reyes (milo): busser 18:00 to 00:10\n- Cara Lund (cara): runner 16:00 to 00:00\n- Ivan Cole (ivan): host 16:00 to 00:00\n- Hana Sato (hana): cook 16:00 to 20:30\n- Dev Rao (dev): dishwasher 16:00 to 20:00\n- Lena Voss (lena): bartender 18:00 to 20:20\n\nOut of the pool tonight:\n- Nobody",
+              "type": "input_text"
+            }
+          ],
+          "role": "user"
+        }
+      ],
+      "model": "gpt-5-mini",
+      "text": {
+        "format": {
+          "name": "split_reading",
+          "schema": {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "additionalProperties": false,
+            "properties": {
+              "people": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "staffId": {
+                      "description": "The id from the roster.",
+                      "type": "string"
+                    },
+                    "stations": {
+                      "items": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "minutes": {
+                            "description": "Minutes worked at this station, counted from the shift times.",
+                            "type": "number"
+                          },
+                          "pointsPerHour": {
+                            "description": "Points per hour for this station, from the written policy.",
+                            "type": "number"
+                          },
+                          "station": {
+                            "enum": [
+                              "server",
+                              "bartender",
+                              "busser",
+                              "runner",
+                              "barback",
+                              "host",
+                              "cook",
+                              "dishwasher",
+                              "manager"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "station",
+                          "minutes",
+                          "pointsPerHour"
+                        ],
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "staffId",
+                    "stations"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "people"
+            ],
+            "type": "object"
+          },
+          "strict": true,
+          "type": "json_schema"
+        }
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "contentType": "application/json",
+    "body": "{\n  \"id\": \"resp_0e52c6d99a2d72fd006aefc967e48087d281a882ea3f85cb59\",\n  \"object\": \"response\",\n  \"created_at\": 1794099559,\n  \"status\": \"completed\",\n  \"access_programs\": null,\n  \"background\": false,\n  \"billing\": {\n    \"payer\": \"openai\"\n  },\n  \"completed_at\": 1794099572,\n  \"error\": null,\n  \"frequency_penalty\": 0,\n  \"image\": {\n    \"context_compression\": \"disabled\"\n  },\n  \"incomplete_details\": null,\n  \"instructions\": null,\n  \"max_output_tokens\": null,\n  \"max_tool_calls\": null,\n  \"model\": \"gpt-5-mini-2025-08-07\",\n  \"moderation\": null,\n  \"output\": [\n    {\n      \"id\": \"rs_0e52c6d99a2d72fd006aefc96824dc87d2bc4708232213c96f\",\n      \"type\": \"reasoning\",\n      \"content\": [],\n      \"encrypted_content\": \"redacted\",\n      \"summary\": []\n    },\n    {\n      \"id\": \"msg_0e52c6d99a2d72fd006aefc972786087d2823c699318372f9b\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"logprobs\": [],\n          \"text\": \"{\\\"people\\\":[{\\\"staffId\\\":\\\"lena\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":120,\\\"pointsPerHour\\\":1},{\\\"station\\\":\\\"bartender\\\",\\\"minutes\\\":140,\\\"pointsPerHour\\\":1.5}]},{\\\"staffId\\\":\\\"june\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":430,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"gus\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":470,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"ada\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":370,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"eli\\\",\\\"stations\\\":[{\\\"station\\\":\\\"server\\\",\\\"minutes\\\":270,\\\"pointsPerHour\\\":1}]},{\\\"staffId\\\":\\\"ben\\\",\\\"stations\\\":[{\\\"station\\\":\\\"bartender\\\",\\\"minutes\\\":490,\\\"pointsPerHour\\\":1.5}]},{\\\"staffId\\\":\\\"milo\\\",\\\"stations\\\":[{\\\"station\\\":\\\"busser\\\",\\\"minutes\\\":370,\\\"pointsPerHour\\\":0.5}]},{\\\"staffId\\\":\\\"cara\\\",\\\"stations\\\":[{\\\"station\\\":\\\"runner\\\",\\\"minutes\\\":480,\\\"pointsPerHour\\\":0.75}]},{\\\"staffId\\\":\\\"ivan\\\",\\\"stations\\\":[{\\\"station\\\":\\\"host\\\",\\\"minutes\\\":480,\\\"pointsPerHour\\\":0.5}]}]}\"\n        }\n      ],\n      \"role\": \"assistant\"\n    }\n  ],\n  \"parallel_tool_calls\": true,\n  \"presence_penalty\": 0,\n  \"previous_response_id\": null,\n  \"prompt_cache_key\": null,\n  \"prompt_cache_retention\": \"in_memory\",\n  \"reasoning\": {\n    \"context\": \"current_turn\",\n    \"effort\": \"medium\",\n    \"mode\": \"standard\",\n    \"summary\": null\n  },\n  \"safety_identifier\": null,\n  \"service_tier\": \"default\",\n  \"store\": true,\n  \"temperature\": 1,\n  \"text\": {\n    \"format\": {\n      \"type\": \"json_schema\",\n      \"description\": null,\n      \"name\": \"split_reading\",\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"people\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"staffId\": {\n                  \"type\": \"string\",\n                  \"description\": \"The id from the roster.\"\n                },\n                \"stations\": {\n                  \"type\": \"array\",\n                  \"items\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"station\": {\n                        \"type\": \"string\",\n                        \"enum\": [\n                          \"server\",\n                          \"bartender\",\n                          \"busser\",\n                          \"runner\",\n                          \"barback\",\n                          \"host\",\n                          \"cook\",\n                          \"dishwasher\",\n                          \"manager\"\n                        ]\n                      },\n                      \"minutes\": {\n                        \"type\": \"number\",\n                        \"description\": \"Minutes worked at this station, counted from the shift times.\"\n                      },\n                      \"pointsPerHour\": {\n                        \"type\": \"number\",\n                        \"description\": \"Points per hour for this station, from the written policy.\"\n                      }\n                    },\n                    \"required\": [\n                      \"station\",\n                      \"minutes\",\n                      \"pointsPerHour\"\n                    ],\n                    \"additionalProperties\": false\n                  }\n                }\n              },\n              \"required\": [\n                \"staffId\",\n                \"stations\"\n              ],\n              \"additionalProperties\": false\n            }\n          }\n        },\n        \"required\": [\n          \"people\"\n        ],\n        \"additionalProperties\": false\n      },\n      \"strict\": true\n    },\n    \"verbosity\": \"medium\"\n  },\n  \"tool_choice\": \"auto\",\n  \"tool_usage\": {\n    \"image_gen\": {\n      \"input_tokens\": 0,\n      \"input_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"output_tokens\": 0,\n      \"output_tokens_details\": {\n        \"image_tokens\": 0,\n        \"text_tokens\": 0\n      },\n      \"total_tokens\": 0\n    },\n    \"web_search\": {\n      \"num_requests\": 0\n    }\n  },\n  \"tools\": [],\n  \"top_logprobs\": 0,\n  \"top_p\": 1,\n  \"truncation\": \"disabled\",\n  \"usage\": {\n    \"input_tokens\": 696,\n    \"input_tokens_details\": {\n      \"cache_write_tokens\": 0,\n      \"cached_tokens\": 0\n    },\n    \"output_tokens\": 1551,\n    \"output_tokens_details\": {\n      \"reasoning_tokens\": 1280\n    },\n    \"total_tokens\": 2247\n  },\n  \"user\": null,\n  \"metadata\": {}\n}"
+  }
+}
