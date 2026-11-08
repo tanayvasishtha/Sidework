@@ -40,7 +40,8 @@ export default function CheckPage({ params }: PageProps<"/check/[token]">) {
 async function Check({ params }: { params: PageProps<"/check/[token]">["params"] }) {
   await connection();
   const { token } = await params;
-  const ids = readCheckToken(token, settings().CHECK_SECRET);
+  const secret = settings().checkSecret;
+  const ids = secret ? readCheckToken(token, secret) : null;
   if (!ids) notFound();
   const check = getWorkerCheck(db(), ids.nightId, ids.staffId);
   if (!check) notFound();

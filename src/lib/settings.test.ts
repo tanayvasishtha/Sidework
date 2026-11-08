@@ -35,7 +35,13 @@ describe("loadSettings", () => {
     const s = loadSettings({ OPENAI_API_KEY: "", PAYPAL_SANDBOX_RECEIVER: "", CHECK_SECRET: " ", REPLAY: "" });
     expect(s.mode).toBe("replay");
     expect(s.PAYPAL_SANDBOX_RECEIVER).toBeUndefined();
-    expect(s.CHECK_SECRET.length).toBeGreaterThanOrEqual(16);
+    expect(s.checkSecret?.length).toBeGreaterThanOrEqual(16);
+  });
+
+  it("never signs worker links with the public fallback on Render", () => {
+    expect(loadSettings({ RENDER: "true" }).checkSecret).toBeNull();
+    expect(loadSettings({ RENDER: "true", CHECK_SECRET: "a-long-random-secret-value" }).checkSecret).toBe("a-long-random-secret-value");
+    expect(loadSettings({}).checkSecret).toBe("sidework-local-demo-secret");
   });
 
   it("names the bad field in its error", () => {

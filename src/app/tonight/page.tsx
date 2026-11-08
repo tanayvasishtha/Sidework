@@ -104,7 +104,7 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
   const live = payoutStands(payout) ? payout : null;
   const sent = live?.paypalBatchId ? live : null;
   const statusFor = new Map(sent?.items.map((i) => [i.staffId, i]) ?? []);
-  const secret = settings().CHECK_SECRET;
+  const secret = settings().checkSecret;
 
   return (
     <section className={styles.right} aria-labelledby="tips">
@@ -201,9 +201,13 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
           {c.split.map((s) => (
             <tr key={s.staffId} className={blockedIds.has(s.staffId) ? styles.blockedRow : undefined}>
               <td>
-                <Link href={`/check/${checkToken(c.night.id, s.staffId, secret)}`} className={styles.person}>
-                  {s.name}
-                </Link>
+                {secret ? (
+                  <Link href={`/check/${checkToken(c.night.id, s.staffId, secret)}`} className={styles.person}>
+                    {s.name}
+                  </Link>
+                ) : (
+                  s.name
+                )}
                 <div className={styles.muted}>{blockedIds.has(s.staffId) ? "Can't stay in the pool" : s.detail}</div>
               </td>
               <td className="num">

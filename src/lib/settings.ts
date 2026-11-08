@@ -11,8 +11,10 @@ const schema = z.object({
   // land somewhere they can be claimed. Staff emails like maria@sidework.test can't be.
   PAYPAL_SANDBOX_RECEIVER: z.string().email().optional(),
   DATABASE_PATH: z.string().default("data/sidework.db"),
-  // Signs each worker's private check link. Set a long random value anywhere public.
-  CHECK_SECRET: z.string().min(16).default("sidework-local-demo-secret"),
+  // Signs each worker's private check link. Required anywhere public.
+  CHECK_SECRET: z.string().min(16).optional(),
+  // Render sets this on every service it runs.
+  RENDER: z.string().optional(),
   REPLAY: z.enum(["auto", "record", "off"]).default("auto"),
   FIXTURES_DIR: z.string().default("fixtures"),
 });
@@ -23,6 +25,8 @@ export type Mode = "live" | "replay";
 export type ServiceMode = "live" | "record" | "replay";
 
 export type Settings = z.infer<typeof schema> & {
+  /** Null on a public host with no CHECK_SECRET set: worker links are then switched off, never signed with a known key. */
+  checkSecret: string | null;
   mode: Mode;
   paypalMode: ServiceMode;
   llmMode: ServiceMode;
@@ -54,7 +58,10 @@ export function loadSettings(env: Record<string, string | undefined> = process.e
   const llmMode = serviceMode(s.REPLAY, hasOpenAI);
   const mode: Mode = paypalMode !== "replay" && llmMode !== "replay" ? "live" : "replay";
 
-  return { ...s, mode, paypalMode, llmMode, hasOpenAI, hasPayPal };
+  // The local fallback is in the public repo, so it may only sign links on a private machine.
+  const checkSecret = s.CHECK_SECRET ?? (s.RENDER ? null : "sidework-local-demo-secret");
+
+  return { ...s, checkSecret, mode, paypalMode, llmMode, hasOpenAI, hasPayPal };
 }
 
 let cached: Settings | undefined;

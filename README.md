@@ -2,7 +2,9 @@
 
 Splits restaurant tip pools by the rules and pays staff the same night through PayPal.
 
-<!-- Live URL and a 30-second GIF go here once the Render deploy is up. -->
+**Live demo:** [sidework-0i01.onrender.com](https://sidework-0i01.onrender.com). No sign-in and no keys: it replays a recorded live run against the PayPal sandbox and OpenAI. The free server sleeps when idle, so the first load can take about a minute.
+
+<!-- A 30-second GIF goes here once the video is cut. -->
 
 At close, a manager writes what changed on the shift in plain words. Sidework updates the schedule, checks the tip pool against federal tip law, keeps automatic gratuities out of the qualified tips, and has an AI agent work out the split on its own so a rules engine can check it to the cent. Once the manager approves, everyone is paid through PayPal Payouts. Staff can choose PayPal or Venmo, but PayPal's sandbox can't send Venmo payouts, so the demo pays everyone by PayPal. Each worker gets a private link showing how their share was figured, their qualified tips for the year, and the tip codes their W-2 now has to carry.
 
