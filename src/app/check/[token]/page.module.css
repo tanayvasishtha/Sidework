@@ -79,10 +79,14 @@
   color: var(--ink);
 }
 
+/* Two rows tall with one rule under it, so no rule runs through the large type. */
 .total {
   font-size: 22px;
   font-weight: 600;
   min-height: 56px;
+  margin: 0 -16px;
+  padding: 0 16px 4px;
+  background: linear-gradient(180deg, var(--paper) 0 55px, var(--paper-rule) 55px 56px);
 }
 
 .provisional {
