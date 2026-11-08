@@ -56,7 +56,7 @@ From `npm run eval` ([eval/RESULTS.md](eval/RESULTS.md)) on 56 test nights with 
 
 ## What broke and how it was fixed
 
-- A stress test of 5,000 random nights against the answer key found that float division put a share one cent off on about 1 night in 1,000. The 56 scenarios had missed it. All money math now runs in whole numbers, and the stress test stays in the suite.
+- A stress test of 5,000 random nights against the answer key found that float division put a share one cent off on 7 of those nights. The 56 scenarios had missed it. All money math now runs in whole numbers, and the stress test stays in the suite.
 - An early design had the agent compute each share itself. It would miss by a cent, so the check would have meant nothing. Now the agent only reports what it read (hours and rates), and both sides go through the same arithmetic, so a difference is a real disagreement.
 - A retry could have paid everyone twice: if PayPal accepted a batch and the response was lost, a new batch id would pay again. Ambiguous failures (no response, timeout, 5xx) now keep the night locked, and the retry resends the same batch id and request id. PayPal won't run a second batch under an id it has already seen, so nobody is paid twice.
 - The first draft of the pitch said the Perry's ruling was about managers in the pool. The court record says it was pre-opening staff who weren't customarily tipped. That correction became a rule of its own, and the demo's second restaurant is built on the facts of the case.
