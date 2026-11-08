@@ -11,7 +11,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: "Sidework",
   description:
-    "Splits restaurant tip pools by the rules and pays staff the same night through PayPal and Venmo.",
+    "Splits restaurant tip pools by the rules and pays staff the same night through PayPal.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

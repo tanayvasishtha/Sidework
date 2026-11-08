@@ -1,6 +1,6 @@
 # Sidework
 
-Splits restaurant tip pools by the rules and pays staff the same night through PayPal and Venmo.
+Splits restaurant tip pools by the rules and pays staff the same night through PayPal.
 
 <!-- Live URL and a 30-second GIF go here once the Render deploy is up. -->
 
