@@ -18,8 +18,7 @@ export async function askAction(_prev: AskState, formData: FormData): Promise<As
   if (!question) return { error: "Type a question first." };
   if (question.length > 300) return { error: "Keep the question under 300 characters." };
 
-  const secret = settings().checkSecret;
-  const ids = secret ? readCheckToken(String(formData.get("token") ?? ""), secret) : null;
+  const ids = readCheckToken(String(formData.get("token") ?? ""), settings().checkSecret);
   const check = ids ? getWorkerCheck(db(), ids.nightId, ids.staffId) : null;
   if (!check) return { error: "This link doesn't match a payout check." };
 

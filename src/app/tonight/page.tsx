@@ -201,13 +201,9 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
           {c.split.map((s) => (
             <tr key={s.staffId} className={blockedIds.has(s.staffId) ? styles.blockedRow : undefined}>
               <td>
-                {secret ? (
-                  <Link href={`/check/${checkToken(c.night.id, s.staffId, secret)}`} className={styles.person}>
-                    {s.name}
-                  </Link>
-                ) : (
-                  s.name
-                )}
+                <Link href={`/check/${checkToken(c.night.id, s.staffId, secret)}`} className={styles.person}>
+                  {s.name}
+                </Link>
                 <div className={styles.muted}>{blockedIds.has(s.staffId) ? "Can't stay in the pool" : s.detail}</div>
               </td>
               <td className="num">
