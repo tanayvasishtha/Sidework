@@ -1,6 +1,7 @@
-// Sends $1.00 to one Venmo and one PayPal sandbox receiver, then waits for the result.
-// npm run sandbox:check -- --venmo <sandbox email or @handle> --paypal <sandbox email>
-// The sandbox rejects the PHONE recipient type, so test Venmo with an email or handle.
+// Sends $1.00 to a sandbox receiver, then waits for the result.
+// npm run sandbox:check -- --paypal <US sandbox personal email>
+// --venmo is kept for live accounts. PayPal's sandbox rejects every Venmo payout
+// ("Recipient wallet not supported in sandbox", seen Nov 8 2026).
 
 import { parseArgs } from "node:util";
 import { type PayoutLine, getPayoutBatch, createPayoutBatch, paypal } from "@/lib/paypal";

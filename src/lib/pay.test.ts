@@ -2,7 +2,16 @@ import { describe, expect, it } from "vitest";
 import { acceptEngineSplit, getCloseout, saveShiftEdits, saveSplitCheck, takeOut } from "@/lib/closeout";
 import { openDb, SATURDAY } from "@/lib/db";
 import { createPayPalClient } from "@/lib/paypal";
-import { applyPayoutEvent, getNightPayout, payoutStands, PayRefusedError, PayUncertainError, payNight, refreshPayout } from "./pay";
+import {
+  applyPayoutEvent,
+  getNightPayout,
+  payoutStands,
+  PayRefusedError,
+  PayUncertainError,
+  payNight,
+  refreshPayout,
+  walletSent,
+} from "./pay";
 
 const SANDBOX = "https://api-m.sandbox.paypal.com";
 
@@ -64,8 +73,9 @@ describe("payNight", () => {
     expect(batches).toHaveLength(1);
     const sent = batches[0];
     expect(sent.items).toHaveLength(13);
+    // Maria chose Venmo, which PayPal's sandbox can't pay, so she's paid to PayPal there.
     expect(sent.items.find((i) => i.sender_item_id.endsWith(":maria"))).toMatchObject({
-      recipient_wallet: "VENMO",
+      recipient_wallet: "PAYPAL",
       receiver: "maria@sidework.test",
       note: "Your tips from Lucia's, Saturday, Nov 7",
     });
@@ -119,14 +129,17 @@ describe("payNight", () => {
     await expect(payNight(readyNight(), SATURDAY, client, { baseUrl: "https://api-m.paypal.com" })).rejects.toThrow("sandbox");
   });
 
-  it("sends test payouts to stand-in sandbox accounts when set", async () => {
+  it("sends test payouts to the stand-in sandbox account when set", async () => {
     const { client, batches } = fakeSandbox();
-    await payNight(readyNight(), SATURDAY, client, {
-      baseUrl: SANDBOX,
-      receivers: { paypal: "pp@sandbox.test", venmo: "vm@sandbox.test" },
-    });
+    await payNight(readyNight(), SATURDAY, client, { baseUrl: SANDBOX, sandboxReceiver: "pp@sandbox.test" });
     const receivers = new Set(batches[0].items.map((i) => `${i.recipient_wallet}:${i.receiver}`));
-    expect(receivers).toEqual(new Set(["PAYPAL:pp@sandbox.test", "VENMO:vm@sandbox.test"]));
+    expect(receivers).toEqual(new Set(["PAYPAL:pp@sandbox.test"]));
+  });
+
+  it("keeps Venmo for live accounts and swaps it only in the sandbox", () => {
+    expect(walletSent("VENMO", SANDBOX)).toBe("PAYPAL");
+    expect(walletSent("VENMO", "https://api-m.paypal.com")).toBe("VENMO");
+    expect(walletSent("PAYPAL", SANDBOX)).toBe("PAYPAL");
   });
 
   it("marks the batch failed when PayPal refuses it, and lets the manager try again", async () => {

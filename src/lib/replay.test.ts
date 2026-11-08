@@ -110,3 +110,17 @@ describe("replay through the PayPal client", () => {
     await expect(judge.request("GET", "/v1/payments/payouts/PB1")).rejects.toBeInstanceOf(ReplayMissError);
   });
 });
+
+describe("payout recordings", () => {
+  it("match whatever batch id and receiver a setup uses", async () => {
+    const { payoutReplayKey } = await import("@/lib/paypal");
+    const body = (batch: string, receiver: string) => ({
+      sender_batch_header: { sender_batch_id: batch, email_subject: "Tips" },
+      items: [{ recipient_type: "EMAIL", receiver, recipient_wallet: "PAYPAL", amount: { currency: "USD", value: "1.00" }, sender_item_id: "a" }],
+    });
+    const url = "https://api-m.sandbox.paypal.com/v1/payments/payouts";
+    expect(requestKey("POST", url, payoutReplayKey(url, body("one", "x@personal.example.com")))).toBe(
+      requestKey("POST", url, payoutReplayKey(url, body("two", "maria@sidework.test"))),
+    );
+  });
+});

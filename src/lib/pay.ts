@@ -104,6 +104,15 @@ export function getNightPayout(d: DatabaseSync, nightId: string): NightPayout | 
   };
 }
 
+/**
+ * PayPal's sandbox rejects recipient_wallet VENMO ("Recipient wallet not supported in sandbox",
+ * seen Nov 8 2026), so staff who chose Venmo are paid to PayPal there. Sidework only runs
+ * against the sandbox, so for now that is every payout.
+ */
+export function walletSent(chosen: Wallet, baseUrl: string): Wallet {
+  return chosen === "VENMO" && baseUrl.includes("sandbox") ? "PAYPAL" : chosen;
+}
+
 /** How long a batch can sit in SENDING before it must have died mid-call. Past every client timeout. */
 const SENDING_STALE_MS = 2 * 60 * 1000;
 
@@ -124,7 +133,7 @@ export async function payNight(
   d: DatabaseSync,
   nightId: string,
   client: PayPalClient,
-  opts: { baseUrl: string; receivers?: { paypal?: string; venmo?: string }; now?: () => Date },
+  opts: { baseUrl: string; sandboxReceiver?: string; now?: () => Date },
 ): Promise<NightPayout> {
   if (!opts.baseUrl.includes("sandbox")) {
     throw new PayRefusedError("Sidework only sends money from the PayPal sandbox.");
@@ -166,8 +175,8 @@ export async function payNight(
     const staff = new Map(c.people.map((p) => [p.id, p]));
     lines = shares.map((s) => ({
       id: `${batchId}:${s.staffId}`,
-      wallet: s.wallet,
-      receiver: (s.wallet === "VENMO" ? opts.receivers?.venmo : opts.receivers?.paypal) ?? staff.get(s.staffId)?.payoutReceiver ?? "",
+      wallet: walletSent(s.wallet, opts.baseUrl),
+      receiver: opts.sandboxReceiver ?? staff.get(s.staffId)?.payoutReceiver ?? "",
       cents: s.cents,
       note,
     }));

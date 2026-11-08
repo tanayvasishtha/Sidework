@@ -22,7 +22,8 @@ export class ReplayMissError extends Error {
 const NO_BODY = new Set([101, 204, 205, 304]);
 
 // Recorded responses go in a public repo, so anything that grants access is blanked.
-const SECRET_KEYS = new Set(["access_token", "refresh_token", "id_token", "client_secret", "nonce"]);
+// encrypted_content is OpenAI's opaque reasoning state: no use in a replay, and large.
+const SECRET_KEYS = new Set(["access_token", "refresh_token", "id_token", "client_secret", "nonce", "encrypted_content"]);
 
 function sortKeys(value: unknown): unknown {
   if (Array.isArray(value)) return value.map(sortKeys);

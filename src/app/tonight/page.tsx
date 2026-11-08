@@ -153,7 +153,12 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
       {!live && c.check?.status === "mismatch" && !c.check.accepted ? <Disagreement check={c.check} /> : null}
 
       {sent ? (
-        <SentSummary payout={sent} state={c.restaurant.state} nightId={c.night.id} />
+        <SentSummary
+          payout={sent}
+          state={c.restaurant.state}
+          nightId={c.night.id}
+          venmoStandIns={sent.items.filter((i) => i.wallet === "PAYPAL" && c.split.find((s) => s.staffId === i.staffId)?.wallet === "VENMO").length}
+        />
       ) : (
         <div className={styles.payBar}>
           {c.check ? <CheckLine check={c.check} /> : null}
@@ -267,7 +272,17 @@ function Disagreement({ check }: { check: SplitCheck }) {
   );
 }
 
-function SentSummary({ payout, state, nightId }: { payout: NightPayout; state: string; nightId: string }) {
+function SentSummary({
+  payout,
+  state,
+  nightId,
+  venmoStandIns,
+}: {
+  payout: NightPayout;
+  state: string;
+  nightId: string;
+  venmoStandIns: number;
+}) {
   const paid = payout.items.filter((i) => i.status === "SUCCESS").length;
   const failed = payout.items.filter((i) => payoutStatus(i).tone === "failed").length;
   return (
@@ -278,6 +293,9 @@ function SentSummary({ payout, state, nightId }: { payout: NightPayout; state: s
       </b>
       {paid} of {payout.items.length} paid so far, through PayPal Payouts.
       {failed > 0 ? ` ${failed} didn't go through.` : ""}
+      {venmoStandIns > 0
+        ? ` PayPal's sandbox can't pay Venmo accounts, so the ${venmoStandIns} who chose Venmo were paid by PayPal here.`
+        : ""}
       <PayoutWatcher nightId={nightId} settled={payout.items.every((i) => isSettled(i.status))} />
     </div>
   );

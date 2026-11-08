@@ -72,7 +72,7 @@ export async function payAction(_prev: PayState, formData: FormData): Promise<Pa
   try {
     await payNight(db(), nightId, paypal(), {
       baseUrl: s.PAYPAL_API_BASE,
-      receivers: { paypal: s.PAYPAL_SANDBOX_RECEIVER, venmo: s.PAYPAL_SANDBOX_VENMO_RECEIVER },
+      sandboxReceiver: s.PAYPAL_SANDBOX_RECEIVER,
     });
   } catch (err) {
     revalidatePath("/tonight");

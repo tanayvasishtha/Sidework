@@ -24,7 +24,5 @@ services:
         sync: false
       - key: PAYPAL_SANDBOX_RECEIVER
         sync: false
-      - key: PAYPAL_SANDBOX_VENMO_RECEIVER
-        sync: false
       - key: OPENAI_API_KEY
         sync: false
