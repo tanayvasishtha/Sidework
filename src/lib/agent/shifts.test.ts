@@ -36,8 +36,8 @@ describe("applyShiftNote", () => {
     expect(prompt).toContain("Jake Park (jake): server 16:00 to 00:40");
     expect(result.applied.map((a) => a.said)).toEqual([
       "Sam Okafor is off tonight's schedule",
-      "Maria Lopez left at 21:00",
-      "Jake Park moved to bartender at 20:00",
+      "Maria Lopez left at 9:00",
+      "Jake Park moved to bartender at 8:00",
     ]);
     expect(result.rejected.map((r) => r.reason)).toEqual(['"Omar left at 10" isn\'t in the note.']);
     expect(result.shifts.some((s) => s.staffId === "sam")).toBe(false);

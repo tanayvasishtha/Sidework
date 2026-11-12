@@ -42,9 +42,9 @@ describe("applyShiftEdits", () => {
     ]);
     expect(result.applied.map((a) => a.said)).toEqual([
       "Sam is off tonight's schedule",
-      "Maria left at 21:00",
-      "Jake moved to bartender at 20:00",
-      "Ana worked host 17:00 to 22:00",
+      "Maria left at 9:00",
+      "Jake moved to bartender at 8:00",
+      "Ana worked host 5:00 to 10:00",
     ]);
   });
 
@@ -84,7 +84,7 @@ describe("applyShiftEdits", () => {
       [{ ...sam, staffId: "zoe" }, 'id "zoe"'],
       [{ ...maria, at: "9pm" }, "HH:MM"],
       [{ ...maria, at: "15:00" }, "before their shift started"],
-      [{ ...jake, at: "02:00" }, "wasn't working at 02:00"],
+      [{ ...jake, at: "02:00" }, "wasn't working at 2:00"],
       [{ ...ana, start: "16:00", end: "18:00", staffId: "maria" }, "two shifts at once"],
       [edit({ kind: "start", staffId: "maria", at: "23:30", quote: "Maria cut at 9" }), "after the shift ends"],
       [{ ...ana, start: "17:00", end: "17:00" }, "no length"],

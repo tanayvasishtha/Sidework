@@ -79,6 +79,11 @@
   color: var(--ink);
 }
 
+/* A value that wrapped would land on the next rule. */
+.line > :last-child {
+  white-space: nowrap;
+}
+
 /* Two rows tall with one rule under it, so no rule runs through the large type. */
 .total {
   font-size: 22px;

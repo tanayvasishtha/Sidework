@@ -173,7 +173,7 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
           ) : !live && c.check?.status === "mismatch" && !c.check.accepted ? (
             <form action={acceptEngineAction}>
               <input type="hidden" name="night" value={c.night.id} />
-              <button className={`${styles.pay} num`} type="submit">
+              <button className={styles.pay} type="submit">
                 Use the rules engine&apos;s numbers
               </button>
             </form>
@@ -183,11 +183,15 @@ function Tips({ closeout: c, payout }: { closeout: Closeout; payout: NightPayout
               nightId={c.night.id}
               disabled={c.blocking > 0 || count === 0}
               label={
-                c.blocking > 0
-                  ? `Fix ${c.blocking === 1 ? "1 problem" : `${c.blocking} problems`} before paying`
-                  : live
-                    ? `Finish sending to ${people(live.items.length)}`
-                    : `${payout?.status ? "Try again: pay" : "Pay"} ${people(count)} ${money(c.money.poolCents)}`
+                c.blocking > 0 ? (
+                  `Fix ${c.blocking === 1 ? "1 problem" : `${c.blocking} problems`} before paying`
+                ) : live ? (
+                  `Finish sending to ${people(live.items.length)}`
+                ) : (
+                  <>
+                    {payout?.status ? "Try again: pay" : "Pay"} {people(count)} <span className="num">{money(c.money.poolCents)}</span>
+                  </>
+                )
               }
             />
           )}
@@ -287,11 +291,13 @@ function SentSummary({
   const failed = payout.items.filter((i) => payoutStatus(i).tone === "failed").length;
   return (
     <div className={styles.sent} role="status">
-      <b className="num">
-        Sent {money(payout.items.reduce((t, i) => t + i.cents, 0))} to {people(payout.items.length)} at{" "}
-        {localTime(payout.createdAt, state)}
+      <b>
+        Sent <span className="num">{money(payout.items.reduce((t, i) => t + i.cents, 0))}</span> to {people(payout.items.length)} at{" "}
+        <span className="num">{localTime(payout.createdAt, state)}</span>
       </b>
-      {paid} of {payout.items.length} paid so far, through PayPal Payouts.
+      {paid === payout.items.length
+        ? `All ${paid} paid through PayPal Payouts.`
+        : `${paid} of ${payout.items.length} paid so far, through PayPal Payouts.`}
       {failed > 0 ? ` ${failed} didn't go through.` : ""}
       {venmoStandIns > 0
         ? ` PayPal's sandbox can't pay Venmo accounts, so the ${venmoStandIns} who chose Venmo were paid by PayPal here.`

@@ -470,7 +470,7 @@
 }
 
 .done::before {
-  content: "¹3  ";
+  content: "\2713\00a0";
 }
 
 .waiting {

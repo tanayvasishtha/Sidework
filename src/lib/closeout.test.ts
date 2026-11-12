@@ -69,6 +69,6 @@ describe("close-out", () => {
     const after = getCloseout(d, SATURDAY);
     const edited = after.people.flatMap((p) => p.shifts).filter((s) => s.edited);
     expect(edited).toEqual([{ staffId: "maria", station: "server", start: "17:00", end: "21:00", edited: true }]);
-    expect(after.note).toEqual({ text: note, applied: ["Maria Lopez left at 21:00"], rejected: [] });
+    expect(after.note).toEqual({ text: note, applied: ["Maria Lopez left at 9:00"], rejected: [] });
   });
 });

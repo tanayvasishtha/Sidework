@@ -119,10 +119,7 @@ function Slip({ check: c }: { check: WorkerCheck }) {
             {c.share.remainderCents > 0 ? `, plus ${c.share.remainderCents}¢ left over from rounding` : ""}.
           </p>
           <div className={styles.line}>
-            <span>
-              {c.payout ? `Sent to ${WALLET[c.payout.wallet]}` : `Goes to your ${WALLET[c.person.wallet]}`}
-              {c.payout && c.payout.wallet !== c.person.wallet ? " (sandbox can't pay Venmo)" : ""}
-            </span>
+            <span>{c.payout ? `Sent to ${WALLET[c.payout.wallet]}` : `Goes to your ${WALLET[c.person.wallet]}`}</span>
             <span className="num">
               {c.payout
                 ? c.payout.status === "SUCCESS"
@@ -135,6 +132,9 @@ function Slip({ check: c }: { check: WorkerCheck }) {
                 : "Not sent yet"}
             </span>
           </div>
+          {c.payout && c.payout.wallet !== c.person.wallet ? (
+            <p className={styles.how}>PayPal&apos;s sandbox can&apos;t pay Venmo, so this went to PayPal.</p>
+          ) : null}
         </>
       ) : (
         <p className={styles.outOfPool}>

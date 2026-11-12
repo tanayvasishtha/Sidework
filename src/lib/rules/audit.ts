@@ -139,7 +139,7 @@ export function auditPolicy(
         ruleId: "FLSA-FEE",
         severity: "warn",
         quote: reading.cardFeeQuote,
-        message: `A ${reading.cardFeePercent}% fee is more than card processors charge. Only the actual processing cost may come off tips.`,
+        message: `${reading.cardFeePercent}% is more than card processors charge. Only the actual processing cost may come off tips.`,
       });
     }
   }

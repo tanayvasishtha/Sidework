@@ -1,3 +1,4 @@
+import { clock } from "@/lib/format";
 import { quoteFound, type Role, type Shift } from "@/lib/rules";
 import { nightMinutes as night, shiftSpan as span } from "./night";
 
@@ -95,13 +96,13 @@ export function applyShiftEdits(
         const t = night(at);
         const started = theirs.filter((s) => span(s)[0] < t);
         if (started.length === 0) {
-          reject(`${name} can't leave at ${at}, before their shift started.`);
+          reject(`${name} can't leave at ${clock(at)}, before their shift started.`);
           break;
         }
         // The shift they were on when they left, or their last one if they stayed late.
         const target = started.find((s) => t <= span(s)[1]) ?? started.at(-1)!;
         next = [...others, ...started.map((s) => (s === target ? { ...s, end: at } : s))];
-        said = `${name} left at ${at}`;
+        said = `${name} left at ${clock(at)}`;
         break;
       }
 
@@ -112,11 +113,11 @@ export function applyShiftEdits(
           break;
         }
         if (night(at) >= span(first)[1]) {
-          reject(`${name} can't start at ${at}, after the shift ends.`);
+          reject(`${name} can't start at ${clock(at)}, after the shift ends.`);
           break;
         }
         next = [...others, { ...first, start: at }, ...theirs.slice(1)];
-        said = `${name} came in at ${at}`;
+        said = `${name} came in at ${clock(at)}`;
         break;
       }
 
@@ -129,7 +130,7 @@ export function applyShiftEdits(
         const t = night(at);
         const target = theirs.find((s) => span(s)[0] < t && t < span(s)[1]);
         if (!target) {
-          reject(`${name} wasn't working at ${at}.`);
+          reject(`${name} wasn't working at ${clock(at)}.`);
           break;
         }
         next = [
@@ -138,7 +139,7 @@ export function applyShiftEdits(
           { ...target, end: at },
           { staffId: target.staffId, station, start: at, end: target.end },
         ];
-        said = `${name} moved to ${station} at ${at}`;
+        said = `${name} moved to ${station} at ${clock(at)}`;
         break;
       }
 
@@ -148,11 +149,11 @@ export function applyShiftEdits(
           break;
         }
         if (start === end) {
-          reject(`A shift from ${start} to ${end} has no length.`);
+          reject(`A shift from ${clock(start)} to ${clock(end)} has no length.`);
           break;
         }
         next = [...current, { staffId: edit.staffId, station: edit.station, start, end }];
-        said = `${name} worked ${edit.station} ${start} to ${end}`;
+        said = `${name} worked ${edit.station} ${clock(start)} to ${clock(end)}`;
         break;
       }
     }
