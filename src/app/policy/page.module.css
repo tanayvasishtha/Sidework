@@ -1,5 +1,9 @@
-.page {
-  max-width: 760px;
+/* Policy on the left, what the audit found on the right, like the close-out screen. */
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
 }
 
 .loading {
@@ -33,7 +37,7 @@
   color: var(--ink-soft);
   text-decoration: none;
   border: 1px solid var(--control);
-  border-radius: 20px;
+  border-radius: 8px;
   padding: 3px 14px;
 }
 
@@ -44,6 +48,7 @@
 }
 
 .lede {
+  max-width: 720px;
   margin: 10px 0 18px;
   font-size: 15px;
   color: var(--ink-soft);
@@ -105,12 +110,22 @@
   color: var(--amber);
 }
 
+/* Before the first audit: says what will show up here and how to get it. */
+.waiting {
+  margin: 0;
+  padding: 18px 20px;
+  border: 1px dashed var(--control);
+  border-radius: 4px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
 /* Results sit on guest check paper, like the tips panel. */
 .results {
-  margin-top: 22px;
   padding: 18px 20px;
   background: var(--paper);
-  border-radius: 14px;
+  border-radius: 4px;
+  box-shadow: 0 1px 0 var(--paper-rule);
 }
 
 .results h2 {
@@ -143,54 +158,67 @@
   border-bottom: 2px solid var(--amber);
 }
 
+/* Line items on the check: what kind of problem on the left, the line and the rule on the right. */
 .findings {
   list-style: none;
   margin: 16px 0 0;
   padding: 0;
+  border-top: 1px solid var(--paper-rule);
 }
 
 .findings li {
-  padding: 10px 12px;
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: 2px 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--paper-rule);
   font-size: 14px;
+  color: var(--graphite);
+}
+
+.kind {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.block .kind {
+  color: var(--red);
+}
+
+.warn .kind {
+  color: var(--amber);
 }
 
 .findings b {
   display: block;
   margin-bottom: 2px;
+  color: var(--ink);
 }
 
+/* Underlined the same way as the line it quotes in the policy above. */
 .findings q {
   display: block;
   margin-bottom: 4px;
   font-style: italic;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.block q {
+  text-decoration-color: var(--red);
+}
+
+.warn q {
+  text-decoration-color: var(--amber);
 }
 
 .findings a {
   display: block;
   margin-top: 4px;
   font-size: 12px;
-  color: inherit;
-}
-
-.block {
-  background: var(--red-wash);
-  border-left: 3px solid var(--red);
-  color: #6e1c18;
-}
-
-.block b {
-  color: var(--red);
-}
-
-.warn {
-  background: #fff;
-  border-left: 3px solid var(--amber);
-  color: var(--graphite);
-}
-
-.warn b {
-  color: var(--amber);
+  color: var(--ink-soft);
 }
 
 .rates {
@@ -230,4 +258,17 @@
 .dropped {
   margin: 0;
   padding-left: 18px;
+}
+
+@media (max-width: 900px) {
+  .cols {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .findings li {
+    grid-template-columns: 1fr;
+  }
 }

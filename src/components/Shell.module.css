@@ -44,11 +44,11 @@
   color: var(--ink-soft);
 }
 
+/* A dotted underline, because the explanation is in the hover title. */
 .mode {
-  border: 1px solid var(--control);
-  border-radius: 20px;
-  padding: 2px 10px;
-  font-size: 12px;
+  font-size: 13px;
+  border-bottom: 1px dotted var(--control);
+  cursor: help;
 }
 
 .main {
@@ -62,11 +62,6 @@
     flex-wrap: wrap;
     gap: 12px 20px;
     padding: 12px 16px;
-  }
-
-  .meta {
-    margin-left: 0;
-    width: 100%;
   }
 
   .main {

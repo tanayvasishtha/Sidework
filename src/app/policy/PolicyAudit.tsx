@@ -35,11 +35,22 @@ function marked(text: string, quotes: { quote: string; severity: Severity }[]): 
 export function PolicyAudit({ restaurantId, policyText }: { restaurantId: string; policyText: string }) {
   const [state, action, pending] = useActionState<AuditState, FormData>(auditAction, {});
   const [text, setText] = useState(policyText);
-  const findings = state.findings;
+  const where = (quote: string) => {
+    const at = (state.text ?? "").toLowerCase().indexOf(quote.toLowerCase());
+    return at < 0 ? Number.MAX_SAFE_INTEGER : at;
+  };
+  // What's illegal comes first, then the order the policy says things in.
+  const findings = state.findings
+    ? [...state.findings].sort(
+        (a, b) => Number(a.severity === "warn") - Number(b.severity === "warn") || where(a.quote) - where(b.quote),
+      )
+    : undefined;
   const blocks = findings?.filter((f) => f.severity === "block").length ?? 0;
+  // A job the policy gives no points to isn't a rate worth listing.
+  const rates = state.rates?.filter((r) => r.points > 0) ?? [];
 
   return (
-    <>
+    <div className={styles.cols}>
       <form action={action} className={styles.form}>
         <input type="hidden" name="restaurant" value={restaurantId} />
         <label htmlFor="policy">Your written tip policy</label>
@@ -82,21 +93,24 @@ export function PolicyAudit({ restaurantId, policyText }: { restaurantId: string
           <ul className={styles.findings}>
             {findings.map((f, i) => (
               <li key={`${f.ruleId}-${i}`} className={f.severity === "block" ? styles.block : styles.warn}>
-                <b>{f.severity === "block" ? "Illegal" : "Worth fixing"}: {f.title}</b>
-                <q>{f.quote}</q>
-                {f.message}
-                <a href={f.url} target="_blank" rel="noreferrer">
-                  {f.source}
-                </a>
+                <span className={styles.kind}>{f.severity === "block" ? "Illegal" : "Worth fixing"}</span>
+                <div>
+                  <b>{f.title}</b>
+                  <q>{f.quote}</q>
+                  {f.message}
+                  <a href={f.url} target="_blank" rel="noreferrer">
+                    {f.source}
+                  </a>
+                </div>
               </li>
             ))}
           </ul>
 
-          {state.rates && state.rates.length > 0 ? (
+          {rates.length > 0 ? (
             <>
               <h3>Points the policy gives</h3>
               <dl className={`${styles.rates} num`}>
-                {state.rates.map((r) => (
+                {rates.map((r) => (
                   <div key={r.station}>
                     <dt>{r.station}</dt>
                     <dd>{r.points}</dd>
@@ -123,7 +137,13 @@ export function PolicyAudit({ restaurantId, policyText }: { restaurantId: string
             </>
           ) : null}
         </section>
-      ) : null}
-    </>
+      ) : (
+        <p className={styles.waiting} aria-live="polite">
+          {pending
+            ? "Reading the policy. The agent quotes it, then the rules engine checks each quote."
+            : "Nothing checked yet. Press Check this policy, and every line that breaks a federal rule shows up here in the policy's own words."}
+        </p>
+      )}
+    </div>
   );
 }

@@ -16,7 +16,7 @@ async function ModeBadge() {
   await connection();
   const { mode, paypalMode, llmMode } = settings();
   const label =
-    paypalMode === llmMode ? (mode === "replay" ? "Replay" : "Live sandbox") : `PayPal ${MODE_LABEL[paypalMode]}, AI ${MODE_LABEL[llmMode]}`;
+    paypalMode === llmMode ? (mode === "replay" ? "Replay mode" : "Live sandbox") : `PayPal ${MODE_LABEL[paypalMode]}, AI ${MODE_LABEL[llmMode]}`;
   return (
     <span
       className={styles.mode}

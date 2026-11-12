@@ -28,7 +28,7 @@ async function Policy({ searchParams }: { searchParams: PageProps<"/policy">["se
   const restaurant = getRestaurant(d, id);
 
   return (
-    <div className={styles.page}>
+    <div>
       <div className={styles.head}>
         <h1>Is your tip policy legal?</h1>
         <nav className={styles.places} aria-label="Restaurants">
